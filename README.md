@@ -1,8 +1,26 @@
-# React + Vite
+Para correr el proyecto debemos correr el comando, este comando abre nuestro proyecto es el puerto 5170
+```
+npm run dev
+```
+En otra consola debes correrer, este comando sirve para correr Tailwind
+```
+npm run tailwind
+```
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Para acceder a nuestro proyecto debemos poner en nuestro buscador
+```
+localhost:5170
+```
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clonar el repositorio
+-debemos tener NodeJS instalado en nuestro equipos
+
+Copiamos la liga del repositorio y en nuestra consola escribimos 
+```
+git clone url_repositorio
+```
+Una vez que tenemos el repositorio en nuestro local, nos ubicamos en la carpeta del repositorio y corremos el siguiente comando, este comando instalar todos los archivos necesarios para que funcione nuestro Front
+```
+npm i
+```
