@@ -3,7 +3,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import ViewMain from "../view/ViewMain.jsx";
+import ViewMain from "../view/viewMain/ViewMain.jsx";
 
 const router = createBrowserRouter([
   {
