@@ -38,3 +38,5 @@ Toda documentación la pueden encontrar en internet, pero les iré explicando co
 react-cookie - Biblioteca que nos permite manipular las cookies que llegan desde nuestro servidor con mayor facilidad
 
 clsx - Biblioteca que permite realizar condiciones al momento de asignar clases de estilos css
+
+quagga - Vamos a usar esta biblioteca para leer el código de barra de los productos
