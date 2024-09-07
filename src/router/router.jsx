@@ -1,14 +1,11 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import ViewMain from "../view/viewMain/ViewMain.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div >Hello world!</div>,
+    element: <div>Hello world!</div>,
   },
   {
     path: "/hola",
@@ -18,6 +15,6 @@ const router = createBrowserRouter([
 
 const Router = () => {
   return <RouterProvider router={router} />;
-}
+};
 
 export default Router;
