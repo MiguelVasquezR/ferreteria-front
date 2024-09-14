@@ -28,7 +28,7 @@ const Photo = () => {
     }
   };
 
- /*  const ImagenEsqueleto = () => {
+  const ImagenEsqueleto = () => {
     return (
       <div>
         <img
@@ -42,7 +42,7 @@ const Photo = () => {
         />
       </div>
     );
-  }; */
+  };
 
   return (
     <div
