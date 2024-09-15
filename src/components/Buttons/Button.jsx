@@ -16,7 +16,7 @@ const Button = ({ texto, isIcon, Icon, onClick, type, size, color, tipo }) => {
   }
 
   return (
-    <div className={`flex flex-row justify-center items-center gap-2 w-full rounded-md text-white p-1 font-georgia text-[18px] ${bg}`}>
+    <div className={`flex flex-row justify-center items-center gap-2 w-full rounded-md text-white p-1 font-georgia text-[18px] ${bg} bg-F58A27`}>
       {isIcon && <Icon size={size} color={color} />}
       <button onClick={onClick} type={type}>
         {texto}

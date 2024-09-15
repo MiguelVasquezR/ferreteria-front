@@ -1,7 +1,16 @@
 import PropTypes from "prop-types";
 import { useFormContext } from "react-hook-form";
+import clsx from "clsx";
 
-const TextField = ({ label, name, type, placeholder, isIcon, Icon }) => {
+const TextField = ({
+  label,
+  name,
+  type,
+  placeholder,
+  isIcon,
+  Icon,
+  isError,
+}) => {
   const {
     register,
     formState: { errors },
@@ -9,19 +18,23 @@ const TextField = ({ label, name, type, placeholder, isIcon, Icon }) => {
 
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
-      <label className="pl-2 w-full">{label}</label>
+      <label
+        className={clsx("pl-2 w-full", isError ? "text-error" : "text-black")}
+      >
+        {label}
+      </label>
       <div className="relative w-full">
         <input
           placeholder={placeholder}
           type={type}
           {...register(name)}
-          className={`shadow-md rounded-md p-1 w-full outline-none pr-8 ${
+          className={`shadow-md rounded-md p-2 w-full outline-none pr-8 ${
             errors[name] ? "border-red-500" : ""
           }`}
         />
         {isIcon && (
           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer">
-            <Icon />
+            <Icon size={32} color={"gray"} />
           </span>
         )}
       </div>
@@ -39,6 +52,7 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   isIcon: PropTypes.bool,
   Icon: PropTypes.elementType,
+  isError: PropTypes.bool,
 };
 
 export default TextField;

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import ViewMain from "../view/viewMain/ViewMain.jsx";
+import ViewLogin from "../view/viewLogin/ViewLogin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -8,7 +9,11 @@ const router = createBrowserRouter([
     element: <div>Hello world!</div>,
   },
   {
-    path: "/hola",
+    path: "/login",
+    element: <ViewLogin />,
+  },
+  {
+    path: "/home",
     element: <ViewMain />,
   },
 ]);
