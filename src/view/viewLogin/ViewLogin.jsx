@@ -29,7 +29,7 @@ const ViewLogin = () => {
     }
     if (data.usuario !== "" && data.contrasena !== "") {
       axios
-        .post("http://localhost:4567/login", data)
+        .post(`${import.meta.env.VITE_API_URL_BACK}/login`, data)
         .then((res) => {
           if (res.data === "Usuario o contraseña incorrectos") {
             setIsError(res.data);
@@ -92,9 +92,14 @@ const ViewLogin = () => {
             texto="Iniciar Sesión"
             isIcon={false}
             Icon={null}
+            background="bg-blue"
             onClick={() => {}}
           />
         </FormProvider>
+
+        <a href="/forget-password" className="underline">
+          Olvide Contraseña
+        </a>
       </form>
     </div>
   );

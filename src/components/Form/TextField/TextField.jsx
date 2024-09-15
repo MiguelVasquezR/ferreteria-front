@@ -9,17 +9,15 @@ const TextField = ({
   placeholder,
   isIcon,
   Icon,
+  Error,
   isError,
 }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
 
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
       <label
-        className={clsx("pl-2 w-full", isError ? "text-error" : "text-black")}
+        className={clsx("pl-2 w-full font-bold lg:text-[20px]", isError ? "text-red-500" : "text-black")}
       >
         {label}
       </label>
@@ -28,19 +26,17 @@ const TextField = ({
           placeholder={placeholder}
           type={type}
           {...register(name)}
-          className={`shadow-md rounded-md p-2 w-full outline-none pr-8 ${
-            errors[name] ? "border-red-500" : ""
+          className={`shadow-md rounded-md p-2 w-full outline-none pr-8 lg:h-[44px] ${
+            isError ? "border-red-500" : "border-gray-300"
           }`}
         />
         {isIcon && (
           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer">
-            <Icon size={32} color={"gray"} />
+            {Icon}
           </span>
         )}
       </div>
-      {errors[name] && (
-        <p className="text-error text-s pl-2">{errors[name].message}</p>
-      )}
+      {isError && <p className="text-error text-sm pl-2">{Error}</p>}
     </div>
   );
 };
@@ -51,8 +47,9 @@ TextField.propTypes = {
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   isIcon: PropTypes.bool,
-  Icon: PropTypes.elementType,
+  Icon: PropTypes.node,
   isError: PropTypes.bool,
+  Error: PropTypes.string,
 };
 
 export default TextField;

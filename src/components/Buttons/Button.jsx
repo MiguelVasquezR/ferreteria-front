@@ -1,24 +1,12 @@
 import PropTypes from "prop-types";
 
-const Button = ({ texto, isIcon, Icon, onClick, type, size, color, tipo }) => {
-  let bg = "";
-
-  switch (tipo) {
-    case "guardar":
-      bg = "bg-blue";
-      break;
-    case "exito":
-      bg = "bg-succes";
-      break;
-    case "error":
-      bg = "bg-error";
-      break;
-  }
-
+const Button = ({ texto, isIcon, Icon, onClick, type, background }) => {
   return (
-    <div className={`flex flex-row justify-center items-center gap-2 w-full rounded-md text-white p-1 font-georgia text-[18px] ${bg} bg-F58A27`}>
-      {isIcon && <Icon size={size} color={color} />}
-      <button onClick={onClick} type={type}>
+    <div
+      className={`flex flex-row justify-center items-center gap-2 w-full h-[40px] rounded-md text-white p-1 font-georgia text-[18px] ${background}`}
+    >
+      {isIcon && { Icon }}
+      <button onClick={onClick} type={type} className="h-full w-full">
         {texto}
       </button>
     </div>
@@ -27,13 +15,11 @@ const Button = ({ texto, isIcon, Icon, onClick, type, size, color, tipo }) => {
 
 Button.propTypes = {
   texto: PropTypes.string.isRequired,
-  isIcon: PropTypes.bool,
-  Icon: PropTypes.elementType,
+  isIcon: PropTypes.bool.isRequired,
+  Icon: PropTypes.node,
   onClick: PropTypes.func,
-  type: PropTypes.string,
-  tipo: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  background: PropTypes.string.isRequired,
 };
 
 export default Button;
