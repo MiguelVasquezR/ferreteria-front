@@ -9,7 +9,7 @@ const Header = () => {
 
   if (isOpen) {
     return (
-      <div className="bg-F5A928 w-screen h-screen relative font-georgia text-white flex justify-center items-center">
+      <div className="bg-F58A27 w-screen h-screen relative font-georgia text-white flex justify-center items-center">
         <IoMdCloseCircle
           onClick={() => {
             setIsOpen(false);
@@ -32,7 +32,7 @@ const Header = () => {
   }
 
   return (
-    <div className="bg-F5A928 w-full h-[80px] flex flex-row justify-between items-center px-5 text-white font-georgia text-[18px]">
+    <div className="bg-F58A27 w-full h-[80px] flex flex-row justify-between items-center px-5 text-white font-georgia text-[18px]">
       <picture className="flex justify-center items-center">
         <img src={Logo} alt="" className="w-[60px] h-[60px]" />
       </picture>
