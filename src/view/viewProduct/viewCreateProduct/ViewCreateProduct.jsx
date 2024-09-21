@@ -33,7 +33,7 @@ const ViewCreateProduct = () => {
       .then((response) => {
         if (response.data === "Producto agregado correctamente") {
           toast.success(response.data);
-          navigate("/");
+          navigate("/prodcuts");
         } else {
           toast.error("Error al agregar el producto");
         }
@@ -43,13 +43,19 @@ const ViewCreateProduct = () => {
       });
   };
 
+  const backPage = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(-1)
+  }
+
   return (
     <div>
       <Header />
 
       <div className="flex flex-col gap-1">
         <div className="flex flex-row justify-start items-center gap-1 my-5 lg:pl-5 cursor-pointer">
-          <IoArrowBackOutline className="font-bold" size={32} color={"black"} />
+          <IoArrowBackOutline className="font-bold" size={32} color={"black"} onClick={backPage} />
           <h2 className="font-bold text-[18px] lg:text-[22px]">
             Crear Producto
           </h2>
