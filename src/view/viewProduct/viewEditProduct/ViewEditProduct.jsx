@@ -4,7 +4,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { IoArrowBackOutline } from "react-icons/io5";
 import Photo from "../../../components/Photo/Photo";
 import Button from "../../../components/Buttons/Button";
-import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { AiOutlineSave } from "react-icons/ai";
 
 const ViewEditProduct = () => {
@@ -12,17 +11,16 @@ const ViewEditProduct = () => {
   return (
     <div className="">
       <Header />
-       <div className="flex flex-col justify-center items-center py-3" >
-        <div className="flex flex-row justify-start items-center gap-2 w-full">
-          <IoArrowBackOutline />
-          <p> Editar texto</p>
+      <div className="flex flex-col justify-center items-center py-3">
+
+        <div className="flex flex-row justify-start items-center gap-2 w-full p-5">
+          <IoArrowBackOutline size={32} />
+          <p className="font-bold text-[18px]">Editar Producto</p>
         </div>
 
-        <form className="w-[320px] p-5 m-5">
+        <form className="w-[320px] lg:w-1/2 p-2 flex justify-center items-center flex-col gap-2 ">
           <FormProvider {...methods}>
-            <div>
-              <Photo />
-            </div>
+            <Photo />
 
             <TextField
               label="Codigo"
@@ -33,6 +31,7 @@ const ViewEditProduct = () => {
               placeholder={"Codigo"}
               Error={""}
               isError={true}
+              register={methods.register}
             />
 
             <TextField
@@ -44,6 +43,7 @@ const ViewEditProduct = () => {
               placeholder={"Producto"}
               Error={""}
               isError={true}
+              register={methods.register}
             />
 
             <TextField
@@ -55,6 +55,7 @@ const ViewEditProduct = () => {
               placeholder={"Marca"}
               Error={""}
               isError={true}
+              register={methods.register}
             />
 
             <TextField
@@ -66,20 +67,20 @@ const ViewEditProduct = () => {
               placeholder={"Precio Unitario"}
               Error={""}
               isError={true}
+              register={methods.register}
             />
+
+            <div className="w-full lg:w-1/2 lg:h-[40px]">
+              <Button
+                background="bg-blue"
+                isIcon={true}
+                texto="Exito"
+                type="submit"
+                Icon={<AiOutlineSave />}
+                onClick={() => {}}
+              />
+            </div>
           </FormProvider>
-
-          <div>
-            <Button  
-            background="bg-blue"
-            isIcon={true}
-            texto="Exito"
-            type="submit"
-            Icon={<AiOutlineSave />}  
-            onClick={()=>{}}
-            />
-          </div>
-
         </form>
       </div>
     </div>
