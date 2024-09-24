@@ -5,7 +5,7 @@ const Button = ({ texto, isIcon, Icon, onClick, type, background }) => {
     <div
       className={`flex flex-row justify-center items-center gap-2 w-full h-[40px] rounded-md text-white p-1 font-georgia text-[18px] ${background}`}
     >
-      {isIcon && { Icon }}
+      {isIcon &&  <span> {Icon} </span> }
       <button onClick={onClick} type={type} className="h-full w-full">
         {texto}
       </button>
