@@ -10,12 +10,13 @@ const ViewEditSuplier = () => {
   return (
     <div>
       <Header />
-      <div className="flex flex-col justify-center items-center">
-        <div className="flex flex-row justify-start items-center gap-2 w-full">
-          <IoArrowBackOutline />
-          <p>Editar Proveedor</p>
+      <div className="flex flex-col justify-center items-center my-5">
+        <div className="flex flex-row justify-start items-center gap-2 w-full p-5">
+          <IoArrowBackOutline size={32} />
+          <p className="text-[18px] font-bold">Editar Proveedor</p>
         </div>
-        <form className="w-[320px] p-5 m-5 ">
+
+        <form className="w-[320px] lg:w-1/2 p-2 flex justify-center items-center flex-col gap-2 ">
           <FormProvider {...methods}>
             <TextField
               label="Nombre del Proveedor"
@@ -26,6 +27,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"Nombre del Proveedor..."}
+              register={methods.register}
             />
 
             <TextField
@@ -37,6 +39,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"228..."}
+              register={methods.register}
             />
 
             <TextField
@@ -48,6 +51,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"ejemplo@gmail.com"}
+              register={methods.register}
             />
 
             <TextField
@@ -59,6 +63,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"RFC"}
+              register={methods.register}
             />
 
             <TextField
@@ -70,6 +75,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"$"}
+              register={methods.register}
             />
 
             <TextField
@@ -81,6 +87,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"Ciudad del proveedor"}
+              register={methods.register}
             />
 
             <TextField
@@ -92,6 +99,7 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"Colonia del proveedor"}
+              register={methods.register}
             />
 
             <TextField
@@ -102,6 +110,7 @@ const ViewEditSuplier = () => {
               Icon={false}
               isError={true}
               isIcon={false}
+              register={methods.register}
               placeholder={"Calle del proveedor"}
             />
 
@@ -114,21 +123,22 @@ const ViewEditSuplier = () => {
               isError={true}
               isIcon={false}
               placeholder={"Numero del domicilio del proveedor"}
+              register={methods.register}
             />
+
+            <div className="w-full lg:w-[400px] lg:h-[40px]">
+              <Button
+                background="bg-blue"
+                isIcon={true}
+                texto="Guardar"
+                type="submit"
+                Icon={<AiOutlineSave />}
+                onClick={() => {}}
+              />
+            </div>
+
+
           </FormProvider>
-
-          <div>
-            <Button
-            background="bg-blue"
-            isIcon={true}
-            texto="Guardar"
-            type="submit"
-            Icon={<AiOutlineSave />}
-            onClick={()=>{}}
-            />
-
-            
-          </div>
         </form>
       </div>
     </div>
