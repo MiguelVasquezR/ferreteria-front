@@ -6,6 +6,7 @@ import ViewForgetPasswordAction from "../view/viewForgetPassword/viewForgetPassw
 import ProtectedRoute from "./ProtecterRoute.jsx";
 import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
 import ViewCreateProduct from "../view/viewProduct/viewCreateProduct/ViewCreateProduct.jsx";
+import ViewProducts from "../view/viewProduct/ViewProduct.jsx";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/create-product",
     element: <ViewCreateProduct />
+  },
+  {
+    path: "/products",
+    element: <ViewProducts />
   }
 ]);
 

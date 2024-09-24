@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const SchemaProduct = z.object({
-  urlImage: z.string({ message: "La imagen del producto es requerida" }),
+  url_image: z.string({ message: "La imagen del producto es requerida" }),
   nombre: z.string().min(1, "El nombres es requrido"),
   cantidad: z.string().min(1, "La cantidad del producto es requerida"),
   stock_minimo: z.string().min(1, "El stock minimo del producto es requerido"),

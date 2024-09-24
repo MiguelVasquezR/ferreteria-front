@@ -26,7 +26,7 @@ const Photo = ({ isError, Error }) => {
       const ulrImDesc = await getDownloadURL(refArchivo);
       if (ulrImDesc !== null) {
         setImage(ulrImDesc);
-        setValue("urlImage", ulrImDesc);
+        setValue("url_image", ulrImDesc);
         setIsLoading(false);
       }
     }
@@ -37,7 +37,7 @@ const Photo = ({ isError, Error }) => {
       <div>
         <img
           src={image}
-          className="bg-[#f2f2f2] w-[120px] h-[120px] rounded-full flex justify-center items-center animate-pulse"
+          className="bg-[#f2f2f2] w-[120px] h-[120px] lg:w-[220px] lg:h-[220px] rounded-full flex justify-center items-center animate-pulse"
         />
       </div>
     );
@@ -49,7 +49,7 @@ const Photo = ({ isError, Error }) => {
         <ImagenEsqueleto />
       ) : (
         <div
-          className="w-[120px] h-[120px]"
+          className="w-[120px] h-[120px] lg:w-[220px] lg:h-[220px]"
           onClick={() => {
             if (refImage.current) {
               refImage.current.click();
@@ -58,31 +58,31 @@ const Photo = ({ isError, Error }) => {
             }
           }}
         >
-          <picture className="relative w-[120px] h-[120px]">
+          <picture className="relative w-[120px] h-[120px] lg:w-[220px] lg:h-[220px]">
             {image ? (
-              <div className="w-[120px] h-[120px]">
+              <div className="w-[120px] h-[120px] lg:w-[220px] lg:h-[220px]">
                 <img
                   src={image}
-                  className="w-[120px] h-[120px] rounded-full flex justify-center items-center object-cover"
+                  className="w-[120px] h-[120px] lg:w-[220px] lg:h-[220px] rounded-full flex justify-center items-center object-cover"
                 />
                 <MdPhotoCamera
                   color="#F58A27"
                   size={50}
-                  className="absolute  right-[-10px] bottom-[-10px]"
+                  className="absolute  right-[-10px] bottom-[-10px] lg:right-[0px] lg:bottom-[0px]"
                 />
               </div>
             ) : (
-              <div className="w-[120px] h-[120px]">
+              <div className="w-[120px] h-[120px] lg:w-[220px] lg:h-[220px]">
                 <div
                   className={clsx(
-                    "bg-[#f2f2f2] w-[120px] h-[120px] rounded-full flex justify-center items-center",
+                    "bg-[#f2f2f2] w-[120px] h-[120px] lg:w-[220px] lg:h-[220px] rounded-full flex justify-center items-center",
                     isError ? "border-error border-solid border-[1px]" : ""
                   )}
                 ></div>
                 <MdPhotoCamera
                   color="#F58A27"
                   size={50}
-                  className="absolute  right-[-10px] bottom-[-10px]"
+                  className="absolute right-[-10px] bottom-[-10px] lg:right-0 lg:bottom-0 "
                 />
               </div>
             )}
