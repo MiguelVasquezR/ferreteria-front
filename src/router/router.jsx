@@ -4,6 +4,7 @@ import ViewLogin from "../view/viewLogin/ViewLogin.jsx";
 import ViewForgetPassword from "../view/viewForgetPassword/ViewForgetPassword.jsx";
 import ViewForgetPasswordAction from "../view/viewForgetPassword/viewForgetPasswordAction/ViewForgetPasswordAction.jsx";
 import ProtectedRoute from "./ProtecterRoute.jsx";
+import ViewEditSuplier from "../view/viewEditSuplier/ViewEditSuplier.jsx";
 import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
 import ViewCreateProduct from "../view/viewProduct/viewCreateProduct/ViewCreateProduct.jsx";
 import ViewProducts from "../view/viewProduct/ViewProduct.jsx";
@@ -41,20 +42,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/edit-product",
-    element: <ViewEditProduct />
+    element: <ViewEditProduct />,
   },
   {
     path: "/home",
     element: <ProtectedRoute element={<ViewMain />} requiredRole="admin" />,
   },
   {
+    path: "/edit-suplier",
+    element: <ViewEditSuplier />,
+  },
+  {
     path: "/create-product",
-    element: <ViewCreateProduct />
+    element: <ViewCreateProduct />,
   },
   {
     path: "/products",
-    element: <ViewProducts />
-  }
+    element: <ViewProducts />,
+  },
 ]);
 
 const AppRouter = () => {
