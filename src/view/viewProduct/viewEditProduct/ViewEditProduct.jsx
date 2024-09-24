@@ -1,9 +1,9 @@
-import Header from "../../components/Header/Header";
-import TextField from "../../components/Form/TextField/TextField";
+import Header from "../../../components/Header/Header";
+import TextField from "../../../components/Form/TextField/TextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { IoArrowBackOutline } from "react-icons/io5";
-import Photo from "../../components/Photo/Photo";
-import Button from "../../components/Buttons/Button";
+import Photo from "../../../components/Photo/Photo";
+import Button from "../../../components/Buttons/Button";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { AiOutlineSave } from "react-icons/ai";
 
