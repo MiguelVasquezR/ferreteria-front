@@ -5,6 +5,9 @@ import ViewForgetPassword from "../view/viewForgetPassword/ViewForgetPassword.js
 import ViewForgetPasswordAction from "../view/viewForgetPassword/viewForgetPasswordAction/ViewForgetPasswordAction.jsx";
 import ProtectedRoute from "./ProtecterRoute.jsx";
 import ViewEditSuplier from "../view/viewEditSuplier/ViewEditSuplier.jsx";
+import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
+import ViewCreateProduct from "../view/viewProduct/viewCreateProduct/ViewCreateProduct.jsx";
+import ViewProducts from "../view/viewProduct/ViewProduct.jsx";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -38,13 +41,25 @@ const router = createBrowserRouter([
     element: <ViewForgetPasswordAction />,
   },
   {
+    path: "/edit-product",
+    element: <ViewEditProduct />,
+  },
+  {
     path: "/home",
     element: <ProtectedRoute element={<ViewMain />} requiredRole="admin" />,
   },
   {
     path: "/edit-suplier",
     element: <ViewEditSuplier />,
-  }
+  },
+  {
+    path: "/create-product",
+    element: <ViewCreateProduct />,
+  },
+  {
+    path: "/products",
+    element: <ViewProducts />,
+  },
 ]);
 
 const AppRouter = () => {

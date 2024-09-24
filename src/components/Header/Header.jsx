@@ -9,7 +9,7 @@ const Header = () => {
 
   if (isOpen) {
     return (
-      <div className="bg-F5A928 w-screen h-screen relative font-georgia text-white flex justify-center items-center">
+      <div className="bg-F58A27 w-screen h-screen relative font-georgia text-white flex justify-center items-center">
         <IoMdCloseCircle
           onClick={() => {
             setIsOpen(false);
