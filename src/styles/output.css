@@ -658,10 +658,6 @@ video {
   height: 80px;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .h-screen {
   height: 100vh;
 }
@@ -998,9 +994,6 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-\[\] {
-  color: ;
-}
 
 .underline {
   text-decoration-line: underline;

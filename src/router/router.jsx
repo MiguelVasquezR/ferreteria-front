@@ -4,6 +4,7 @@ import ViewLogin from "../view/viewLogin/ViewLogin.jsx";
 import ViewForgetPassword from "../view/viewForgetPassword/ViewForgetPassword.jsx";
 import ViewForgetPasswordAction from "../view/viewForgetPassword/viewForgetPasswordAction/ViewForgetPasswordAction.jsx";
 import ProtectedRoute from "./ProtecterRoute.jsx";
+import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
 import ViewCreateProduct from "../view/viewProduct/viewCreateProduct/ViewCreateProduct.jsx";
 import ViewProducts from "../view/viewProduct/ViewProduct.jsx";
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/forget-password-action",
     element: <ViewForgetPasswordAction />,
+  },
+  {
+    path: "/edit-product",
+    element: <ViewEditProduct />
   },
   {
     path: "/home",
