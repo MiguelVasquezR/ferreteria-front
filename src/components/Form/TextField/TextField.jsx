@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useFormContext } from "react-hook-form";
 import clsx from "clsx";
 
 const TextField = ({
@@ -11,13 +10,15 @@ const TextField = ({
   Icon,
   Error,
   isError,
+  register,
 }) => {
-  const { register } = useFormContext();
-
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
       <label
-        className={clsx("pl-2 w-full font-bold lg:text-[20px]", isError ? "text-red-500" : "text-black")}
+        className={clsx(
+          "pl-2 w-full font-bold lg:text-[20px]",
+          isError ? "text-red-500" : "text-black"
+        )}
       >
         {label}
       </label>
@@ -26,9 +27,10 @@ const TextField = ({
           placeholder={placeholder}
           type={type}
           {...register(name)}
-          className={`shadow-md rounded-md p-2 w-full outline-none pr-8 lg:h-[44px] ${
-            isError ? "border-red-500" : "border-gray-300"
-          }`}
+          className={clsx(
+            "shadow-md rounded-md p-2 w-full outline-none pr-8 lg:h-[44px]",
+            isError ? "border-error border-[1px] border-solid" : ""
+          )}
         />
         {isIcon && (
           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer">
@@ -42,14 +44,15 @@ const TextField = ({
 };
 
 TextField.propTypes = {
-  label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
+  isError: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  Error: PropTypes.string,
+  label: PropTypes.string,
   isIcon: PropTypes.bool,
   Icon: PropTypes.node,
-  isError: PropTypes.bool,
-  Error: PropTypes.string,
+  register: PropTypes.any,
 };
 
 export default TextField;
