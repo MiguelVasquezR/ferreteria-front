@@ -8,6 +8,8 @@ import { SchemeSuplier } from "../../../schema/SchemaSuplier";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import ImageSuplier from "../../../../public/proveedor.png";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ViewCreateSuplier = () => {
   const methods = useForm({
@@ -16,9 +18,25 @@ const ViewCreateSuplier = () => {
   });
 
   const handleSubmit = (data) => {
-    console.log(data);
+    const config = {
+      method: "POST",
+      url: `${import.meta.env.VITE_URL}/proveedor/agregar`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      data,
+    };
 
-    
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Error al crear el proveedor");
+      });
   };
 
   return (

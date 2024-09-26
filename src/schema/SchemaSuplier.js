@@ -13,6 +13,6 @@ export const SchemeSuplier = z.object({
   rfc: z.string().length(13, "El RFC debe tener 13 caracteres"),
   calle: z.string().min(1, "La calle debe tener al es obligatorio"),
   colonia: z.string().min(1, "La colonia debe tener al es obligatorio"),
-  numero: z.string().min(1, "El número debe tener al es obligatorio"),
+  numero: z.string().min(1, "El número debe tener al es obligatorio").max(7, "El número no puede ser mayor a 7 caracteres"),
   ciudad: z.string().min(1, "La ciudad debe tener al es obligatorio"),
 });
