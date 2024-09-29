@@ -1,8 +1,8 @@
-import Header from "../../components/Header/Header";
-import TextField from "../../components/Form/TextField/TextField";
+import Header from "../../../components//Header/Header";
+import TextField from "../../../components/Form/TextField/TextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { IoArrowBackOutline } from "react-icons/io5";
-import Button from "../../components/Buttons/Button";
+import Button from "../../../components/Buttons/Button";
 import { AiOutlineSave } from "react-icons/ai";
 
 const ViewEditSuplier = () => {
@@ -20,7 +20,7 @@ const ViewEditSuplier = () => {
           <FormProvider {...methods}>
             <TextField
               label="Nombre del Proveedor"
-              name="Nombre"
+              name="nombre"
               type="text"
               Error={""}
               Icon={false}

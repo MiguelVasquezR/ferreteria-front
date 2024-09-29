@@ -12,11 +12,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const ViewCreateProduct = () => {
+  
   const methods = useForm({
     resolver: zodResolver(SchemaProduct),
     mode: "onChange",
   });
   const navigate = useNavigate();
+
+
 
   const onSubmit = (data) => {
     const config = {
@@ -46,8 +49,8 @@ const ViewCreateProduct = () => {
   const backPage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   return (
     <div>
@@ -55,7 +58,12 @@ const ViewCreateProduct = () => {
 
       <div className="flex flex-col gap-1">
         <div className="flex flex-row justify-start items-center gap-1 my-5 lg:pl-5 cursor-pointer">
-          <IoArrowBackOutline className="font-bold" size={32} color={"black"} onClick={backPage} />
+          <IoArrowBackOutline
+            className="font-bold"
+            size={32}
+            color={"black"}
+            onClick={backPage}
+          />
           <h2 className="font-bold text-[18px] lg:text-[22px]">
             Crear Producto
           </h2>
