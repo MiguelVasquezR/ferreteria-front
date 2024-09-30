@@ -9,6 +9,7 @@ import { MdModeEdit } from "react-icons/md";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Modal from "../../components/Modal/Modal";
 
 const ViewProducts = () => {
   const methods = useForm();
@@ -45,7 +46,7 @@ const ViewProducts = () => {
   return (
     <>
       <Header />
-
+      <Modal />
       <div className="m-5">
         <h2 className="font-bold text-[18px] lg:text-[22px]">Productos</h2>
 
