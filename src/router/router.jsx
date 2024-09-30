@@ -10,6 +10,7 @@ import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct
 import ViewEditSuplier from "../view/viewSuplier/viewEditSuplier/ViewEditSuplier.jsx";
 import ViewCreateSuplier from "../view/viewSuplier/viewCreateSuplier/viewCreateSuplier.jsx";
 
+
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
   que el usuario quiere ingresar al sistema tenga el permiso de entrar a esa pestalla. He creado el componente 
@@ -65,6 +66,7 @@ const router = createBrowserRouter([
     path: "/create-suplier",
     element: <ViewCreateSuplier />,
   },
+  
   
 
 ]);
