@@ -8,6 +8,7 @@ import ViewEditSuplier from "../view/viewEditSuplier/ViewEditSuplier.jsx";
 import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
 import ViewCreateProduct from "../view/viewProduct/viewCreateProduct/ViewCreateProduct.jsx";
 import ViewProducts from "../view/viewProduct/ViewProduct.jsx";
+import ViewListSuplier from "../view/viewListSuplier/ViewListSuplier.jsx";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
   {
     path: "/products",
     element: <ViewProducts />,
+  },
+  
+  {path: "/list-suplier",
+    element: <ViewListSuplier/>
+
   },
 ]);
 
