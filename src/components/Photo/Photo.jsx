@@ -26,7 +26,7 @@ const Photo = ({ isError, Error }) => {
       const ulrImDesc = await getDownloadURL(refArchivo);
       if (ulrImDesc !== null) {
         setImage(ulrImDesc);
-        setValue("url_image", ulrImDesc);
+        setValue("urlImage", ulrImDesc);
         setIsLoading(false);
       }
     }
