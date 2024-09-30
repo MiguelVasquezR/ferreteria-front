@@ -74,7 +74,7 @@ const router = createBrowserRouter([
     path: "/create-suplier",
     element: <ViewCreateSuplier />,
   },
- 
+
 ]);
 
 const AppRouter = () => {
