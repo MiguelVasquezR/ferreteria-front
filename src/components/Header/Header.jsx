@@ -20,12 +20,24 @@ const Header = () => {
         />
 
         <ul className="flex flex-col justify-center items-center gap-5 text-[20px]">
-          <li>Inicio</li>
-          <li>Productos</li>
-          <li>Proveedores</li>
-          <li>Generar Código</li>
-          <li>Opciones</li>
-          <li>Cerrar Sesión</li>
+          <a href="/">
+            <li className="hover:underline">Inicio</li>
+          </a>
+          <a href="/products">
+            <li className="hover:underline">Productos</li>
+          </a>
+          <a href="/supliers">
+            <li className="hover:underline">Proveedores</li>
+          </a>
+          <a href="">
+            <li className="hover:underline">Generar Código</li>
+          </a>
+          <a href="">
+            <li className="hover:underline">Opciones</li>
+          </a>
+          <a href="">
+            <li className="hover:underline">Cerrar Sesión</li>
+          </a>
         </ul>
       </div>
     );
@@ -39,12 +51,24 @@ const Header = () => {
 
       <div className="hidden lg:flex">
         <ul className="flex flex-row justify-center items-center gap-5 text-[20px]">
-          <li className="hover:underline">Inicio</li>
-          <li className="hover:underline">Productos</li>
-          <li className="hover:underline">Proveedores</li>
-          <li className="hover:underline">Generar Código</li>
-          <li className="hover:underline">Opciones</li>
-          <li className="hover:underline">Cerrar Sesión</li>
+          <a href="/">
+            <li className="hover:underline">Inicio</li>
+          </a>
+          <a href="/products">
+            <li className="hover:underline">Productos</li>
+          </a>
+          <a href="/supliers">
+            <li className="hover:underline">Proveedores</li>
+          </a>
+          <a href="">
+            <li className="hover:underline">Generar Código</li>
+          </a>
+          <a href="">
+            <li className="hover:underline">Opciones</li>
+          </a>
+          <a href="">
+            <li className="hover:underline">Cerrar Sesión</li>
+          </a>
         </ul>
       </div>
 

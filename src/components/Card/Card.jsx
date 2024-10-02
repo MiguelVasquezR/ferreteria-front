@@ -4,11 +4,11 @@ import { MdEmail } from "react-icons/md";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaTruck } from "react-icons/fa";
 
-const Card = ({ nombre, telefono, correo, id, direccion, handleModal }) => {
+const Card = ({ nombre, telefono, correo, id, direccion }) => {
   return (
     <div
       key={id}
-      className="shadow-md rounded-md p-5  flex flex-col gap-5 w-full"
+      className="shadow-md rounded-md p-5  flex flex-col gap-5 w-[300px]"
     >
       <div className="flex flex-row justify-between items-center">
         <article>
@@ -28,7 +28,7 @@ const Card = ({ nombre, telefono, correo, id, direccion, handleModal }) => {
 
         <div className="flex flex-row gap-1">
           <MdEdit className="cursor-pointer" size={32} color="#F58A27" />
-          <MdDelete onClick={handleModal} className="cursor-pointer" size={32} color="#F58A27" />
+          <MdDelete className="cursor-pointer" size={32} color="#F58A27" />
         </div>
       </div>
     </div>
@@ -41,7 +41,6 @@ Card.propTypes = {
   correo: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   direccion: PropTypes.string.isRequired,
-  handleModal: PropTypes.func,
 };
 
 export default Card;

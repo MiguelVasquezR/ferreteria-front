@@ -9,20 +9,25 @@ import { MdModeEdit } from "react-icons/md";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Modal from "../../components/Modal/Modal";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import {
+  dataProduct,
+  actualizarStatus,
+} from "../../store/slices/product/product_reducers";
 
-const ViewProducts = () => {
+const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   const methods = useForm();
-  const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const { productos } = products;
 
   const productosFiltrados = useMemo(() => {
-    return products.filter((producto) =>
-      producto.nombre
+    return productos?.filter((product) =>
+      product.nombre
         ?.toLowerCase()
         .includes(methods.watch("buscador").toLowerCase())
     );
-  }, [products, methods.watch("buscador")]);
+  }, [productos, methods.watch("buscador")]);
 
   useEffect(() => {
     const config = {
@@ -33,20 +38,22 @@ const ViewProducts = () => {
       url: `${import.meta.env.VITE_URL}/producto/obtener-productos`,
     };
 
+    setStatus("loading");
     axios
       .request(config)
       .then((response) => {
-        setProducts(response.data);
+        setDataProducts(response.data);
+        setStatus("succeeded");
       })
       .catch(() => {
         toast.error("Error al obtener los productos");
+        setStatus("error");
       });
   }, []);
 
   return (
     <>
       <Header />
-      <Modal />
       <div className="m-5">
         <h2 className="font-bold text-[18px] lg:text-[22px]">Productos</h2>
 
@@ -106,7 +113,7 @@ const ViewProducts = () => {
               </thead>
 
               <tbody>
-                {productosFiltrados.map((product, index) => {
+                {productosFiltrados?.map((product, index) => {
                   return (
                     <tr
                       key={index}
@@ -186,4 +193,23 @@ const ViewProducts = () => {
   );
 };
 
-export default ViewProducts;
+ViewProducts.propTypes = {
+  setDataProducts: PropTypes.func.isRequired,
+  products: PropTypes.any,
+  setStatus: PropTypes.any,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    products: state.productos,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setDataProducts: (data) => dispatch(dataProduct(data)),
+    setStatus: (status) => dispatch(actualizarStatus(status)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewProducts);
