@@ -4,6 +4,7 @@ export default {
   theme: {
     colors: {
       F58A27: "#F58A27",
+      primary: "#F58A27",
       black: "#000000",
       white: "#ffffff",
       succes: "#36D680",
@@ -12,6 +13,7 @@ export default {
     },
     backgroundColor: {
       F58A27: "#F58A27",
+      primary: "#F58A27",
       black: "#000000",
       white: "#ffffff",
       succes: "#36D680",

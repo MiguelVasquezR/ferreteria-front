@@ -10,16 +10,14 @@ import { IoIosSave } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import TextArea from "../../../components/Form/TextArea/TextArea";
 
 const ViewCreateProduct = () => {
-  
   const methods = useForm({
     resolver: zodResolver(SchemaProduct),
     mode: "onChange",
   });
   const navigate = useNavigate();
-
-
 
   const onSubmit = (data) => {
     const config = {
@@ -36,7 +34,7 @@ const ViewCreateProduct = () => {
       .then((response) => {
         if (response.data === "Producto agregado correctamente") {
           toast.success(response.data);
-          navigate("/prodcuts");
+          navigate("/products");
         } else {
           toast.error("Error al agregar el producto");
         }
@@ -76,8 +74,13 @@ const ViewCreateProduct = () => {
           <FormProvider {...methods}>
             <div className="my-5 lg:w-[300px]">
               <PhotoComponent
-                Error={methods?.formState.errors?.urlImage?.message}
-                isError={!!methods?.formState.errors?.urlImage?.message}
+                Error={methods?.formState?.errors?.urlImage?.message | ""}
+                isError={
+                  methods?.formState?.errors?.urlImage?.message ? true : false
+                }
+                directory={"productos"}
+                register={methods.register}
+                name={"urlImage"}
               />
             </div>
 
@@ -104,7 +107,7 @@ const ViewCreateProduct = () => {
 
               <TextField
                 label="¿Cuál sería el Stock mínimo?"
-                name="stock_minimo"
+                name="stockMinimo"
                 type="text"
                 placeholder="1, 4, 4.5kg, etc."
                 register={methods.register}
@@ -124,7 +127,7 @@ const ViewCreateProduct = () => {
 
               <TextField
                 label="Precio menudeo del producto"
-                name="precio_menudeo"
+                name="precioMenudeo"
                 type="text"
                 placeholder="Precio del producto"
                 register={methods.register}
@@ -134,12 +137,21 @@ const ViewCreateProduct = () => {
 
               <TextField
                 label="Precio mayoreo del producto"
-                name="precio_mayoreo"
+                name="precioMayoreo"
                 type="text"
                 placeholder="Precio mayoreo del producto"
                 register={methods.register}
                 Error={methods?.formState.errors?.precio_mayoreo?.message}
                 isError={!!methods?.formState.errors?.precio_mayoreo?.message}
+              />
+
+              <TextArea
+                label="Descripción del producto"
+                name="descripcion"
+                placeholder="Descripción del producto"
+                isError={!!methods?.formState.errors?.descripcion?.message}
+                error={methods?.formState.errors?.descripcion?.message}
+                register={methods.register}
               />
 
               <div className="w-[200px] lg:w-[300px] lg:h-[50px] my-5">

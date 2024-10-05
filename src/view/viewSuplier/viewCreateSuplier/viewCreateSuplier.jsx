@@ -1,4 +1,4 @@
-import Header from "../../../components/header/header";
+import Header from "../../../components/Header/Header";
 import TextField from "../../../components/Form/TextField/TextField";
 import Button from "../../../components/Buttons/Button";
 import { FormProvider, useForm } from "react-hook-form";
@@ -10,12 +10,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ImageSuplier from "../../../../public/proveedor.png";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const ViewCreateSuplier = () => {
   const methods = useForm({
     resolver: zodResolver(SchemeSuplier),
     mode: "onChange",
   });
+
+  const navigate = useNavigate();
 
   const handleSubmit = (data) => {
     const config = {
@@ -32,6 +35,12 @@ const ViewCreateSuplier = () => {
       .request(config)
       .then((response) => {
         console.log(response);
+        if (
+          response.status === 201 &&
+          response.data.message === "Proveedor registrado correctamente"
+        ) {
+          navigate("/supliers");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -45,7 +54,11 @@ const ViewCreateSuplier = () => {
 
       <div className="flex justify-center items-center flex-col gap-5 py-5">
         <div className="flex flex-row justify-start items-center gap-2 w-full p-5">
-          <IoArrowBackOutline size={32} />
+          <IoArrowBackOutline
+            size={32}
+            onClick={() => navigate(-1)}
+            className="cursor-pointer"
+          />
           <p className="text-[18px] font-bold">Crear Proveedor</p>
         </div>
 

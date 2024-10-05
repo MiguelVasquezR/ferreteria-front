@@ -33,6 +33,7 @@ const ViewLogin = () => {
             const { access_token, rol } = res.headers;
             cookies.set("token", access_token, { path: "/" });
             cookies.set("rol", rol, { path: "/" });
+
             navigate("/home");
           }
         })
