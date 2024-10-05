@@ -13,3 +13,8 @@ export const Passwords = z
     message: "Las contraseñas no coinciden",
     path: ["confirmPassword"],
   });
+
+export const UserLogin = z.object({
+  usuario: z.string().min(1, "El usuario es requerido"),
+  password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+});

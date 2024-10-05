@@ -5,43 +5,39 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import Button from "../../../components/Buttons/Button";
 import { IoIosSave } from "react-icons/io";
 import PhotoComponent from "../../../components/Photo/Photo";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  actualizarStatus,
+  dataProduct,
+} from "../../../store/slices/product/product_reducers";
 
-const ViewEditProduct = () => {
+const ViewEditProduct = ({ productosState }) => {
   const methods = useForm();
-  const queryParameters = new URLSearchParams(window.location.search);
-  const id = queryParameters.get("id");
-  const [product, setProduct] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { productos } = productosState;
 
   useEffect(() => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-      url: `${import.meta.env.VITE_URL}/producto/obtener-producto?id=${id}`,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        setProduct(response.data);
-        methods.setValue("nombre", response.data.nombre);
-        methods.setValue("cantidad", response.data.cantidad);
-        methods.setValue("stockMinimo", response.data.stockMinimo);
-        methods.setValue("costo", response.data.costo);
-        methods.setValue("precioMenudeo", response.data.precioMenudeo);
-        methods.setValue("precioMayoreo", response.data.precioMayoreo);
-        methods.setValue("urlImage", response.data.urlImage);
-      })
-      .catch(() => {
-        toast.error("Error al obtener el producto");
+    if (productos) {
+      const editProducto = productos.find((p) => {
+        if (p.idProducto === id) return p;
       });
-  }, []);
+      if (editProducto) {
+        methods.setValue("urlImage", editProducto.urlImage);
+        methods.setValue("nombre", editProducto.nombre);
+        methods.setValue("cantidad", editProducto.cantidad);
+        methods.setValue("stockMinimo", editProducto.stockMinimo);
+        methods.setValue("costo", editProducto.costo);
+        methods.setValue("precioMenudeo", editProducto.precioMenudeo);
+        methods.setValue("precioMayoreo", editProducto.precioMayoreo);
+      }
+    }
+  }, [productos, id, methods]);
 
   const onSubmit = (data) => {
     const dataSend = {
@@ -61,9 +57,9 @@ const ViewEditProduct = () => {
     axios
       .request(config)
       .then((response) => {
-        if(response.data === "Datos del producto guardados exitosamente"){
-          navigate("/products")
-        }else{
+        if (response.data === "Datos del producto guardados exitosamente") {
+          navigate("/products");
+        } else {
           toast.error("Error al editar el producto");
         }
       })
@@ -73,11 +69,11 @@ const ViewEditProduct = () => {
   };
 
   return (
-    <div className="">
+    <div>
       <Header />
       <div className="flex flex-col gap-1">
         <div className="flex flex-row justify-start items-center gap-2 w-full p-5">
-          <IoArrowBackOutline size={32} />
+          <IoArrowBackOutline size={32} onClick={() => navigate(-1)} />
           <p className="font-bold text-[18px]">Editar Producto</p>
         </div>
 
@@ -90,6 +86,9 @@ const ViewEditProduct = () => {
               <PhotoComponent
                 Error={methods?.formState.errors?.urlImage?.message}
                 isError={!!methods?.formState.errors?.urlImage?.message}
+                directory={"productos"}
+                name="urlImage"
+                register={methods.register}
               />
             </div>
 
@@ -171,4 +170,24 @@ const ViewEditProduct = () => {
     </div>
   );
 };
-export default ViewEditProduct;
+
+ViewEditProduct.propTypes = {
+  setDataProducts: PropTypes.func.isRequired,
+  productosState: PropTypes.any,
+  setStatus: PropTypes.any,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    productosState: state.productos,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setDataProducts: (data) => dispatch(dataProduct(data)),
+    setStatus: (status) => dispatch(actualizarStatus(status)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewEditProduct);
