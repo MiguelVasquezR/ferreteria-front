@@ -16,14 +16,14 @@ const proveedorSlice = createSlice({
   name: "proveedores",
   initialState,
   reducers: {
-    actualizarProveedores(state, action) {
+    dataProveedores(state, action) {
       state.proveedores = action.payload;
     },
-    actualizarStatus(state, action) {
+    updateStatus(state, action) {
       state.status = action.payload;
     },
   },
 });
 
-export const { todoAdded, todoToggled } = proveedorSlice.actions;
+export const { dataProveedores, updateStatus } = proveedorSlice.actions;
 export default proveedorSlice.reducer;

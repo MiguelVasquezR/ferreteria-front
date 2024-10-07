@@ -6,12 +6,11 @@ import ViewForgetPasswordAction from "../view/viewForgetPassword/viewForgetPassw
 import ProtectedRoute from "./ProtecterRoute.jsx";
 import ViewCreateProduct from "../view/viewProduct/viewCreateProduct/ViewCreateProduct.jsx";
 import ViewProducts from "../view/viewProduct/ViewProduct.jsx";
-import ViewListSuplier from "../view/viewListSuplier/ViewListSuplier.jsx";
+import ViewListSuplier from "../view/viewSuplier/ViewListSuplier.jsx";
 import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
 import ViewEditSuplier from "../view/viewSuplier/viewEditSuplier/ViewEditSuplier.jsx";
 import ViewCreateSuplier from "../view/viewSuplier/viewCreateSuplier/viewCreateSuplier.jsx";
 import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.jsx";
-
 
 
 /*
@@ -27,7 +26,7 @@ import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.js
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <ViewMain />,
   },
   {
     path: "*",
@@ -46,7 +45,7 @@ const router = createBrowserRouter([
     element: <ViewForgetPasswordAction />,
   },
   {
-    path: "/edit-product",
+    path: "/edit-product/:id",
     element: <ViewEditProduct />,
   },
   {
@@ -54,7 +53,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute element={<ViewMain />} requiredRole="admin" />,
   },
   {
-    path: "/edit-suplier",
+    path: "/edit-suplier/:id",
     element: <ViewEditSuplier />,
   },
   {
@@ -66,11 +65,7 @@ const router = createBrowserRouter([
     element: <ViewProducts />,
   },
 
-  
-  {path: "/list-suplier",
-    element: <ViewListSuplier/>
-
-  },
+  { path: "/supliers", element: <ViewListSuplier /> },
 
   {
     path: "/create-suplier",
