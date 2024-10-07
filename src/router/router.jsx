@@ -10,6 +10,8 @@ import ViewListSuplier from "../view/viewSuplier/ViewListSuplier.jsx";
 import ViewEditProduct from "../view/viewProduct/viewEditProduct/ViewEditProduct.jsx";
 import ViewEditSuplier from "../view/viewSuplier/viewEditSuplier/ViewEditSuplier.jsx";
 import ViewCreateSuplier from "../view/viewSuplier/viewCreateSuplier/viewCreateSuplier.jsx";
+import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.jsx";
+
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -69,6 +71,12 @@ const router = createBrowserRouter([
     path: "/create-suplier",
     element: <ViewCreateSuplier />,
   },
+
+  {path: "/generate-report",
+    element: <ViewGenerateReport/>
+
+  },
+
 ]);
 
 const AppRouter = () => {
