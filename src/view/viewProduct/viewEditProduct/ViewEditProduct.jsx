@@ -16,12 +16,14 @@ import {
   actualizarStatus,
   dataProduct,
 } from "../../../store/slices/product/product_reducers";
+import { Cookies } from "react-cookie";
 
 const ViewEditProduct = ({ productosState }) => {
   const methods = useForm();
   const navigate = useNavigate();
   const { id } = useParams();
   const { productos } = productosState;
+  const cookie = new Cookies();
 
   useEffect(() => {
     if (productos) {
@@ -48,6 +50,7 @@ const ViewEditProduct = ({ productosState }) => {
     };
     const config = {
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
       method: "PUT",

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import TextArea from "../../../components/Form/TextArea/TextArea";
+import { Cookies } from "react-cookie";
 
 const ViewCreateProduct = () => {
   const methods = useForm({
@@ -18,10 +19,12 @@ const ViewCreateProduct = () => {
     mode: "onChange",
   });
   const navigate = useNavigate();
+  const cookie = new Cookies();
 
   const onSubmit = (data) => {
     const config = {
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
       method: "POST",

@@ -63,6 +63,7 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
     if (!selectedProduct) return;
     const config = {
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
       method: "DELETE",
