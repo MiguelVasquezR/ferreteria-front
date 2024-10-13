@@ -25,7 +25,7 @@ const ViewLogin = () => {
     setIsError("");
     if (data.usuario !== "" && data.contrasena !== "") {
       axios
-        .post(`${import.meta.env.VITE_API_URL_BACK}/login`, data)
+        .post(`${import.meta.env.VITE_URL}/login`, data)
         .then((res) => {
           if (res.data === "Usuario o contraseña incorrectos") {
             setIsError(res.data);
@@ -33,8 +33,7 @@ const ViewLogin = () => {
             const { access_token, rol } = res.headers;
             cookies.set("token", access_token, { path: "/" });
             cookies.set("rol", rol, { path: "/" });
-
-            navigate("/home");
+            navigate("/");
           }
         })
         .catch((err) => {
@@ -62,7 +61,7 @@ const ViewLogin = () => {
 
           <TextField
             label="Ingresa tu usuario o correo"
-            name="usuario"
+            name="user"
             type="text"
             isIcon={false}
             Icon={null}

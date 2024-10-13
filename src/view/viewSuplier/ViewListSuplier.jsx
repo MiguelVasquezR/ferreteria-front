@@ -53,14 +53,30 @@ const ViewListSuplier = ({
   const handleDeleteSuplier = () => {
     const config = {
       method: "DELETE",
-      url: `${import.meta.env.VITE_URL}/proveedor/eliminar/${idSelectSuplier}`,
+      url: `${
+        import.meta.env.VITE_URL
+      }/proveedor/eliminar?id=${idSelectSuplier}`,
       headers: {
         "Content-Type": "application/json",
       },
-      data: idSelectSuplier,
     };
 
-    console.log(config);
+    axios
+      .request(config)
+      .then((data) => {
+        if (data.data.message === "Proveedor eliminado correctamente") {
+          const newItems = proveedores?.filter((i) => {
+            return i.idPersona !== idSelectSuplier;
+          });
+          setDataProveedores(newItems);
+          setStatus("success");
+          setOpenModal(false);
+          toast.success("Proveedor eliminado correctamente");
+        }
+      })
+      .catch(() => {
+        toast.error("Error al eliminar el proveedor");
+      });
   };
 
   return (
