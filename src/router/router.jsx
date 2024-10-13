@@ -13,6 +13,7 @@ import ViewCreateSuplier from "../view/viewSuplier/viewCreateSuplier/viewCreateS
 import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.jsx";
 import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct/ViewReportDamageProduct.jsx";
 import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
+import ViewSale from "../view/viewSale/ViewSale.jsx";
 
 
 /*
@@ -90,6 +91,11 @@ const router = createBrowserRouter([
     path: "/process-payment",
     element: <ViewProcessPayment/>
   },
+
+  {
+    path: "/sale",
+    element: <ViewSale/>
+  }
 
 ]);
 

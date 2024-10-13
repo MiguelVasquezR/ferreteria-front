@@ -18,6 +18,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { IoIosSearch } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import { MdDelete, MdModeEdit } from "react-icons/md";
+import { Cookies } from "react-cookie";
 
 const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   const methods = useForm();
@@ -25,6 +26,7 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   const { productos } = products;
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const cookie = new Cookies();
 
   const productosFiltrados = useMemo(() => {
     return productos?.filter((product) =>
@@ -37,6 +39,7 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   useEffect(() => {
     const config = {
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
       method: "GET",
