@@ -11,6 +11,7 @@ import ImageSuplier from "../../../../public/proveedor.png";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 const ViewCreateSuplier = () => {
   const methods = useForm({
@@ -19,12 +20,14 @@ const ViewCreateSuplier = () => {
   });
 
   const navigate = useNavigate();
+  const cookie = new Cookies();
 
   const handleSubmit = (data) => {
     const config = {
       method: "POST",
       url: `${import.meta.env.VITE_URL}/proveedor/agregar`,
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),

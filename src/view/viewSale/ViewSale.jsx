@@ -1,14 +1,118 @@
 import Header from "../../components/Header/Header";
 import TextField from "../../components/Form/TextField/TextField";
-import Modal from "../../components/Modal/Modal";
 import { FormProvider, useForm } from "react-hook-form";
 import { IoIosSearch } from "react-icons/io";
 import { FaBarcode } from "react-icons/fa6";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import Button from "../../components/Buttons/Button";
+import PropTypes from "prop-types";
+import {
+  actualizarStatus,
+  dataProduct,
+} from "../../store/slices/product/product_reducers";
+import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const ViewSales = () => {
+const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
   const methods = useForm();
+  const { productos } = productosState;
+  const cookie = new Cookies();
+  const [sales, setSales] = useState([]);
+  const [totalCompra, setTotalCompra] = useState(0);
+
+  useEffect(() => {
+    if (productos.length !== 0 || productos === null) {
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      url: `${import.meta.env.VITE_URL}/producto/obtener-productos`,
+    };
+
+    setStatus("loading");
+    axios
+      .request(config)
+      .then((response) => {
+        setDataProducts(response.data);
+        setStatus("succeeded");
+      })
+      .catch(() => {
+        toast.error("Error al obtener los productos");
+        setStatus("error");
+      });
+  }, []);
+
+  useEffect(() => {
+    const total = sales.reduce((acc, s) => {
+      const precioUnitario =
+        s.cantidadCompra >= s.stockMinimo ? s.precioMayoreo : s.precioMenudeo;
+      return acc + s.cantidadCompra * precioUnitario;
+    }, 0);
+    setTotalCompra(total);
+  }, [sales]);
+
+  const handleFindProduct = (data) => {
+    const pd = productos.find((p) => p.codigo === data.buscador);
+    if (pd) {
+      const existingSale = sales.find((s) => s.codigo === pd.codigo);
+      if (existingSale) {
+        setSales((prevSales) =>
+          prevSales.map((s) =>
+            s.codigo === existingSale.codigo
+              ? { ...s, cantidadCompra: s.cantidadCompra + 1 }
+              : s
+          )
+        );
+      } else {
+        setSales((prevSales) => [...prevSales, { ...pd, cantidadCompra: 1 }]);
+      }
+    }
+  };
+
+  const onSaveSale = () => {
+    if (sales.length === 0) {
+      toast.error("No hay productos para vender");
+      return;
+    }
+
+    const data = {
+      productos: sales,
+      total: totalCompra,
+    };
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      url: `${import.meta.env.VITE_URL}/venta/guardar`,
+      data,
+    };
+
+    axios
+      .request(config)
+      .then((res) => {
+        if (res.data === "Venta guardada exitosamente") {
+          toast.success("Venta guardada exitosamente");
+          setSales([]);
+          setTotalCompra(0);
+        } else {
+          toast.error("Error al registrar la venta");
+        }
+      })
+      .catch(() => {
+        toast.error("Error al registrar la venta");
+      });
+  };
 
   return (
     <>
@@ -18,7 +122,10 @@ const ViewSales = () => {
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">Ventas</h2>
 
         <div className="flex justify-center items-center flex-col gap-5 max-w-[1200px] mx-auto">
-          <form className="w-[320px] lg:w-[600px]">
+          <form
+            onSubmit={methods.handleSubmit(handleFindProduct)}
+            className="w-[320px] lg:w-[600px]"
+          >
             <FormProvider {...methods}>
               <TextField
                 placeholder="Buscar producto"
@@ -40,28 +147,22 @@ const ViewSales = () => {
             </div>
 
             <div className="bg-black rounded-md text-black flex flex-row justify-center items-center p-1 gap-1 cursor-pointer">
-              <a
-                href="/create-sale"
-                className="flex flex-row justify-center items-center"
-              >
-                <FaBarcode size={32} color="white" />
-                <p className="hidden lg:flex">Agregar Venta</p>
-              </a>
+              <FaBarcode size={32} color="white" />
             </div>
           </div>
 
           <div className="w-full flex flex-row justify-center items-start gap-5">
-            <table className="w-full lg:w-[80%]">
+            <table className="w-full">
               <thead>
                 <tr className="table-row">
                   <th className="border-solid border-[#d2d2d2] border-[1px]">
-                    Cliente
+                    Nombre
                   </th>
                   <th className="border-solid border-[#d2d2d2] border-[1px]">
                     Cantidad
                   </th>
                   <th className="border-solid border-[#d2d2d2] border-[1px]">
-                    Precio/U
+                    Precio Unidad
                   </th>
                   <th className="border-solid border-[#d2d2d2] border-[1px]">
                     Total
@@ -70,9 +171,24 @@ const ViewSales = () => {
               </thead>
 
               <tbody>
-                {/* Aquí se debería mapear las ventas */}
+                {sales.map((s, index) => {
+                  const precioUnitario =
+                    s.cantidadCompra >= s.stockMinimo
+                      ? s.precioMayoreo
+                      : s.precioMenudeo;
+                  const total = s.cantidadCompra * precioUnitario;
+                  return (
+                    <tr key={s.codigo + "-" + index}>
+                      <td className="text-center">{s.nombre}</td>
+                      <td className="text-center">{s.cantidadCompra}</td>
+                      <td className="text-center">{s.precioMenudeo}</td>
+                      <td className="text-center">{total}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
 
-                {/* Fila para el Total a pagar */}
+              <tbody>
                 <tr>
                   <td
                     className="border-solid border-[#d2d2d2] border-[1px] text-right"
@@ -81,35 +197,47 @@ const ViewSales = () => {
                     Total a pagar
                   </td>
                   <td className="border-solid border-[#d2d2d2] border-[1px] text-center">
-                    {/* Aquí se puede agregar el valor total dinámico */}
-                    $0.00
+                    {totalCompra}
                   </td>
                 </tr>
               </tbody>
             </table>
-
-            {/* Vista previa de ventas no seleccionadas */}
-            <div className="bg-primary h-[700px] max-h-[600px] place-items-center rounded-sm lg:flex justify-center items-center hidden">
-              <h2 className="text-white text-[30px] font-bold text-center">
-                Debes seleccionar una venta
-              </h2>
-            </div>
-            
           </div>
-          <div className="w-[200px] lg:w-[300px] lg:h-[50px] my-5">
-            <Button
-            background="bg-blue"
-            isIcon={false}
-            texto="Pagar"
-            type=""
-            Icon={false}
-            />
+          <div className="w-full flex justify-end items-center">
+            <div className="w-[200px] h-[40px] lg:w-[300px] lg:h-[50px]">
+              <Button
+                background="bg-blue"
+                isIcon={false}
+                texto="Pagar"
+                type=""
+                Icon={false}
+                onClick={onSaveSale}
+              />
+            </div>
           </div>
         </div>
-        
       </div>
     </>
   );
 };
 
-export default ViewSales;
+ViewSales.propTypes = {
+  productosState: PropTypes.object,
+  setDataProducts: PropTypes.func,
+  setStatus: PropTypes.func,
+};
+
+const mapsStateToProps = (state) => {
+  return {
+    productosState: state.productos,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setDataProducts: (data) => dispatch(dataProduct(data)),
+    setStatus: (status) => dispatch(actualizarStatus(status)),
+  };
+};
+
+export default connect(mapsStateToProps, mapDispatchToProps)(ViewSales);

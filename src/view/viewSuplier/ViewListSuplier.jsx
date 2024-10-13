@@ -14,6 +14,8 @@ import {
   dataProveedores,
   updateStatus,
 } from "../../store/slices/proveedor/proveedor_reducers";
+import { Cookies } from "react-cookie";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewListSuplier = ({
   setDataProveedores,
@@ -24,6 +26,8 @@ const ViewListSuplier = ({
   const [openModal, setOpenModal] = useState(false);
   const { proveedores } = proveedoresState;
   const [idSelectSuplier, setIdSelectSuplier] = useState(null);
+  const cookie = new Cookies();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (proveedores.length > 0) {
@@ -34,6 +38,7 @@ const ViewListSuplier = ({
       method: "GET",
       url: `${import.meta.env.VITE_URL}/proveedor/obtener`,
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
     };
@@ -41,8 +46,13 @@ const ViewListSuplier = ({
     axios
       .request(config)
       .then((response) => {
-        setStatus("succeeded");
-        setDataProveedores(response.data);
+        if (response.data == null) {
+          toast.error("No hay proveedores registrados");
+        } else {
+          setStatus("succeeded");
+          setDataProveedores(response.data);
+          setIsLoading(false);
+        }
       })
       .catch(() => {
         setStatus("error");
@@ -57,6 +67,7 @@ const ViewListSuplier = ({
         import.meta.env.VITE_URL
       }/proveedor/eliminar?id=${idSelectSuplier}`,
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
     };
@@ -65,9 +76,11 @@ const ViewListSuplier = ({
       .request(config)
       .then((data) => {
         if (data.data.message === "Proveedor eliminado correctamente") {
-          const newItems = proveedores?.filter((i) => {
-            return i.idPersona !== idSelectSuplier;
-          });
+          const newItems =
+            proveedores.length > 0 &&
+            proveedores?.filter((i) => {
+              return i.idPersona !== idSelectSuplier;
+            });
           setDataProveedores(newItems);
           setStatus("success");
           setOpenModal(false);
@@ -81,6 +94,8 @@ const ViewListSuplier = ({
 
   return (
     <div className="min-h-screen flex flex-col items-center relative">
+      {isLoading && <SuplierLoading />}
+
       <Header />
 
       {openModal && (
@@ -129,7 +144,7 @@ const ViewListSuplier = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5 bg-gray-100 w-full mx-auto justify-center">
-          {proveedores &&
+          {proveedores.length > 0 &&
             proveedores?.map((proveedor, index) => {
               return (
                 <Card
