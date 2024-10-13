@@ -12,6 +12,7 @@ import ViewEditSuplier from "../view/viewSuplier/viewEditSuplier/ViewEditSuplier
 import ViewCreateSuplier from "../view/viewSuplier/viewCreateSuplier/viewCreateSuplier.jsx";
 import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.jsx";
 import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct/ViewReportDamageProduct.jsx";
+import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
 import ViewSale from "../view/viewSale/ViewSale.jsx";
 
 
@@ -84,6 +85,11 @@ const router = createBrowserRouter([
   {
     path: "/report-damage-product",
     element: <ViewReportDamageProduct/>
+  },
+
+  {
+    path: "/process-payment",
+    element: <ViewProcessPayment/>
   },
 
   {
