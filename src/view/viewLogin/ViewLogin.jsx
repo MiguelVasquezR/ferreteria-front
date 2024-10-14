@@ -8,28 +8,24 @@ import { useState } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { UserLogin } from "../../schema/SchemaUser";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ViewLogin = () => {
-  const methods = useForm();
-  const [isErrorUser, setIsErrorUser] = useState(false);
-  const [isErrorPassword, setIsErrorPassword] = useState(false);
+  const methods = useForm({
+    resolver: zodResolver(UserLogin),
+    mode: "onChange",
+  });
+
   const [isError, setIsError] = useState("");
   const cookies = new Cookies();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    setIsErrorUser(false);
-    setIsErrorPassword(false);
     setIsError("");
-    if (data.usuario === "") {
-      setIsErrorUser(true);
-    }
-    if (data.contrasena === "") {
-      setIsErrorPassword(true);
-    }
     if (data.usuario !== "" && data.contrasena !== "") {
       axios
-        .post(`${import.meta.env.VITE_API_URL_BACK}/login`, data)
+        .post(`${import.meta.env.VITE_URL}/login`, data)
         .then((res) => {
           if (res.data === "Usuario o contraseña incorrectos") {
             setIsError(res.data);
@@ -37,7 +33,7 @@ const ViewLogin = () => {
             const { access_token, rol } = res.headers;
             cookies.set("token", access_token, { path: "/" });
             cookies.set("rol", rol, { path: "/" });
-            navigate("/home");
+            navigate("/");
           }
         })
         .catch((err) => {
@@ -61,7 +57,7 @@ const ViewLogin = () => {
             />
           </picture>
 
-          <h2>Iniciar Sesión</h2>
+          <h2 className="font-bold text-[28px]">Iniciar Sesión</h2>
 
           <TextField
             label="Ingresa tu usuario o correo"
@@ -69,8 +65,10 @@ const ViewLogin = () => {
             type="text"
             isIcon={false}
             Icon={null}
-            isError={isErrorUser}
             placeholder={"Usuario o correo"}
+            register={methods.register}
+            isError={!!methods?.formState.errors?.usuario?.message}
+            Error={methods?.formState.errors?.usuario?.message}
           />
 
           <TextField
@@ -79,22 +77,26 @@ const ViewLogin = () => {
             type="password"
             isIcon={true}
             Icon={IoIosEyeOff}
-            isError={isErrorPassword}
             placeholder={"Usuario o correo"}
+            register={methods.register}
+            isError={!!methods?.formState.errors?.password?.message}
+            Error={methods?.formState.errors?.password?.message}
           />
 
           {isError !== "" && (
             <p className="text-error text-s pl-2">{isError}</p>
           )}
 
-          <Button
-            type="submit"
-            texto="Iniciar Sesión"
-            isIcon={false}
-            Icon={null}
-            background="bg-blue"
-            onClick={() => {}}
-          />
+          <div className="lg:w-[300px] h-[40px]">
+            <Button
+              type="submit"
+              texto="Iniciar Sesión"
+              isIcon={false}
+              Icon={null}
+              background="bg-blue"
+              onClick={() => {}}
+            />
+          </div>
         </FormProvider>
 
         <a href="/forget-password" className="underline">

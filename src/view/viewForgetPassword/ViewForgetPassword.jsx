@@ -6,12 +6,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
 import SearchLoading from "../../components/Loadings/SearchLoading/SearchLoading";
+import { Cookies } from "react-cookie";
 
 const ViewForgetPassword = () => {
   const methods = useForm();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const cookie = new Cookies();
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -28,6 +30,7 @@ const ViewForgetPassword = () => {
         data.email
       }`,
       headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
     };

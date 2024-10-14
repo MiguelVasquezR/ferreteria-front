@@ -1,5 +1,12 @@
-const FormComponent = () => {
-  return <div></div>;
+import Header from "../../components/Header/Header";
+
+const ViewMain = () => {
+  return(
+     <div>
+      <Header />
+
+     </div>
+    );
 };
 
-export default FormComponent;
+export default ViewMain;

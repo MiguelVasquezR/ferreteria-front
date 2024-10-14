@@ -5,14 +5,12 @@ import app from "../../utils/FirebaseService";
 import { useFormContext } from "react-hook-form";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-
 const storage = getStorage(app);
 
-const Photo = ({ isError, Error }) => {
+const Photo = ({ isError, Error, directory, register, name }) => {
   const refImage = useRef(null);
   const [image, setImage] = useState("");
-  const { setValue } = useFormContext();
-
+  const { setValue, watch } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = async (e) => {
@@ -21,7 +19,7 @@ const Photo = ({ isError, Error }) => {
     setIsLoading(true);
     const file = e.target.files[0];
     if (file) {
-      const refArchivo = ref(storage, `inventario/${file.name}`);
+      const refArchivo = ref(storage, `${directory}/${file.name}`);
       await uploadBytes(refArchivo, file);
       const ulrImDesc = await getDownloadURL(refArchivo);
       if (ulrImDesc !== null) {
@@ -59,10 +57,11 @@ const Photo = ({ isError, Error }) => {
           }}
         >
           <picture className="relative w-[120px] h-[120px] lg:w-[220px] lg:h-[220px]">
-            {image ? (
+            {watch(name) ? (
               <div className="w-[120px] h-[120px] lg:w-[220px] lg:h-[220px]">
                 <img
-                  src={image}
+                  {...register(name)}
+                  src={watch(name)}
                   className="w-[120px] h-[120px] lg:w-[220px] lg:h-[220px] rounded-full flex justify-center items-center object-cover"
                 />
                 <MdPhotoCamera
@@ -92,6 +91,7 @@ const Photo = ({ isError, Error }) => {
             ref={refImage}
             style={{ display: "none" }}
             onChange={handleChange}
+            accept="image/*"
           />
         </div>
       )}
@@ -102,7 +102,10 @@ const Photo = ({ isError, Error }) => {
 
 Photo.propTypes = {
   isError: PropTypes.bool.isRequired,
-  Error: PropTypes.string,
+  Error: PropTypes.string.isRequired,
+  directory: PropTypes.string.isRequired,
+  register: PropTypes.any,
+  name: PropTypes.string,
 };
 
 export default Photo;
