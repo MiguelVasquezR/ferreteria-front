@@ -43,6 +43,7 @@ const ViewProducts = () => {
       });
   }, []);
 
+
   return (
     <>
       <Header />
