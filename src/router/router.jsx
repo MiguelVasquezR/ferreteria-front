@@ -15,7 +15,7 @@ import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct
 import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
 import ViewSale from "../view/viewSale/ViewSale.jsx";
 import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
-
+import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -101,6 +101,11 @@ const router = createBrowserRouter([
   {
     path: "/edit-sale",
     element: <ViewEditSale/>
+  },
+  
+  {
+    path: "/building-site",
+    element: <ViewBuildingSite/>
   }
 
 ]);
