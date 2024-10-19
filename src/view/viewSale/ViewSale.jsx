@@ -14,6 +14,8 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import axios from "axios";
+import BarcodeScannerComponent from "../../components/BarCode/BarCode";
+
 import toast from "react-hot-toast";
 
 const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
@@ -117,6 +119,7 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
   return (
     <>
       <Header />
+      <BarcodeScannerComponent />
 
       <div className="relative p-5 w-full h-full">
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">Ventas</h2>
@@ -147,7 +150,11 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
             </div>
 
             <div className="bg-black rounded-md text-black flex flex-row justify-center items-center p-1 gap-1 cursor-pointer">
-              <FaBarcode size={32} color="white" />
+              <FaBarcode
+                size={32}
+                color="white"
+                onClick={() => setSales(true)}
+              />
             </div>
           </div>
 
@@ -171,7 +178,7 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
               </thead>
 
               <tbody>
-                {sales.map((s, index) => {
+                {sales?.map((s, index) => {
                   const precioUnitario =
                     s.cantidadCompra >= s.stockMinimo
                       ? s.precioMayoreo
