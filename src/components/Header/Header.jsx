@@ -17,7 +17,7 @@ const Header = () => {
     },
     Administrador: {
       options: ["Proveedor", "Producto", "Reporte"],
-      urls: ["/supliers", "/products", "/reporte"],
+      urls: ["/supliers", "/products", "/report-damage-product"],
     },
     Vendedor: {
       options: [
