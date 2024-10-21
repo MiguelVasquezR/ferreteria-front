@@ -15,6 +15,10 @@ import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct
 import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
 import ViewSale from "../view/viewSale/ViewSale.jsx";
 import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
+
+import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
+import ViewProject from "../view/viewProject/ViewProject.jsx";
+
 import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
 
 /*
@@ -106,6 +110,18 @@ const router = createBrowserRouter([
   {
     path: "/building-site",
     element: <ViewBuildingSite/>
+  }
+
+  ,
+
+
+  {
+    path: "/proyecto/agregar",
+    element: <ViewAddProject />
+  },
+  {
+    path: "/proyecto",
+    element: <ViewProject />
   }
 
 ]);
