@@ -14,6 +14,10 @@ import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.js
 import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct/ViewReportDamageProduct.jsx";
 import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
 import ViewSale from "../view/viewSale/ViewSale.jsx";
+import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
+
+import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
+import ViewProject from "../view/viewProject/ViewProject.jsx";
 import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
 
 /*
@@ -95,6 +99,23 @@ const router = createBrowserRouter([
   {
     path: "/sale",
     element: <ViewSale/>
+  },
+
+  {
+    path: "/edit-sale",
+    element: <ViewEditSale/>
+  }
+
+  ,
+
+
+  {
+    path: "/proyecto/agregar",
+    element: <ViewAddProject />
+  },
+  {
+    path: "/proyecto",
+    element: <ViewProject />
   },
 
   {
