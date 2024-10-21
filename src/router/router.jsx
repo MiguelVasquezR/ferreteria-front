@@ -14,7 +14,7 @@ import ViewGenerateReport from "../view/viewGenerateReport/ViewGenerateReport.js
 import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct/ViewReportDamageProduct.jsx";
 import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
 import ViewSale from "../view/viewSale/ViewSale.jsx";
-
+import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -95,7 +95,13 @@ const router = createBrowserRouter([
   {
     path: "/sale",
     element: <ViewSale/>
-  }
+  },
+
+  {
+path:"/daily-report",
+element:< ViewDailyReport/>
+  },
+
 
 ]);
 
