@@ -1,7 +1,8 @@
 import { MdDelete, MdEdit } from "react-icons/md";
 
-const CardPresentationProject = ({ proyecto }) => {
+const CardPresentationProject = ({ proyecto, showModal, changeStateID }) => {
   const {
+    idProyecto,
     nombre,
     telefono,
     correo,
@@ -15,6 +16,12 @@ const CardPresentationProject = ({ proyecto }) => {
     colonia_proyecto,
     ciudad_proyecto,
   } = proyecto;
+
+  const handleClic = () => {
+    changeStateID(idProyecto);
+    showModal();
+  };
+
   return (
     <div className="bg-white rounded-md shadow-md w-[90%] p-5 flex flex-row justify-between items-center">
       <div className="w-[50%]">
@@ -48,7 +55,12 @@ const CardPresentationProject = ({ proyecto }) => {
         </div>
 
         <div className="flex flex-row justify-end items-center gap-4 my-5">
-          <MdDelete size={32} color="black" className="cursor-pointer" />
+          <MdDelete
+            onClick={handleClic}
+            size={32}
+            color="black"
+            className="cursor-pointer"
+          />
           <MdEdit size={32} color="black" className="cursor-pointer" />
         </div>
       </div>
