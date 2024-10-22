@@ -21,6 +21,8 @@ import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
 import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
 import ViewProject from "../view/viewProject/ViewProject.jsx";
 import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
+import { element } from "prop-types";
 
 
 /*
@@ -131,6 +133,11 @@ path:"/daily-report",
 element:< ViewDailyReport/>
   },
 
+
+  {
+    path:"/Add-Package",
+    element:< ViewAddPackage/>
+  },
 
 ]);
 
