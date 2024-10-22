@@ -17,6 +17,7 @@ import {
 } from "../../store/slices/project/project_reducers";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../components/Modal/Modal";
 
 const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
   const methods = useForm();
@@ -24,6 +25,54 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
   const cookie = new Cookies();
   const { proyectos } = proyectosState;
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [idProyecto, setIdProyecto] = useState("");
+
+  const changeStateModal = () => {
+    setShowModal(true);
+  };
+
+  const changeStateID = (id) => {
+    setIdProyecto(id);
+  };
+
+  const handleDelete = () => {
+    const config = {
+      method: "DELETE",
+      url: `${import.meta.env.VITE_URL}/obra/eliminar?id=${idProyecto}`,
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        if (response.data.status === 200) {
+          const newItems =
+            proyectos.length > 0 &&
+            proyectos?.filter((i) => {
+              return i.idProyecto !== idProyecto;
+            });
+          setDataProyectos(newItems);
+          setStatus("succeeded");
+          setIsLoading(false);
+          setShowModal(false);
+          toast.success("Proyecto eliminado");
+        } else {
+          setIsLoading(true);
+          setStatus("error");
+          toast.error("Error al eliminar el proyecto");
+        }
+      })
+      .catch((error) => {
+        setIsLoading(true);
+        console.log(error);
+        setStatus("error");
+        toast.error("Error al eliminar el proyecto");
+      });
+  };
 
   useEffect(() => {
     if (proyectos.length > 0) {
@@ -61,8 +110,19 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
     <>
       <Header />
       {isLoading && <SuplierLoading />}
+      {showModal && (
+        <div className="absolute w-screen z-50 h-screen bg-[#000]/60 flex justify-center items-center">
+          <Modal
+            onCancel={() => {
+              setShowModal(false);
+            }}
+            onDelete={handleDelete}
+            text="¿Desea borrar el Proyecto?"
+          />
+        </div>
+      )}
 
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col absolute">
         <h2 className="font-bold w-full p-5 text-[18px] lg:text-[24px]">
           Proyectos
         </h2>
@@ -95,7 +155,12 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  place-items-center">
           {proyectos?.map((proyecto, index) => (
-            <CardPresentationProject proyecto={proyecto} key={index} />
+            <CardPresentationProject
+              changeStateID={changeStateID}
+              showModal={changeStateModal}
+              proyecto={proyecto}
+              key={index}
+            />
           ))}
         </div>
       </div>
