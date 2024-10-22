@@ -19,6 +19,8 @@ import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
 import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
 import ViewProject from "../view/viewProject/ViewProject.jsx";
 import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
+import { element } from "prop-types";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -123,6 +125,11 @@ path:"/daily-report",
 element:< ViewDailyReport/>
   },
 
+
+  {
+    path:"/Add-Package",
+    element:< ViewAddPackage/>
+  },
 
 ]);
 
