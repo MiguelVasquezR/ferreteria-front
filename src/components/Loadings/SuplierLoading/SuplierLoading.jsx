@@ -2,7 +2,7 @@ import "./Styles.css";
 
 const SuplierLoading = () => {
   return (
-    <div className="absolute w-full h-full bg-white/60 z-50 flex justify-center items-center">
+    <div className="absolute w-screen h-screen bg-white/60 z-50 flex justify-center items-center">
       <div className="loader">
         <div className="truckWrapper">
           <div className="truckBody">
