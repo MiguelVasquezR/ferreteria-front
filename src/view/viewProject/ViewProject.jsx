@@ -75,9 +75,11 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
   };
 
   useEffect(() => {
+
     if (proyectos.length > 0) {
       return;
     }
+    
     setIsLoading(true);
     setStatus("loading");
     const config = {
