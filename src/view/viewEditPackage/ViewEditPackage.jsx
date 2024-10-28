@@ -3,13 +3,11 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
 import Card from "../../components/cardAddPackage/cardAddPackage"; // Importa el componente Card circular
 
-const ViewAddPackage = () => {
+const ViewEditPackage = () => {
   const methods = useForm();
 
   return (
-    <div style={{ fontFamily: "Georgia", fontSize: "12px" }}>
-      {" "}
-      {/* Aplicando estilo en línea */}
+    <div style={{ fontFamily: 'Georgia', fontSize: '12px' }}> {/* Aplicando estilo en línea */}
       <Header />
       {/* Contenedor principal de la página */}
       <div className="flex flex-col w-full max-w-[2000px] mx-auto">
@@ -36,7 +34,9 @@ const ViewAddPackage = () => {
                     required: "Este campo es obligatorio",
                   })}
                   className={`shadow-md rounded-lg p-2 w-4/5 outline-none pr-8 lg:h-[44px] bg-gradient-to-r from-gray-200 to-gray-300 border-none ${
-                    methods.formState.errors.nombre ? "border-red-500" : ""
+                    methods.formState.errors.nombre
+                      ? "border-red-500"
+                      : ""
                   }`}
                 />
                 {methods.formState.errors.nombre && (
@@ -45,7 +45,17 @@ const ViewAddPackage = () => {
                   </p>
                 )}
               </div>
-
+              {/* Campo de texto para Precio */}
+              <div className="flex flex-col w-full">
+                <label htmlFor="precio" className="pl-2 mb-1">
+                  Precio
+                </label>
+                <input
+                  id="precio"
+                  type="text"
+                  className={`shadow-md rounded-lg p-2 w-4/5 outline-none pr-8 lg:h-[44px] bg-gradient-to-r from-gray-200 to-gray-300 border-none`}
+                />
+              </div>
               {/* Campo de texto para Descripción */}
               <div className="flex flex-col w-full">
                 <label htmlFor="descripcion" className="pl-2 mb-1">
@@ -57,7 +67,9 @@ const ViewAddPackage = () => {
                     required: "Este campo es obligatorio",
                   })}
                   className={`shadow-md rounded-lg p-2 w-4/5 outline-none pr-8 lg:h-[100px] bg-gradient-to-r from-gray-200 to-gray-300 border-none ${
-                    methods.formState.errors.descripcion ? "border-red-500" : ""
+                    methods.formState.errors.descripcion
+                      ? "border-red-500"
+                      : ""
                   }`}
                 />
                 {methods.formState.errors.descripcion && (
@@ -72,6 +84,7 @@ const ViewAddPackage = () => {
       </div>
       {/* Sección de Productos */}
       <h2 className="text-lg font-bold mt-8 ml-10">Productos</h2>
+
       <div className="flex justify-around mt-8">
         <Card />
         <Card />
@@ -96,4 +109,5 @@ const ViewAddPackage = () => {
   );
 };
 
-export default ViewAddPackage;
+export default ViewEditPackage;
+  
