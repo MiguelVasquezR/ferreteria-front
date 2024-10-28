@@ -15,12 +15,21 @@ import ViewReportDamageProduct from "../view/viewProduct/viewReportDamageProduct
 import ViewProcessPayment from "../view/viewProcessPayment/ViewProcessPayment.jsx";
 import ViewSale from "../view/viewSale/ViewSale.jsx";
 import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
+import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
+
+import ViewProject from "../view/viewProject/ViewProject.jsx";
+import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject.jsx";
+
 
 import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
 
-import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
+import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
 import ViewProject from "../view/viewProject/ViewProject.jsx";
 import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
+import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
+
 
 
 /*
@@ -108,14 +117,6 @@ const router = createBrowserRouter([
     path: "/edit-sale",
     element: <ViewEditSale/>
   },
-  
-  {
-    path: "/building-site",
-    element: <ViewBuildingSite/>
-  }
-
-  ,
-
 
   {
     path: "/proyecto/agregar",
@@ -127,10 +128,30 @@ const router = createBrowserRouter([
   },
 
   {
-path:"/daily-report",
-element:< ViewDailyReport/>
+    path:"/daily-report",
+    element:< ViewDailyReport/>
   },
 
+  {
+    path:"/edit-project",
+    element: <ViewEditProject/>
+  }
+
+
+  {
+    path:"/Edit-Package",
+    element:< ViewEditPackage/>
+  },
+
+  {
+path:"/Add-package",
+element:<ViewAddPackage/>
+  },
+  
+  {
+path:"/List-package",
+element:<ViewListPackage/>
+  },
 
 ]);
 

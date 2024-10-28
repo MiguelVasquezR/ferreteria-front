@@ -69,7 +69,7 @@ const ViewDailyReport = () => {
       </div>
       
       {/* Ajuste del espaciado entre cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 gap-y-1"> 
+      <dv className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-1 gap-y-1"> 
         {[...Array(6)].map((_, index) => (
           <CardReport
             key={index}
@@ -79,7 +79,7 @@ const ViewDailyReport = () => {
             imageUrl="https://m.media-amazon.com/images/I/51F6j0nht0L.__AC_SX300_SY300_QL70_ML2_.jpg"
           />
         ))}
-      </div>
+      </dv>
     </div>
   );
 };
