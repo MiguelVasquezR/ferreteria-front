@@ -18,6 +18,8 @@ import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
 import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
 import ViewProject from "../view/viewProject/ViewProject.jsx";
 import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
+import { element } from "prop-types";
 import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject.jsx";
 
 
@@ -127,6 +129,11 @@ const router = createBrowserRouter([
     element: <ViewEditProject/>
   }
 
+
+  {
+    path:"/Add-Package",
+    element:< ViewAddPackage/>
+  },
 
 ]);
 
