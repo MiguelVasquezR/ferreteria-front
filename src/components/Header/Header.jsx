@@ -29,7 +29,7 @@ const Header = () => {
         "Paquetes",
       ],
       urls: [
-        "/obra",
+        "/proyecto",
         "/sale",
         "/devolucion",
         "/pedido",
