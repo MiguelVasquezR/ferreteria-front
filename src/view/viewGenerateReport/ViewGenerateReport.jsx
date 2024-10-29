@@ -83,14 +83,14 @@ const ViewGenerateReport = () => {
 
       {/* Texto de selección del reporte */}
       <div className="w-full px-5 my-5 text-center">
-        <p className="font-bold text-[18px] mb-3">
+        {/* <p className="font-bold text-[18px] mb-3">
           Seleccione la opción del reporte
-        </p>
+        </p> */}
       </div>
 
       {/* Barra de búsqueda */}
       <div className="w-full px-5 my-5 flex flex-col items-center">
-        <form className="w-full max-w-[600px] mx-auto">
+        {/* <form className="w-full max-w-[600px] mx-auto">
           <FormProvider {...methods}>
             <TextField
               isError={!!methods.formState.errors.buscador}
@@ -103,7 +103,7 @@ const ViewGenerateReport = () => {
             placeholder=""
             />
           </FormProvider>
-        </form>
+        </form> */}
         <br />
 
         {/* Botón para generar reporte */}

@@ -5,14 +5,6 @@ export const schemaObra = z.object({
     .string()
     .min(1, "El nombres es requrido")
     .max(25, "El nombre es muy largo"),
-  paterno: z
-    .string()
-    .min(1, "El apellido es requrido")
-    .max(25, "El apellido es muy largo"),
-  materno: z
-    .string()
-    .min(1, "El apellido es requrido")
-    .max(25, "El apellido es muy largo"),
   telefono: z
     .string()
     .min(10, "El telefono es requrido")
