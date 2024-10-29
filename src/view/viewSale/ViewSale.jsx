@@ -14,9 +14,9 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import axios from "axios";
-import BarcodeScannerComponent from "../../components/BarCode/BarCode";
 
 import toast from "react-hot-toast";
+import ModalEmail from "../../components/Modal/ModalEmail/ModalEmail";
 
 const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
   const methods = useForm();
@@ -24,6 +24,8 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
   const cookie = new Cookies();
   const [sales, setSales] = useState([]);
   const [totalCompra, setTotalCompra] = useState(0);
+  const [showModalEmail, setShowModalEmail] = useState(false);
+  const [dataProductStock, setDataProductStock] = useState([]);
 
   useEffect(() => {
     if (productos.length !== 0 || productos === null) {
@@ -76,7 +78,13 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
       } else {
         setSales((prevSales) => [...prevSales, { ...pd, cantidadCompra: 1 }]);
       }
+    } else {
+      toast.error("Producto no encontrado");
     }
+  };
+
+  const closeModalEmail = () => {
+    setShowModalEmail(false);
   };
 
   const onSaveSale = () => {
@@ -100,26 +108,45 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
       data,
     };
 
-    axios
-      .request(config)
-      .then((res) => {
-        if (res.data === "Venta guardada exitosamente") {
-          toast.success("Venta guardada exitosamente");
-          setSales([]);
-          setTotalCompra(0);
-        } else {
+    validateAmountAvailable(data?.productos);
+
+    if (dataProductStock) {
+      setShowModalEmail(true);
+    } else {
+      axios
+        .request(config)
+        .then((res) => {
+          if (res.data === "Venta guardada exitosamente") {
+            toast.success("Venta guardada exitosamente");
+            setSales([]);
+            setTotalCompra(0);
+          } else {
+            toast.error("Error al registrar la venta");
+          }
+        })
+        .catch(() => {
           toast.error("Error al registrar la venta");
-        }
-      })
-      .catch(() => {
-        toast.error("Error al registrar la venta");
-      });
+        });
+    }
+  };
+
+  const validateAmountAvailable = (products) => {
+    products.map((p) => {
+      if (p.cantidadCompra > p.cantidad) {
+        setDataProductStock(p);
+      }
+    });
   };
 
   return (
     <>
       <Header />
-      <BarcodeScannerComponent />
+
+      {showModalEmail && (
+        <div className="absolute h-screen w-screen">
+          <ModalEmail producto={dataProductStock} close={closeModalEmail} />
+        </div>
+      )}
 
       <div className="relative p-5 w-full h-full">
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">Ventas</h2>
@@ -145,16 +172,7 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
 
           <div className="w-full flex flex-row justify-between items-center">
             <div className="flex flex-row items-center justify-start">
-              <MdModeEdit className="cursor-pointer" size={32} color="gray" />
               <MdDelete className="cursor-pointer" size={32} color="gray" />
-            </div>
-
-            <div className="bg-black rounded-md text-black flex flex-row justify-center items-center p-1 gap-1 cursor-pointer">
-              <FaBarcode
-                size={32}
-                color="white"
-                onClick={() => setSales(true)}
-              />
             </div>
           </div>
 
