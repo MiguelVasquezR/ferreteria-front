@@ -18,16 +18,16 @@ import ViewEditSale from "../view/viewSale/viewEditSale/ViewEditSale.jsx";
 import ViewAddProject from "../view/viewProject/viewAddProject/ViewAddProject.jsx";
 
 import ViewProject from "../view/viewProject/ViewProject.jsx";
-import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx";
 import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject.jsx";
 
 
-import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
+//import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
 
 import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
-import ViewProject from "../view/viewProject/ViewProject.jsx";
-import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
-import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
+//import ViewProject from "../view/viewProject/ViewProject.jsx";
+//import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx";
 import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
 
 
@@ -135,7 +135,7 @@ const router = createBrowserRouter([
   {
     path:"/edit-project",
     element: <ViewEditProject/>
-  }
+  },
 
 
   {
@@ -152,6 +152,8 @@ element:<ViewAddPackage/>
 path:"/List-package",
 element:<ViewListPackage/>
   },
+
+
 
 ]);
 
