@@ -10,12 +10,14 @@ import { FaRegSave } from "react-icons/fa";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SuplierLoading from "../../../components/Loadings/SuplierLoading/SuplierLoading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const ViewEditProject = () => {
+const ViewEditProject = ({ proyectosState }) => {
   const methods = useForm({
     resolver: zodResolver(schemaObra),
     mode: "onChange",
@@ -23,26 +25,57 @@ const ViewEditProject = () => {
   const cookie = new Cookies();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams();
+  const { proyectos } = proyectosState;
+
+  useEffect(() => {
+    proyectos.map((p) => {
+      if (p.idProyecto === id) {
+        methods.setValue("idP", p.id_direccion_proyecto);
+        methods.setValue("id", p.id_direccion_persona);
+        methods.setValue("idPersona", p.idPersona);
+        methods.setValue("idProyecto", p.idProyecto);
+
+        methods.setValue("nombre", p.nombre);
+        methods.setValue("telefono", p.telefono);
+        methods.setValue("correo", p.correo);
+        methods.setValue("rfc", p.rfc);
+        methods.setValue("calle", p.calle_persona);
+        methods.setValue("numero", p.numero_persona);
+        methods.setValue("colonia", p.colonia_persona);
+        methods.setValue("ciudad", p.ciudad_persona);
+
+        methods.setValue("calleP", p.calle_proyecto);
+        methods.setValue("numeroP", p.numero_proyecto);
+        methods.setValue("coloniaP", p.colonia_proyecto);
+        methods.setValue("ciudadP", p.ciudad_proyecto);
+
+        methods.setValue("descripcion", p.descripcion);
+      }
+    });
+  }, [proyectos, id, methods]);
 
   const onSubmit = (data) => {
     setIsLoading(true);
     const config = {
-      method: "POST",
-      url: `${import.meta.env.VITE_URL}/obra/agregar`,
+      method: "PUT",
+      url: `${import.meta.env.VITE_URL}/obra/editar-proyecto`,
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
-      data,
+      body: JSON.stringify(methods.getValues()),
+      data: methods.getValues(),
     };
 
     axios
       .request(config)
       .then((response) => {
+        console.log(response);
+
         if (
           response.data.status === 200 &&
-          response.data.mensaje === "Obra guardada correctamente"
+          response.data.mensaje === "Obra editada correctamente"
         ) {
           navigate("/proyecto");
         }
@@ -91,30 +124,6 @@ const ViewEditProject = () => {
               register={methods.register}
               isError={!!methods.formState.errors.nombre}
               Error={methods.formState.errors.nombre?.message}
-            />
-
-            <TextField
-              name="paterno"
-              label={"Apellido Paterno"}
-              placeholder="Apellido paterno de la persona"
-              type="text"
-              Icon={null}
-              isIcon={false}
-              register={methods.register}
-              isError={!!methods.formState.errors.paterno}
-              Error={methods.formState.errors.paterno?.message}
-            />
-
-            <TextField
-              name="materno"
-              label={"Apellido Materno"}
-              placeholder="Apellido materno de la persona"
-              type="text"
-              Icon={null}
-              isIcon={false}
-              register={methods.register}
-              isError={!!methods.formState.errors.materno}
-              Error={methods.formState.errors.materno?.message}
             />
 
             <TextField
@@ -290,4 +299,20 @@ const ViewEditProject = () => {
   );
 };
 
-export default ViewEditProject;
+ViewEditProject.propTypes = {
+  setDataProyectos: PropTypes.func,
+  setStatus: PropTypes.func,
+  proyectosState: PropTypes.any,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    proyectosState: state.proyectos,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewEditProject);

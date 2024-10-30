@@ -22,12 +22,8 @@ import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx";
 import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject.jsx";
 
 
-//import ViewBuildingSite from "../view/viewBuildingSite/ViewBuildingSite.jsx";
-
 import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
-//import ViewProject from "../view/viewProject/ViewProject.jsx";
-//import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx"
-import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx";
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
 import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
 
 
@@ -133,9 +129,10 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"/edit-project",
+    path:"/edit-project/:id",
     element: <ViewEditProject/>
   },
+  
 
 
   {
@@ -144,12 +141,12 @@ const router = createBrowserRouter([
   },
 
   {
-path:"/Add-package",
+path:"/add-package",
 element:<ViewAddPackage/>
   },
   
   {
-path:"/List-package",
+path:"/list-package",
 element:<ViewListPackage/>
   },
 
