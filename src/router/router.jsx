@@ -140,12 +140,12 @@ const router = createBrowserRouter([
   },
 
   {
-path:"/Add-package",
+path:"/add-package",
 element:<ViewAddPackage/>
   },
   
   {
-path:"/List-package",
+path:"/list-package",
 element:<ViewListPackage/>
   },
 

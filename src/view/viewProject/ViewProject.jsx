@@ -94,6 +94,8 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
     axios
       .request(config)
       .then((response) => {
+        console.log( response.data);
+        
         if (response.status === 200) {
           setDataProyectos(response.data);
           setStatus("succeeded");

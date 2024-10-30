@@ -31,6 +31,11 @@ const ViewEditProject = ({ proyectosState }) => {
   useEffect(() => {
     proyectos.map((p) => {
       if (p.idProyecto === id) {
+        methods.setValue("idP", p.id_direccion_proyecto);
+        methods.setValue("id", p.id_direccion_persona);
+        methods.setValue("idPersona", p.idPersona);
+        methods.setValue("idProyecto", p.idProyecto);
+
         methods.setValue("nombre", p.nombre);
         methods.setValue("telefono", p.telefono);
         methods.setValue("correo", p.correo);
@@ -50,9 +55,6 @@ const ViewEditProject = ({ proyectosState }) => {
     });
   }, [proyectos, id, methods]);
 
-  console.log(methods.formState.errors);
-  
-
   const onSubmit = (data) => {
     setIsLoading(true);
     const config = {
@@ -62,16 +64,18 @@ const ViewEditProject = ({ proyectosState }) => {
         Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
-      data,
+      body: JSON.stringify(methods.getValues()),
+      data: methods.getValues(),
     };
 
     axios
       .request(config)
       .then((response) => {
+        console.log(response);
+
         if (
           response.data.status === 200 &&
-          response.data.mensaje === "Obra guardada correctamente"
+          response.data.mensaje === "Obra editada correctamente"
         ) {
           navigate("/proyecto");
         }
