@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
-import { SchemaProduct } from "../../../schema/SchemaProduct";
 import Header from "../../../components/Header/Header";
 import TextField from "../../../components/Form/TextField/TextField";
 import TextArea from "../../../components/Form/TextArea/TextArea";
@@ -12,23 +11,45 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+import { SchemaReportDamage } from "../../../schema/SchemaReportDamage";
+import { Cookies } from "react-cookie";
+import { useState } from "react";
+
 const ViewReportDamageProduct = () => {
   const methods = useForm({
-    resolver: zodResolver(SchemaProduct),
+    resolver: zodResolver(SchemaReportDamage),
     mode: "onChange",
   });
+  const cookie = new Cookies();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Definición de la función onSubmit
-  const onSubmit = async (data) => {
-    try {
-      // Aquí puedes realizar una llamada a la API para enviar los datos
-      const response = await axios.post("/api/report-damage", data);
-      toast.success("Reporte enviado correctamente");
-      navigate(-1); // Regresar a la página anterior después del envío exitoso
-    } catch (error) {
-      toast.error("Error al enviar el reporte");
-    }
+  const onSubmit = (data) => {
+    const config = {
+      method: "POST",
+      url: `${import.meta.env.VITE_URL}/reporte/guardar`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookie.get("token")}`,
+      },
+      data,
+    };
+
+    setIsLoading(true);
+    axios
+      .request(config)
+      .then((response) => {
+        if (response.data === "Reporte guardado exitosamente") {
+          toast.success("Reporte guardado exitosamente");
+          navigate("/");
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+        toast.error(
+          "Por el momento no se puede guardar el reporte, intenta más tarde"
+        );
+      });
   };
 
   const backPage = (e) => {
@@ -52,9 +73,8 @@ const ViewReportDamageProduct = () => {
           <h2 className="font-bold text-[18px] lg:text-[22px]">
             Reporte producto dañado
           </h2>
-          
         </div>
-          
+
         <form
           onSubmit={methods.handleSubmit(onSubmit)} // Usamos la función onSubmit aquí
           className="flex flex-col justify-evenly items-center gap-5 lg:flex-row lg:items-start lg:justify-center"
@@ -73,7 +93,7 @@ const ViewReportDamageProduct = () => {
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-5 px-5">
               <TextField
                 label="Seleccione el producto"
-                name="productoDagnado"
+                name="nombre"
                 type="text"
                 placeholder="Nombre del producto dañado"
                 register={methods.register}
@@ -83,20 +103,21 @@ const ViewReportDamageProduct = () => {
 
               <TextArea
                 isError=""
-                name="reporteDagno"
+                name="descripcion"
                 error={methods.formState.errors.reporteDagno?.message}
                 label={"Seleccione el producto"}
                 placeholder="Describa el daño del producto"
                 register={methods.register}
               />
 
-              <div className="bg-F58A27 w-[200px] lg:w-[300px] lg:h-[50px] my-5 rounded-md">
+              <div className=" w-[200px] lg:w-[300px] lg:h-[50px] my-5 rounded-md">
                 <Button
                   texto="Generar"
-                  background=""
+                  background="bg-F58A27"
                   onClick={() => {}}
                   type="submit"
                   isIcon={false}
+                  isLoading={isLoading}
                   Icon={<IoIosSave size={32} color="white" />}
                 />
               </div>
