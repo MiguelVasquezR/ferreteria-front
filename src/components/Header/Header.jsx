@@ -34,7 +34,7 @@ const Header = () => {
         "/devolucion",
         "/pedido",
         "/products",
-        "/paquetes",
+        "/list-package",
       ],
     },
   };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import { FaTrash, FaPen, FaPlus } from "react-icons/fa"; // Íconos de editar y borrar
 import { FaBoxOpen } from "react-icons/fa"; // Ícono de la caja
@@ -12,10 +12,12 @@ import {
   dataPaquetes,
   updateStatus,
 } from "../../store/slices/package/package_reducers";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
   const cookie = new Cookies();
   const { paquetes } = paquetesState;
+  const [isLoadinView, setIsLoadingView] = useState(false);
 
   useEffect(() => {
     const config = {
@@ -27,6 +29,7 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
       },
     };
 
+    setIsLoadingView(true);
     setStatus("loading");
     axios
       .request(config)
@@ -34,17 +37,22 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
         if (response.status === 200) {
           setDataPaquetes(response.data);
           setStatus("succeeded");
+          setIsLoadingView(false);
         }
       })
       .catch(() => {
+        setIsLoadingView(false);
         setStatus("error");
         toast.error("Error al obtener los paquetes");
       });
   }, [setStatus]);
 
   return (
-    <div>
+    <div className="relative">
       <Header />
+
+      {isLoadinView && <SuplierLoading />}
+
       <div className="flex flex-col w-full max-w-[2000px] mx-auto">
         <div className="flex items-center m-5">
           <h2 className="font-bold text-2xl ml-4">Paquetes</h2>
