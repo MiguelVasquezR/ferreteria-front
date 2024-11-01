@@ -13,7 +13,7 @@ const Header = () => {
   const rolesOptions = {
     Gerente: {
       options: ["Usuario", "Paquetes", "Ofertas", "Reporte"],
-      urls: ["/usuario", "/paquetes", "/ofertas", "/generate-report"],
+      urls: ["/usuario", "/list-package", "/ofertas", "/generate-report"],
     },
     Administrador: {
       options: ["Proveedor", "Producto", "Reporte"],
