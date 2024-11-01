@@ -54,9 +54,7 @@ const ViewReportDamageProduct = () => {
           </h2>
           
         </div>
-          <p>
-           Carga fotografia de evidencia 
-          </p>
+          
         <form
           onSubmit={methods.handleSubmit(onSubmit)} // Usamos la función onSubmit aquí
           className="flex flex-col justify-evenly items-center gap-5 lg:flex-row lg:items-start lg:justify-center"

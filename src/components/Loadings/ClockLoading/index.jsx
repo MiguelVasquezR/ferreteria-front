@@ -2,8 +2,7 @@ import "./style.css";
 
 const ClockLoading = () => {
   return (
-    /* From Uiverse.io by david-mohseni */
-    <div className="loaderClock">
+    <div className="loaderClock flex justify-center items-center">
       <div className="bar1"></div>
       <div className="bar2"></div>
       <div className="bar3"></div>
