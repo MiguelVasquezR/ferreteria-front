@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import { FaTrash, FaPen, FaPlus } from "react-icons/fa"; // Íconos de editar y borrar
 import { FaBoxOpen } from "react-icons/fa"; // Ícono de la caja
@@ -25,10 +25,12 @@ import {
   dataPaquetes,
   updateStatus,
 } from "../../store/slices/package/package_reducers";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
   const cookie = new Cookies();
   const { paquetes } = paquetesState;
+  const [isLoadinView, setIsLoadingView] = useState(false);
 
   useEffect(() => {
     const config = {
@@ -40,6 +42,7 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
       },
     };
 
+    setIsLoadingView(true);
     setStatus("loading");
     axios
       .request(config)
@@ -47,9 +50,11 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
         if (response.status === 200) {
           setDataPaquetes(response.data);
           setStatus("succeeded");
+          setIsLoadingView(false);
         }
       })
       .catch(() => {
+        setIsLoadingView(false);
         setStatus("error");
         toast.error("Error al obtener los paquetes");
       });
@@ -57,6 +62,9 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
 >>>>>>> de4fa7f8dda4d082695b5051ab01079a273ddb7f
 
   return (
+<<<<<<< HEAD
+    <div className="relative">
+=======
     <div>
       {showModal && (
         <div className="absolute z-50 flex justify-center items-center w-screen h-screen bg-black/50">
@@ -70,7 +78,11 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
         </div>
       )}
 
+>>>>>>> f24c288758c73e1c74b7078afd35438182550af0
       <Header />
+
+      {isLoadinView && <SuplierLoading />}
+
       <div className="flex flex-col w-full max-w-[2000px] mx-auto">
 <<<<<<< HEAD
         {/* Contenedor para la flecha y el título */}

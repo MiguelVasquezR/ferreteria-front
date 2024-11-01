@@ -1,14 +1,30 @@
 import PropTypes from "prop-types";
+import ClockLoadin from "../Loadings/ClockLoading/index";
 
-const Button = ({ texto, isIcon, Icon, onClick, type, background }) => {
+const Button = ({
+  texto,
+  isIcon,
+  Icon,
+  onClick,
+  type,
+  background,
+  isLoading,
+}) => {
   return (
     <button
+      disabled={isLoading}
       onClick={onClick}
       type={type}
       className={`flex flex-row justify-center items-center w-full h-full gap-2 rounded-md text-white p-1 font-georgia text-[18px] ${background}`}
     >
-      {isIcon && <span>{Icon}</span>}
-      {texto}
+      {isLoading ? (
+        <ClockLoadin />
+      ) : (
+        <div>
+          {isIcon && <span>{Icon}</span>}
+          {texto}
+        </div>
+      )}
     </button>
   );
 };
@@ -20,6 +36,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string.isRequired,
   background: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default Button;

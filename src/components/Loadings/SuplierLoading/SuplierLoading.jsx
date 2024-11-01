@@ -1,4 +1,4 @@
-import "./Styles.css";
+import "./suplierStyle.css";
 
 const SuplierLoading = () => {
   return (
