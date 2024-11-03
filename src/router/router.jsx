@@ -21,13 +21,11 @@ import ViewProject from "../view/viewProject/ViewProject.jsx";
 import ViewDailyReport from "../view/viewDailyReport/ViewDailyReport.jsx";
 import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject.jsx";
 
-
 import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
-import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
+import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx";
 import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
 import ViewOfferProduct from "../view/viewOfferProduct/ViewOfferProduct.jsx"
-
-
+import ViewEditUser from "../view/viewEditUser/ViewEditUser.jsx"
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -81,9 +79,10 @@ const router = createBrowserRouter([
     element: <ViewProducts />,
   },
 
-  { 
-    path: "/supliers", 
-    element: <ViewListSuplier /> },
+  {
+    path: "/supliers",
+    element: <ViewListSuplier />,
+  },
 
   {
     path: "/create-suplier",
@@ -92,68 +91,71 @@ const router = createBrowserRouter([
 
   {
     path: "/generate-report",
-    element: <ViewGenerateReport/>
+    element: <ViewGenerateReport />,
   },
 
   {
     path: "/report-damage-product",
-    element: <ViewReportDamageProduct/>
+    element: <ViewReportDamageProduct />,
   },
 
   {
     path: "/process-payment",
-    element: <ViewProcessPayment/>
+    element: <ViewProcessPayment />,
   },
 
   {
     path: "/sale",
-    element: <ViewSale/>
+    element: <ViewSale />,
   },
 
   {
     path: "/edit-sale",
-    element: <ViewEditSale/>
+    element: <ViewEditSale />,
   },
 
   {
     path: "/proyecto/agregar",
-    element: <ViewAddProject />
+    element: <ViewAddProject />,
   },
   {
     path: "/proyecto",
-    element: <ViewProject />
+    element: <ViewProject />,
   },
 
   {
-    path:"/daily-report",
-    element:< ViewDailyReport/>
+    path: "/daily-report",
+    element: <ViewDailyReport />,
   },
 
   {
-    path:"/edit-project/:id",
-    element: <ViewEditProject/>
-  },
-  
-
-
-  {
-    path:"/Edit-Package",
-    element:< ViewEditPackage/>
+    path: "/edit-project/:id",
+    element: <ViewEditProject />,
   },
 
   {
-path:"/add-package",
-element:<ViewAddPackage/>
+    path: "/Edit-Package",
+    element: <ViewEditPackage />,
   },
-  
+
   {
-path:"/list-package",
-element:<ViewListPackage/>
+    path: "/add-package",
+    element: <ViewAddPackage />,
+  },
+
+  {
+    path: "/list-package",
+    element: <ViewListPackage />,
   },
 
   {
     path:"/Offer-Product",
     element:<ViewOfferProduct/>
+  },
+
+  {
+    path:"/Edit-User",
+    element:<ViewEditUser/>
   },
 
 

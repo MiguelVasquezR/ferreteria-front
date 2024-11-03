@@ -17,6 +17,8 @@ import toast from "react-hot-toast";
 import { Cookies } from "react-cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SchemaPackage } from "../../schema/SchemaPackage";
+import { useNavigate } from "react-router-dom";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
   const methods = useForm({
@@ -26,6 +28,9 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
   const cookie = new Cookies();
   const { productos } = products;
   const [listProducts, setListProducts] = useState([]);
+  const navigate = useNavigate();
+  const [isLoadingSubmmit, setIsLoadingSubmit] = useState(false);
+  const [isLoadinView, setIsLoadingView] = useState(false);
 
   const addProductsToList = (p) => {
     const productExists = listProducts.find(
@@ -44,6 +49,7 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
     if (productos.length > 0) {
       return;
     }
+    setIsLoadingView(true);
     const config = {
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
@@ -59,8 +65,10 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
       .then((response) => {
         setDataProducts(response.data);
         setStatus("succeeded");
+        setIsLoadingView(false);
       })
       .catch(() => {
+        setIsLoadingView(false);
         toast.error("Error al obtener los productos");
         setStatus("error");
       });
@@ -71,6 +79,7 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
       toast.error("Debes seleccionar al menos un producto");
       return;
     }
+    setIsLoadingSubmit(true);
 
     const information = {
       nombre: data.nombre,
@@ -81,7 +90,7 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
 
     const config = {
       method: "POST",
-      url: `${import.meta.env.VITE_URL}/producto-paquete/agregar`,
+      url: `${import.meta.env.VITE_URL}/paquete/agregar`,
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
@@ -90,26 +99,37 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
       body: JSON.stringify(information),
     };
 
-    console.log(config);
-    
-
     axios
       .request(config)
       .then((response) => {
-        console.log(response);
+        if (response.data === "Paquete agregado exitosamente") {
+          toast.success("Paquete creado exitosamente");
+          navigate("/list-package");
+        }
       })
       .catch(() => {
+        setIsLoadingSubmit(false);
         toast.error("Error al crear el paquete");
       });
   };
 
   return (
     <>
+      {isLoadinView && (
+        <div className="h-screen bg-white/60  w-screen relative">
+          <SuplierLoading />ƒ
+        </div>
+      )}
+
       <Header />
 
       <div className="p-5 lg:w-[90%] mx-auto">
         <div className="flex flex-row justify-start items-center gap-2 font-bold">
-          <IoArrowBackOutline size={28} color="black" />
+          <IoArrowBackOutline
+            onClick={() => navigate(-1)}
+            size={28}
+            color="black"
+          />
           <h1>Crear Paquete</h1>
         </div>
 
@@ -178,7 +198,7 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
               </ol>
             </div>
 
-            <div className="my-5 w-full h-[40px] lg:w-[50%]">
+            <div className="my-5 w-full h-[40px] lg:h-[50px] lg:w-[50%]">
               <Button
                 background="bg-[#F58A27]"
                 text="Crear Paquete"
@@ -187,6 +207,7 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
                 type="submit"
                 Icon={null}
                 onClick={() => {}}
+                isLoading={isLoadingSubmmit}
               />
             </div>
           </FormProvider>
