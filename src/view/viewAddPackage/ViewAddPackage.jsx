@@ -1,7 +1,7 @@
 import Header from "../../components/Header/Header";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
-import Card from "../../components/cardAddPackage/cardAddPackage"; // Importa el componente Card circular
+import Card from "../../components/cardAddPackage/cardAddPackage"; 
 import TextField from "../../components/Form/TextField/TextField";
 import TextArea from "../../components/Form/TextArea/TextArea";
 import Button from "../../components/Buttons/Button";

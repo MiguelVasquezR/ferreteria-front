@@ -25,6 +25,7 @@ import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject
 import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
 import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx"
 import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
+import ViewOfferProduct from "../view/viewOfferProduct/ViewOfferProduct.jsx"
 
 
 
@@ -148,6 +149,11 @@ element:<ViewAddPackage/>
   {
 path:"/list-package",
 element:<ViewListPackage/>
+  },
+
+  {
+    path:"/Offer-Product",
+    element:<ViewOfferProduct/>
   },
 
 
