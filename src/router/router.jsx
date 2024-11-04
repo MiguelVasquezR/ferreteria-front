@@ -24,9 +24,10 @@ import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject
 import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
 import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx";
 import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
-import ViewOfferProduct from "../view/viewOfferProduct/ViewOfferProduct.jsx"
-import ViewEditUser from "../view/viewEditUser/ViewEditUser.jsx"
-import ViewAddUser from "../view/viewAddUser/ViewAddUser.jsx"
+import ViewOfferProduct from "../view/viewOfferProduct/ViewOfferProduct.jsx";
+import ViewEditUser from "../view/viewEditUser/ViewEditUser.jsx";
+import ViewAddUser from "../view/viewAddUser/ViewAddUser.jsx";
+import ViewSettings from "../view/viewSettings/ViewSettings.jsx";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -148,24 +149,22 @@ const router = createBrowserRouter([
     path: "/list-package",
     element: <ViewListPackage />,
   },
-
   {
-    path:"/Offer-Product",
-    element:<ViewOfferProduct/>
+    path: "/offer-Product",
+    element: <ViewOfferProduct />,
   },
-
   {
-    path:"/Edit-User",
-    element:<ViewEditUser/>
+    path: "/edit-User",
+    element: <ViewEditUser />,
   },
-
   {
-    path:"/Add-user",
-    element:<ViewAddUser/>
+    path: "/add-user",
+    element: <ViewAddUser />,
+  },
+  {
+    path: "/settings",
+    element: <ViewSettings />,
   }
-
-
-
 ]);
 
 const AppRouter = () => {
