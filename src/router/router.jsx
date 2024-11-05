@@ -131,7 +131,7 @@ const router = createBrowserRouter([
   {
     path:"/edit-project",
     element: <ViewEditProject/>
-  }
+  },
 
 
   {

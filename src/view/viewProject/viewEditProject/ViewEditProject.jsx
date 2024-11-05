@@ -83,7 +83,7 @@ const ViewEditProject = () => {
 
             <TextField
               name="nombre"
-              label={"Nombre"}
+              label={"Nombre(s)"}
               placeholder="Nombre de la persona"
               type="text"
               Icon={null}
@@ -174,7 +174,7 @@ const ViewEditProject = () => {
             <TextField
               name="numero"
               label={"Número de hogar"}
-              placeholder="Número de hogar"
+              placeholder="Número del edificio"
               type="text"
               Icon={null}
               isIcon={false}
@@ -228,7 +228,7 @@ const ViewEditProject = () => {
             <TextField
               name="numeroP"
               label={"Número de hogar"}
-              placeholder="Número de hogar"
+              placeholder="Número del edificio"
               type="text"
               Icon={null}
               isIcon={false}

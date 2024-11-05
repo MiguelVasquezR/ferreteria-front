@@ -140,7 +140,7 @@ const ViewEditSuplier = ({ proveedoresState }) => {
               isError={!!methods?.formState.errors?.numero?.message}
               Icon={false}
               isIcon={false}
-              placeholder={"Nombre del Proveedor..."}
+              placeholder={"12xx"}
               register={methods.register}
             />
 
