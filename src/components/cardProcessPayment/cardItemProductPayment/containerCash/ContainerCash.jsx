@@ -9,6 +9,7 @@ import axios from "axios";
 const ContainerCash = ({ totalPagar, pago }) => {
   const [efectivo, setEfectivo] = useState(0);
   const [cambio, setCambio] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const cookie = new Cookies();
   const { productos } = pago;
 
@@ -38,12 +39,43 @@ const ContainerCash = ({ totalPagar, pago }) => {
         },
       };
 
+      setIsLoading(true);
       axios
         .request(conf)
         .then((res) => {
-          console.log(res);
+          if (res.data === "Venta guardada exitosamente") {
+            const conftP = {
+              method: "GET",
+              url: `${import.meta.env.VITE_URL}/producto/poco-stock`,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${cookie.get("token")}`,
+              },
+            };
+
+            axios
+              .request(conftP)
+              .then((res) => {
+                console.log(res);
+
+                if (res.data.length > 0) {
+                  toast.success(
+                    `Su venta ha sido procesada, sin embargo, los siguientes productos están en poco stock ${res.data.map(
+                      (p) => {
+                        return p;
+                      }
+                    )}`
+                  );
+                } else {
+                  toast.success("Venta guardada exitosamente");
+                }
+              })
+              .catch(() => {
+                toast.error("Error al procesar el pago");
+              });
+          }
         })
-        .catch((err) => {
+        .catch(() => {
           toast.error("Error al procesar el pago");
         });
     }
@@ -81,7 +113,7 @@ const ContainerCash = ({ totalPagar, pago }) => {
           texto="Pagar"
           type="submit"
           Icon={false}
-          isLoading={false}
+          isLoading={isLoading}
           onClick={onSubmit}
         />
       </div>
