@@ -15,6 +15,6 @@ export const Passwords = z
   });
 
 export const UserLogin = z.object({
-  user: z.string().min(1, "El usuario es requerido"),
-  password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+  usuario: z.string().min(1, "El usuario es requerido"),
+  contrasena: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
 });

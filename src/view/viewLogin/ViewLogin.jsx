@@ -39,6 +39,7 @@ const ViewLogin = () => {
           }
         })
         .catch((err) => {
+          setIsLoadingView(true);
           console.log(err);
         });
     }
@@ -63,7 +64,7 @@ const ViewLogin = () => {
 
           <TextField
             label="Ingresa tu usuario o correo"
-            name="user"
+            name="usuario"
             type="text"
             isIcon={false}
             Icon={null}
@@ -75,7 +76,7 @@ const ViewLogin = () => {
 
           <TextField
             label="Ingresa tu contraseña"
-            name="password"
+            name="contrasena"
             type="password"
             isIcon={true}
             Icon={IoIosEyeOff}
