@@ -6,6 +6,7 @@ import project_reducer from "./slices/project/project_reducers";
 import package_reducer from "./slices/package/package_reducers";
 import payment_slice from "./slices/payment/payment_slice";
 import users_reducer from "./slices/users/users_reducer";
+import offer_reducer from "./slices/offer/offer_reducer";
 
 export const store = configureStore({
   reducer: {
@@ -15,5 +16,6 @@ export const store = configureStore({
     paquetes: package_reducer,
     pagos: payment_slice,
     usuarios: users_reducer,
+    ofertas: offer_reducer,
   },
 });

@@ -1,10 +1,41 @@
 import Header from "../../components/Header/Header";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
-import { IoChevronDownOutline } from "react-icons/io5";
+import { User } from "../../schema/SchemaUser";
+import { zodResolver } from "@hookform/resolvers/zod";
+import TextField from "../../components/Form/TextField/TextField";
+import Button from "../../components/Buttons/Button";
+import { useState } from "react";
 
 const ViewAddUser = () => {
-  const methods = useForm();
+  const methods = useForm({
+    resolver: zodResolver(User),
+    mode: "onChange",
+  });
+  const [tipoView, setTipoView] = useState({
+    tipo: "",
+    error: false,
+  });
+
+  const onChangeSelect = (e) => {
+    setTipoView(e.target.value);
+  };
+
+  const onSubmit = (data) => {
+    console.log(tipoView);
+
+    /* if (tipoView.tipo === "" || tipoView.tipo === undefined) {
+      setTipoView({ ...tipoView, error: true });
+      return;
+    } */
+
+    const dataToSend = {
+      ...data,
+      tipo: tipoView.tipo,
+    };
+
+    console.log(dataToSend);
+  };
 
   return (
     <div
@@ -18,126 +49,115 @@ const ViewAddUser = () => {
         <p className="font-bold text-left text-[18px]">Agregar Usuario</p>
       </div>
 
-      <form className="flex flex-col mt-5 w-full max-w-[900px] px-4 md:px-40">
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex flex-col mt-5 w-full gap-5 max-w-[900px] px-4 md:px-40"
+      >
         <FormProvider {...methods}>
           <div className="flex flex-col gap-5 w-full mt-4">
             <div className="mt-1 text-lg w-full text-left px-14">
               <b>Información Personal</b>
             </div>
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="nombre" className="pl-2 mb-1 text-lg">
-                Nombre
-              </label>
-              <input
-                id="nombre"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="nombre"
+              label="Nombre Completo"
+              type="text"
+              placeholder="Nombre Completo"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.nombre}
+              Error={methods.formState.errors.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="apellidoPaterno" className="pl-2 mb-1 text-lg">
-                Apellido Paterno
-              </label>
-              <input
-                id="apellidoPaterno"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="telefono"
+              label="Teléfono"
+              type="text"
+              placeholder="Nombre Completo"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.telefono}
+              Error={methods.formState.errors.telefono?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="apellidoMaterno" className="pl-2 mb-1 text-lg">
-                Apellido Materno
-              </label>
-              <input
-                id="apellidoMaterno"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="correo"
+              label="Correo Personal"
+              type="text"
+              placeholder="Correo"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.correo}
+              Error={methods.formState.errors.correo?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="telefono" className="pl-2 mb-1 text-lg">
-                Teléfono
-              </label>
-              <input
-                id="telefono"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
-
-            <div className="flex flex-col w-full">
-              <label htmlFor="correo" className="pl-2 mb-1 text-lg">
-                Correo
-              </label>
-              <input
-                id="correo"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
-
-            <div className="flex flex-col w-full">
-              <label htmlFor="rfc" className="pl-2 mb-1 text-lg">
-                RFC
-              </label>
-              <input
-                id="rfc"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="rfc"
+              label="RFC"
+              type="text"
+              placeholder="XXXXXXXXXXXXX"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.rfc}
+              Error={methods.formState.errors.rfc?.message}
+            />
 
             <div className="mt-1 text-lg w-full text-left px-14">
               <b>Dirección</b>
             </div>
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="calle" className="pl-2 mb-1 text-lg">
-                Calle
-              </label>
-              <input
-                id="calle"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="calle"
+              label="Calle"
+              type="text"
+              placeholder="Calle"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.calle}
+              Error={methods.formState.errors.calle?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="numero" className="pl-2 mb-1 text-lg">
-                Número
-              </label>
-              <input
-                id="numero"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="numero"
+              label="Número de Casa"
+              type="text"
+              placeholder="10"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.numero}
+              Error={methods.formState.errors.numero?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="colonia" className="pl-2 mb-1 text-lg">
-                Colonia
-              </label>
-              <input
-                id="colonia"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="colonia"
+              label="Colonia"
+              type="text"
+              placeholder="Colonia"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.colonia}
+              Error={methods.formState.errors.colonia?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="ciudad" className="pl-2 mb-1 text-lg">
-                Ciudad
-              </label>
-              <input
-                id="ciudad"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              name="ciudad"
+              label="Ciudad"
+              type="text"
+              placeholder="Ciudad"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.ciudad}
+              Error={methods.formState.errors.ciudad?.message}
+            />
 
             <div className="mt-1 text-lg w-full text-left px-14">
               <b>Información de Empleado</b>
@@ -147,38 +167,49 @@ const ViewAddUser = () => {
               <label htmlFor="tipoEmpleado" className="pl-2 mb-1 text-lg">
                 Tipo de empleado
               </label>
-              <div className="relative flex flex-col">
-                <IoChevronDownOutline
-                  size={20}
-                  className="absolute top-10 right-3"
-                />
-                <input
-                  id="tipoEmpleado"
-                  type="text"
-                  className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none pr-10 mt-6"
-                />
-              </div>
+
+              <select
+                onChange={onChangeSelect}
+                className="shadow-md rounded-md p-2 w-full outline-none pr-8 lg:h-[44px] text-[14px]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="Vendedor">Vendedor</option>
+                <option value="Administrador">Administrador de Almacen</option>
+                <option value="Gerente">Gerente</option>
+              </select>
+              {tipoView.error && (
+                <p className="text-error text-sm pl-2">
+                  Debe seleccionar una opción
+                </p>
+              )}
             </div>
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="sueldo" className="pl-2 mb-1 text-lg">
-                Sueldo
-              </label>
-              <input
-                id="sueldo"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
+            <TextField
+              name="sueldo"
+              label="Sueldo del Empleado"
+              type="text"
+              placeholder="1200"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.sueldo}
+              Error={methods.formState.errors.sueldo?.message}
+            />
+
+            <div>
+              <Button
+                background="bg-[#F58A27]"
+                isIcon={false}
+                texto="Agregar Usuario"
+                type="submit"
+                Icon={null}
+                isLoading={false}
+                onClick={() => {}}
               />
             </div>
           </div>
         </FormProvider>
       </form>
-
-      <div className="w-full flex justify-center mt-8 px-4">
-        <div className="bg-[#F58A27] rounded-md text-white flex flex-row justify-center items-center p-2 cursor-pointer w-full max-w-[250px] h-12">
-          <span className="text-xl">Generar</span>
-        </div>
-      </div>
     </div>
   );
 };

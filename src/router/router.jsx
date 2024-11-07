@@ -29,6 +29,7 @@ import ViewEditUser from "../view/viewEditUser/ViewEditUser.jsx";
 import ViewAddUser from "../view/viewAddUser/ViewAddUser.jsx";
 import ViewSettings from "../view/viewSettings/ViewSettings.jsx";
 import ViewUser from "../view/viewUser/ViewUser.jsx";
+import ViewListOffer from "../view/viewOfferProduct/viewListOffer/ViewListOffer.jsx";
 
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
   {
     path: "/list-package",
     element: <ViewListPackage />,
+  },
+  {
+    path: "/offers",
+    element: <ViewListOffer />,
   },
   {
     path: "/offer-product",

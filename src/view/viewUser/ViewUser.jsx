@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import { FaPlus } from "react-icons/fa6";
 import { Cookies } from "react-cookie";
@@ -7,12 +7,18 @@ import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { dataUsuarios } from "../../store/slices/users/users_reducer";
+import SupliearLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewUser = ({ setDataUsuarios, usuariosState }) => {
   const cookie = new Cookies();
   const { usuarios } = usuariosState;
+  const [isLoadingView, setIsLoadingView] = useState(true);
 
   useEffect(() => {
+    if (usuarios.length > 0) {
+      return;
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
@@ -22,19 +28,29 @@ const ViewUser = ({ setDataUsuarios, usuariosState }) => {
       url: `${import.meta.env.VITE_URL}/usuario/obtener-usuarios`,
     };
 
+    setIsLoadingView(true);
     axios
       .request(config)
       .then((response) => {
         setDataUsuarios(response.data);
+        setIsLoadingView(false);
       })
       .catch(() => {
         toast.error("Error al obtener los usuarios");
+        setIsLoadingView(false);
       });
   }, []);
 
   return (
     <>
       <Header />
+
+      {isLoadingView && (
+        <div className="w-screen h-screen absolute">
+          <SupliearLoading />
+        </div>
+      )}
+
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-row justify-between items-center p-5 w-full">
           <p className="font-bold text-[24px]">Usuarios</p>
@@ -56,8 +72,8 @@ const ViewUser = ({ setDataUsuarios, usuariosState }) => {
               <tr className="w-full">
                 <th>Nombre</th>
                 <th>Teléfono</th>
-                <th className="hidden lg:table-row">Correo</th>
-                <th className="hidden lg:table-row">RFC</th>
+                <th className="hidden lg:table-column">Correo</th>
+                <th className="hidden lg:table-column">RFC</th>
                 <th>Sueldo</th>
                 <th>Usuario</th>
               </tr>
@@ -71,8 +87,8 @@ const ViewUser = ({ setDataUsuarios, usuariosState }) => {
                   >
                     <td>{user?.nombre}</td>
                     <td>{user?.telefono}</td>
-                    <td className="hidden lg:table-row">{user?.correo}</td>
-                    <td className="hidden lg:table-row">{user?.rfc}</td>
+                    <td className="hidden lg:table-column">{user?.correo}</td>
+                    <td className="hidden lg:table-column">{user?.rfc}</td>
                     <td>{user?.sueldo}</td>
                     <td>{user?.usuario}</td>
                   </tr>
