@@ -56,7 +56,7 @@ const ViewAddUser = () => {
         <FormProvider {...methods}>
           <div className="flex flex-col gap-5 w-full mt-4">
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b>Información Personal</b>
+              <b className="text-[25px]">Informacion Personal</b>
             </div>
 
             <TextField
@@ -108,7 +108,7 @@ const ViewAddUser = () => {
             />
 
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b>Dirección</b>
+              <b className="text-[25px]">Dirección</b>
             </div>
 
             <TextField
@@ -160,7 +160,7 @@ const ViewAddUser = () => {
             />
 
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b>Información de Empleado</b>
+              <b className="text-[25px]">Información de Empleado</b>
             </div>
 
             <div className="flex flex-col w-full">

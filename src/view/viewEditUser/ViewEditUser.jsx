@@ -1,7 +1,8 @@
 import Header from "../../components/Header/Header";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
-import { IoChevronDownOutline } from "react-icons/io5";
+import TextField from "../../components/Form/TextField/TextField";
+import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 
 const ViewEditUser = () => {
   const methods = useForm();
@@ -22,154 +23,125 @@ const ViewEditUser = () => {
         <FormProvider {...methods}>
           <div className="flex flex-col gap-5 w-full mt-4">
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b>Información Personal</b>
+              <b className="text-[25px]">Informacion Personal</b>
             </div>
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="nombre" className="pl-2 mb-1 text-lg">
-                Nombre
-              </label>
-              <input
-                id="nombre"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Nombre"
+              name="nombre"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="apellidoPaterno" className="pl-2 mb-1 text-lg">
-                Apellido Paterno
-              </label>
-              <input
-                id="apellidoPaterno"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Apellido Paterno"
+              name="apellido paterno"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="apellidoMaterno" className="pl-2 mb-1 text-lg">
-                Apellido Materno
-              </label>
-              <input
-                id="apellidoMaterno"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Apellido Materno"
+              name="apellido materno"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="telefono" className="pl-2 mb-1 text-lg">
-                Teléfono
-              </label>
-              <input
-                id="telefono"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Telefono"
+              name="telefono"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="correo" className="pl-2 mb-1 text-lg">
-                Correo
-              </label>
-              <input
-                id="correo"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Correo"
+              name="correo"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="rfc" className="pl-2 mb-1 text-lg">
-                RFC
-              </label>
-              <input
-                id="rfc"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="RFC"
+              name="nombre"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b>Dirección</b>
+              <b className="text-[25px]">Dirección</b>
             </div>
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="calle" className="pl-2 mb-1 text-lg">
-                Calle
-              </label>
-              <input
-                id="calle"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Calle"
+              name="calle"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="numero" className="pl-2 mb-1 text-lg">
-                Número
-              </label>
-              <input
-                id="numero"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Número"
+              name="numero"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="colonia" className="pl-2 mb-1 text-lg">
-                Colonia
-              </label>
-              <input
-                id="colonia"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Colonia"
+              name="colonia"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="ciudad" className="pl-2 mb-1 text-lg">
-                Ciudad
-              </label>
-              <input
-                id="ciudad"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Ciudad"
+              name="ciudad"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
 
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b>Información de Empleado</b>
+              <b className="text-[25px]">Información de Empleado</b>
             </div>
 
-            <div className="flex flex-col w-full">
-              <label htmlFor="tipoEmpleado" className="pl-2 mb-1 text-lg">
-                Tipo de empleado
-              </label>
-              <div className="relative flex flex-col">
-                <IoChevronDownOutline
-                  size={20}
-                  className="absolute top-10 right-3"
-                />
-                <input
-                  id="tipoEmpleado"
-                  type="text"
-                  className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none pr-10 mt-6"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col w-full">
-              <label htmlFor="sueldo" className="pl-2 mb-1 text-lg">
-                Sueldo
-              </label>
-              <input
-                id="sueldo"
-                type="text"
-                className="shadow-md rounded-lg p-3 w-full outline-none bg-gradient-to-r from-gray-200 to-gray-300 border-none"
-              />
-            </div>
+            <TextField
+              label="Tipo de empleado"
+              name="tipo de empleado"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+              isIcon={true}
+              Icon={<IoIosArrowDown size={32} color="black" />}
+            />
+            <TextField
+              label="Sueldo"
+              name="sueldo"
+              type="text"
+              register={methods.register}
+              Error={methods?.formState.errors?.nombre?.message}
+              isError={!!methods?.formState.errors?.nombre?.message}
+            />
           </div>
         </FormProvider>
       </form>
