@@ -1,99 +1,239 @@
 import Header from "../../components/Header/Header";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
-import Card from "../../components/cardAddPackage/cardAddPackage"; // Importa el componente Card circular
+import Card from "../../components/cardAddPackage/cardAddPackage"; 
+import TextField from "../../components/Form/TextField/TextField";
+import TextArea from "../../components/Form/TextArea/TextArea";
+import Button from "../../components/Buttons/Button";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  actualizarStatus,
+  dataProduct,
+} from "../../store/slices/product/product_reducers";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Cookies } from "react-cookie";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SchemaPackage } from "../../schema/SchemaPackage";
+import { useNavigate } from "react-router-dom";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
-const ViewAddPackage = () => {
-  const methods = useForm();
+const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
+  const methods = useForm({
+    resolver: zodResolver(SchemaPackage),
+    mode: "onChange",
+  });
+  const cookie = new Cookies();
+  const { productos } = products;
+  const [listProducts, setListProducts] = useState([]);
+  const navigate = useNavigate();
+  const [isLoadingSubmmit, setIsLoadingSubmit] = useState(false);
+  const [isLoadinView, setIsLoadingView] = useState(false);
+
+  const addProductsToList = (p) => {
+    const productExists = listProducts.find(
+      (product) => product.idProducto === p.idProducto
+    );
+    if (productExists) {
+      setListProducts(
+        listProducts.filter((product) => product.idProducto !== p.idProducto)
+      );
+    } else {
+      setListProducts([...listProducts, p]);
+    }
+  };
+
+  useEffect(() => {
+    if (productos.length > 0) {
+      return;
+    }
+    setIsLoadingView(true);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      url: `${import.meta.env.VITE_URL}/producto/obtener-productos`,
+    };
+
+    setStatus("loading");
+    axios
+      .request(config)
+      .then((response) => {
+        setDataProducts(response.data);
+        setStatus("succeeded");
+        setIsLoadingView(false);
+      })
+      .catch(() => {
+        setIsLoadingView(false);
+        toast.error("Error al obtener los productos");
+        setStatus("error");
+      });
+  }, [setDataProducts, setStatus]);
+
+  const handleSubmit = (data) => {
+    if (listProducts.length === 0) {
+      toast.error("Debes seleccionar al menos un producto");
+      return;
+    }
+    setIsLoadingSubmit(true);
+
+    const information = {
+      nombre: data.nombre,
+      precio: data.precio,
+      descripcion: data.descripcion,
+      productos: listProducts,
+    };
+
+    const config = {
+      method: "POST",
+      url: `${import.meta.env.VITE_URL}/paquete/agregar`,
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      data: information,
+      body: JSON.stringify(information),
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        if (response.data === "Paquete agregado exitosamente") {
+          toast.success("Paquete creado exitosamente");
+          navigate("/list-package");
+        }
+      })
+      .catch(() => {
+        setIsLoadingSubmit(false);
+        toast.error("Error al crear el paquete");
+      });
+  };
 
   return (
-    <div style={{ fontFamily: "Georgia", fontSize: "12px" }}>
-      {" "}
-      {/* Aplicando estilo en línea */}
-      <Header />
-      {/* Contenedor principal de la página */}
-      <div className="flex flex-col w-full max-w-[2000px] mx-auto">
-        {/* Contenedor para la flecha y el título */}
-        <div className="flex flex-row items-center gap-2 w-full p-5 pl-0">
-          <IoArrowBackOutline size={32} />
-          <p className="font-bold text-left text-[18px]">Editar paquete</p>
+    <>
+      {isLoadinView && (
+        <div className="h-screen bg-white/60  w-screen relative">
+          <SuplierLoading />ƒ
         </div>
-      </div>
-      <div>
-        <form className="flex flex-col items-start gap-5 lg:flex-row lg:items-start lg:justify-start">
-          <FormProvider {...methods}>
-            <div className="w-full lg:w-1/2 flex flex-col items-start gap-5 ml-10">
-              {/* Aumentado margen izquierdo con 'ml-10' */}
-              {/* Campo de texto para Nombre */}
-              <div className="flex flex-col w-full">
-                <label htmlFor="nombre" className="pl-2 mb-1">
-                  Nombre
-                </label>
-                <input
-                  id="nombre"
-                  type="text"
-                  {...methods.register("nombre", {
-                    required: "Este campo es obligatorio",
-                  })}
-                  className={`shadow-md rounded-lg p-2 w-4/5 outline-none pr-8 lg:h-[44px] bg-gradient-to-r from-gray-200 to-gray-300 border-none ${
-                    methods.formState.errors.nombre ? "border-red-500" : ""
-                  }`}
-                />
-                {methods.formState.errors.nombre && (
-                  <p className="text-red-500 text-sm pl-2">
-                    {methods.formState.errors.nombre.message}
-                  </p>
-                )}
-              </div>
+      )}
 
-              {/* Campo de texto para Descripción */}
-              <div className="flex flex-col w-full">
-                <label htmlFor="descripcion" className="pl-2 mb-1">
-                  Descripción
-                </label>
-                <textarea
-                  id="descripcion"
-                  {...methods.register("descripcion", {
-                    required: "Este campo es obligatorio",
-                  })}
-                  className={`shadow-md rounded-lg p-2 w-4/5 outline-none pr-8 lg:h-[100px] bg-gradient-to-r from-gray-200 to-gray-300 border-none ${
-                    methods.formState.errors.descripcion ? "border-red-500" : ""
-                  }`}
-                />
-                {methods.formState.errors.descripcion && (
-                  <p className="text-red-500 text-sm pl-2">
-                    {methods.formState.errors.descripcion.message}
-                  </p>
-                )}
+      <Header />
+
+      <div className="p-5 lg:w-[90%] mx-auto">
+        <div className="flex flex-row justify-start items-center gap-2 font-bold">
+          <IoArrowBackOutline
+            onClick={() => navigate(-1)}
+            size={28}
+            color="black"
+          />
+          <h1>Crear Paquete</h1>
+        </div>
+
+        <form
+          onSubmit={methods.handleSubmit(handleSubmit)}
+          className="flex flex-col justify-center items-center gap-5 my-5 lg:w-[80%] lg:mx-auto"
+        >
+          <FormProvider {...methods}>
+            <TextField
+              name="nombre"
+              label="Nombre del paquete"
+              placeholder="Nombre"
+              isError={!!methods.formState.errors.nombre}
+              Error={methods.formState.errors.nombre?.message}
+              register={methods.register}
+              type="text"
+              Icon={null}
+              isIcon={false}
+            />
+            <TextField
+              name="precio"
+              label="Precio del paquete"
+              placeholder="$500.00"
+              isError={!!methods.formState.errors.nombre}
+              Error={methods.formState.errors.nombre?.message}
+              register={methods.register}
+              type="number"
+              Icon={null}
+              isIcon={false}
+            />
+            <TextArea
+              isError={!!methods.formState.errors.descripcion}
+              register={methods.register}
+              name="descripcion"
+              label="Descripción"
+              error={methods.formState.errors.descripcion}
+              placeholder={"Descripción del paquete"}
+            />
+
+            <div className="w-full">
+              <p className="font-bold lg:text-[22px]">Productos</p>
+
+              <div className="flex overflow-y-auto gap-5 p-4 whitespace-nowrap">
+                {productos.map((producto, index) => (
+                  <Card
+                    onClick={() => addProductsToList(producto)}
+                    key={index}
+                    urlImage={producto.urlImage}
+                    name={producto.nombre}
+                    id={producto.idProducto}
+                  />
+                ))}
               </div>
+            </div>
+
+            <div className="w-full my-5">
+              <p className="font-bold lg:text-[22px]">
+                Lista del Productos Seleccionados
+              </p>
+              <ol>
+                {listProducts.map((product, index) => (
+                  <li className="px-5" key={index}>
+                    {product.nombre}
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="my-5 w-full h-[40px] lg:h-[50px] lg:w-[50%]">
+              <Button
+                background="bg-[#F58A27]"
+                text="Crear Paquete"
+                isIcon={false}
+                texto="Crear Paquete"
+                type="submit"
+                Icon={null}
+                onClick={() => {}}
+                isLoading={isLoadingSubmmit}
+              />
             </div>
           </FormProvider>
         </form>
       </div>
-      {/* Sección de Productos */}
-      <h2 className="text-lg font-bold mt-8 ml-10">Productos</h2>
-      <div className="flex justify-around mt-8">
-        <Card />
-        <Card />
-        <Card />
-      </div>
-      {/* Alineado a la izquierda */}
-      <div className="mt-4 ml-10">
-        <h3>Lista</h3>
-        <br />
-        <ol className="list-decimal list-inside">
-          <li>Martillo</li>
-          <li>Clavo 1p</li>
-        </ol>
-      </div>
-      {/* Botón Generar centrado y movido a la derecha */}
-      <div className="w-full flex justify-end mt-8 max-w-[600px] ml-[400px]">
-        <div className="bg-[#F58A27] rounded-md text-white flex flex-row justify-center items-center p-2 gap-2 cursor-pointer w-full max-w-[200px] h-10">
-          <span className="text-xl">Generar</span>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
-export default ViewAddPackage;
+ViewAddPackage.propTypes = {
+  setDataProducts: PropTypes.func.isRequired,
+  products: PropTypes.any,
+  setStatus: PropTypes.any,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    products: state.productos,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setDataProducts: (data) => dispatch(dataProduct(data)),
+    setStatus: (status) => dispatch(actualizarStatus(status)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewAddPackage);

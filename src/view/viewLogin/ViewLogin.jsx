@@ -20,9 +20,11 @@ const ViewLogin = () => {
   const [isError, setIsError] = useState("");
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const [isLoadinView, setIsLoadingView] = useState(false);
 
   const onSubmit = (data) => {
     setIsError("");
+    setIsLoadingView(true);
     if (data.usuario !== "" && data.contrasena !== "") {
       axios
         .post(`${import.meta.env.VITE_URL}/login`, data)
@@ -95,6 +97,7 @@ const ViewLogin = () => {
               Icon={null}
               background="bg-blue"
               onClick={() => {}}
+              isLoading={isLoadinView}
             />
           </div>
         </FormProvider>
