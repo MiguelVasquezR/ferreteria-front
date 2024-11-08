@@ -24,6 +24,9 @@ import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject
 import ViewEditPackage from "../view/viewEditPackage/ViewEditPackage.jsx";
 import ViewAddPackage from "../view/viewAddPackage/ViewAddPackage.jsx";
 import ViewListPackage from "../view/viewListPackage/viewListPackages.jsx";
+import { element } from "prop-types";
+import ViewEditProject from "../view/viewProject/viewEditProject/ViewEditProject.jsx";
+
 import ViewOfferProduct from "../view/viewOfferProduct/ViewOfferProduct.jsx";
 import ViewEditUser from "../view/viewEditUser/ViewEditUser.jsx";
 import ViewAddUser from "../view/viewAddUser/ViewAddUser.jsx";
@@ -132,6 +135,25 @@ const router = createBrowserRouter([
     element: <ViewDailyReport />,
   },
 
+  {
+    path: "/edit-project",
+    element: <ViewEditProject />,
+  },
+
+  {
+    path: "/Edit-Package",
+    element: <ViewEditPackage />,
+  },
+
+  {
+    path: "/Add-package",
+    element: <ViewAddPackage />,
+  },
+
+  {
+    path: "/List-package",
+    element: <ViewListPackage />,
+  },
   {
     path: "/edit-project/:id",
     element: <ViewEditProject />,

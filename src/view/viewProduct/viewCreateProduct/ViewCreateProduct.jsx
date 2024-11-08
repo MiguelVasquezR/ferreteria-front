@@ -20,7 +20,7 @@ const ViewCreateProduct = () => {
   });
   const navigate = useNavigate();
   const cookie = new Cookies();
-
+  console.log (methods.formState.errors)
   const onSubmit = (data) => {
     const config = {
       headers: {
@@ -114,8 +114,8 @@ const ViewCreateProduct = () => {
                 type="text"
                 placeholder="1, 4, 4.5kg, etc."
                 register={methods.register}
-                Error={methods?.formState.errors?.stock_minimo?.message}
-                isError={!!methods?.formState.errors?.stock_minimo?.message}
+                Error={methods?.formState.errors?.stockMinimo?.message}
+                isError={!!methods?.formState.errors?.stockMinimo?.message}
               />
 
               <TextField
@@ -129,23 +129,23 @@ const ViewCreateProduct = () => {
               />
 
               <TextField
-                label="Precio menudeo del producto"
+                label="Precio a menudeo del producto"
                 name="precioMenudeo"
                 type="text"
                 placeholder="Precio del producto"
                 register={methods.register}
-                Error={methods?.formState.errors?.precio_menudeo?.message}
-                isError={!!methods?.formState.errors?.precio_menudeo?.message}
+                Error={methods?.formState.errors?.precioMenudeo?.message}
+                isError={!!methods?.formState.errors?.precioMenudeo?.message}
               />
 
               <TextField
-                label="Precio mayoreo del producto"
+                label="Precio a mayoreo del producto"
                 name="precioMayoreo"
                 type="text"
                 placeholder="Precio mayoreo del producto"
                 register={methods.register}
-                Error={methods?.formState.errors?.precio_mayoreo?.message}
-                isError={!!methods?.formState.errors?.precio_mayoreo?.message}
+                Error={methods?.formState.errors?.precioMayoreo?.message}
+                isError={!!methods?.formState.errors?.precioMayoreo?.message}
               />
 
               <TextArea
