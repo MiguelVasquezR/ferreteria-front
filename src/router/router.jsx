@@ -134,60 +134,59 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"/edit-project",
-    element: <ViewEditProject/>
-  },
-
-
-  {
-    path:"/Edit-Package",
-    element:< ViewEditPackage/>
-  },
-
-  {
-path:"/Add-package",
-element:<ViewAddPackage/>
-  },
-  
-  {
-path:"/List-package",
-element:<ViewListPackage/>
-  },
-
-    path: "/edit-project/:id",
-    element:<ViewEditProject />
+    path: "/edit-project",
+    element: <ViewEditProject />,
   },
 
   {
     path: "/Edit-Package",
-    element: <ViewEditPackage />
+    element: <ViewEditPackage />,
+  },
+
+  {
+    path: "/Add-package",
+    element: <ViewAddPackage />,
+  },
+
+  {
+    path: "/List-package",
+    element: <ViewListPackage />,
+  },
+  {
+    path: "/edit-project/:id",
+    element: <ViewEditProject />,
+  },
+
+  {
+    path: "/Edit-Package",
+    element: <ViewEditPackage />,
   },
 
   {
     path: "/add-package",
-    element: <ViewAddPackage />
+    element: <ViewAddPackage />,
   },
 
   {
     path: "/list-package",
-    element: <ViewListPackage />
+    element: <ViewListPackage />,
   },
   {
     path: "/offer-Product",
-    element: <ViewOfferProduct />
+    element: <ViewOfferProduct />,
   },
   {
     path: "/edit-User",
-    element: <ViewEditUser />
+    element: <ViewEditUser />,
   },
   {
     path: "/add-user",
-    element: <ViewAddUser />
+    element: <ViewAddUser />,
   },
   {
     path: "/settings",
-    element: <ViewSettings />
-  }
+    element: <ViewSettings />,
+  },
 ]);
 
 const AppRouter = () => {
