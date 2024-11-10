@@ -6,6 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import TextField from "../../components/Form/TextField/TextField";
 import Button from "../../components/Buttons/Button";
 import { useState } from "react";
+import { Cookies } from "react-cookie";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const ViewAddUser = () => {
   const methods = useForm({
@@ -16,30 +20,56 @@ const ViewAddUser = () => {
     tipo: "",
     error: false,
   });
+  const cookie = new Cookies();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeSelect = (e) => {
     setTipoView(e.target.value);
   };
 
   const onSubmit = (data) => {
-    console.log(tipoView);
-
-    /* if (tipoView.tipo === "" || tipoView.tipo === undefined) {
+    if (tipoView.tipo === "" || tipoView.tipo === undefined) {
       setTipoView({ ...tipoView, error: true });
       return;
-    } */
+    }
 
     const dataToSend = {
       ...data,
-      tipo: tipoView.tipo,
+      tipo: tipoView,
     };
 
-    console.log(dataToSend);
+    const conf = {
+      method: "POST",
+      url: `${import.meta.env.VITE_URL}/usuario/agregar`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookie.get("token")}`,
+      },
+      data: dataToSend,
+    };
+
+    setIsLoading(true);
+    axios
+      .request(conf)
+      .then((response) => {
+        console.log(response);
+        if (response.data === "Usuario agregado exitosamente") {
+          toast.success("Usuario agregado exitosamente");
+          navigate("/users");
+        } else {
+          toast.error("Error al agregar el usuario");
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        toast.error("Error al agregar el usuario");
+      });
   };
 
   return (
     <div
-      className="flex flex-col items-center"
+      className="flex flex-col items-center pb-5"
       style={{ fontFamily: "Georgia", fontSize: "12px" }}
     >
       <Header />
@@ -196,6 +226,30 @@ const ViewAddUser = () => {
               Error={methods.formState.errors.sueldo?.message}
             />
 
+            <TextField
+              name="usuario"
+              label="Usuario del Empleado"
+              type="text"
+              placeholder="MVR1209"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.usuario}
+              Error={methods.formState.errors.usuario?.message}
+            />
+
+            <TextField
+              name="contrasena"
+              label="Contraseña del Empleado"
+              type="password"
+              placeholder="*********"
+              Icon={null}
+              isIcon={false}
+              register={methods.register}
+              isError={methods.formState.errors.sueldo}
+              Error={methods.formState.errors.sueldo?.message}
+            />
+
             <div>
               <Button
                 background="bg-[#F58A27]"
@@ -203,7 +257,7 @@ const ViewAddUser = () => {
                 texto="Agregar Usuario"
                 type="submit"
                 Icon={null}
-                isLoading={false}
+                isLoading={isLoading}
                 onClick={() => {}}
               />
             </div>
