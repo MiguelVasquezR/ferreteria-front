@@ -146,7 +146,7 @@ const ViewCreateSuplier = () => {
                 isError={!!methods?.formState.errors?.numero?.message}
                 Icon={false}
                 isIcon={false}
-                placeholder={"Nombre del Proveedor..."}
+                placeholder={"Numero del Edificio"}
                 register={methods.register}
               />
 
