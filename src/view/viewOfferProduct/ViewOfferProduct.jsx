@@ -3,7 +3,6 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
 import Card from "../../components/cardAddPackage/cardAddPackage";
 import TextField from "../../components/Form/TextField/TextField";
-import TextArea from "../../components/Form/TextArea/TextArea";
 import Button from "../../components/Buttons/Button";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";

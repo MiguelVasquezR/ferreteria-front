@@ -14,15 +14,9 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
   const { ofertas } = ofertasState;
   const [busqueda, setBusqueda] = useState([]);
 
-  const filterBusqueda = useMemo(() => {
-    return ofertas
-      ? ofertas.filter((ofertas) =>
-          ofertas?.nombreProducto
-            ?.toLowerCase()
-            .includes(busqueda?.toLowerCase())
-        )
-      : "";
-  }, [ofertas, busqueda]);
+  const filterBusqueda = ofertas.filter((ofertas) =>
+    ofertas?.nombreProducto?.toLowerCase().includes(busqueda?.toLowerCase())
+  );
 
   useEffect(() => {
     const config = {
@@ -39,7 +33,7 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
       .then((response) => {
         setDataOfertas(response.data);
       })
-      .catch(() => {
+      .catch((err) => {
         toast.error("Error al obtener las ofertas");
       });
   }, []);
@@ -85,16 +79,20 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-10 justify-center gap-5">
-          {filterBusqueda.length === 0
-            ? toast.error("No se encontraron ofertas")
-            : filterBusqueda.map((oferta) => (
-                <CardOffer
-                  key={oferta.idOferta}
-                  nombre={oferta.nombreProducto}
-                  precio={oferta.precioOferta}
-                  fechaLimite={oferta.fechaFinal}
-                />
-              ))}
+          {filterBusqueda.length === 0 ? (
+            <p className="text-center font-bold text-[24px]">
+              No se han podido cargar las ofertas
+            </p>
+          ) : (
+            filterBusqueda.map((oferta) => (
+              <CardOffer
+                key={oferta.idOferta}
+                nombre={oferta.nombreProducto}
+                precio={oferta.precioOferta}
+                fechaLimite={oferta.fechaFinal}
+              />
+            ))
+          )}
         </div>
 
         <div className="w-full flex justify-center items-center"></div>
