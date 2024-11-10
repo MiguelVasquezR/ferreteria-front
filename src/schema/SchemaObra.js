@@ -5,8 +5,7 @@ export const schemaObra = z.object({
     .string()
     .min(1, "El nombres es requrido")
     .max(25, "El nombre es muy largo")
-    .regex(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo debe contener letras y espacios"),
-  paterno: z
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9#.]+$/, "El nombre solo admite .  #  letras y números"),  paterno: z
     .string()
     .min(1, "El apellido es requrido")
     .max(25, "El apellido es muy largo")

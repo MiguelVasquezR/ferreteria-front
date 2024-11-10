@@ -36,30 +36,12 @@ const ViewEditUser = () => {
             />
 
             <TextField
-              label="Apellido Paterno"
-              name="apellido paterno"
-              type="text"
-              register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
-            />
-
-            <TextField
-              label="Apellido Materno"
-              name="apellido materno"
-              type="text"
-              register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
-            />
-
-            <TextField
               label="Telefono"
               name="telefono"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.telefono?.message}
+              isError={!!methods?.formState.errors?.telefono?.message}
             />
 
             <TextField
@@ -67,8 +49,8 @@ const ViewEditUser = () => {
               name="correo"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.correo?.message}
+              isError={!!methods?.formState.errors?.correo?.message}
             />
 
             <TextField
@@ -76,8 +58,8 @@ const ViewEditUser = () => {
               name="nombre"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.rfc?.message}
+              isError={!!methods?.formState.errors?.rfc?.message}
             />
 
             <div className="mt-1 text-lg w-full text-left px-14">
@@ -89,8 +71,8 @@ const ViewEditUser = () => {
               name="calle"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.calle?.message}
+              isError={!!methods?.formState.errors?.calle?.message}
             />
 
             <TextField
@@ -98,8 +80,8 @@ const ViewEditUser = () => {
               name="numero"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.numero?.message}
+              isError={!!methods?.formState.errors?.numero?.message}
             />
 
             <TextField
@@ -107,8 +89,8 @@ const ViewEditUser = () => {
               name="colonia"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.colonia?.message}
+              isError={!!methods?.formState.errors?.colonia?.message}
             />
 
             <TextField
@@ -116,8 +98,8 @@ const ViewEditUser = () => {
               name="ciudad"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.ciudad?.message}
+              isError={!!methods?.formState.errors?.ciudad?.message}
             />
 
             <div className="mt-1 text-lg w-full text-left px-14">
@@ -139,8 +121,8 @@ const ViewEditUser = () => {
               name="sueldo"
               type="text"
               register={methods.register}
-              Error={methods?.formState.errors?.nombre?.message}
-              isError={!!methods?.formState.errors?.nombre?.message}
+              Error={methods?.formState.errors?.sueldo?.message}
+              isError={!!methods?.formState.errors?.sueldo?.message}
             />
           </div>
         </FormProvider>

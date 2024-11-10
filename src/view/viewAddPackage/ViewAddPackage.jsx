@@ -152,9 +152,9 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
             <TextField
               name="precio"
               label="Precio del paquete"
-              placeholder="$500.00"
-              isError={!!methods.formState.errors.nombre}
-              Error={methods.formState.errors.nombre?.message}
+              placeholder="$000.00"
+              isError={!!methods.formState.errors.precio}
+              Error={methods.formState.errors.precio?.message}
               register={methods.register}
               type="number"
               Icon={null}
