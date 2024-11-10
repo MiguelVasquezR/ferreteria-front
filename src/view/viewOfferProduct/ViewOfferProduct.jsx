@@ -114,15 +114,14 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
 
   return (
     <>
-      {isLoadinView && (
-        <div className="h-screen bg-white/60  w-screen relative">
-          <SuplierLoading />ƒ
-        </div>
-      )}
-
       <Header />
 
       <div className="p-5 lg:w-[90%] mx-auto">
+        {isLoadinView && (
+          <div className="h-screen bg-white/60  w-screen absolute">
+            <SuplierLoading />ƒ
+          </div>
+        )}
         <div className="flex flex-row justify-start items-center gap-2 font-bold">
           <IoArrowBackOutline
             onClick={() => navigate(-1)}

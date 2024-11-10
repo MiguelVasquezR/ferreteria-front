@@ -25,7 +25,7 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
   useEffect(() => {
     const config = {
       method: "GET",
-      url: `${import.meta.env.VITE_URL}/paquete/obtener-paquetes`,
+      url: `${import.meta.env.VITE_URL}/producto-paquete/obtener`,
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
@@ -38,7 +38,24 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
       .request(config)
       .then((response) => {
         if (response.status === 200) {
-          setDataPaquetes(response.data);
+          const paquetesUnicos = response.data.reduce((acc, item) => {
+            const { idPaquete, nombre, descripcion, precio, idProducto } = item;
+
+            if (!acc[idPaquete]) {
+              acc[idPaquete] = {
+                idPaquete,
+                nombre,
+                descripcion,
+                precio,
+                productos: [],
+              };
+            }
+            acc[idPaquete].productos.push(nombre);
+            return acc;
+          }, {});
+          const paquetesFormateados = Object.values(paquetesUnicos);
+
+          setDataPaquetes(paquetesFormateados);
           setStatus("succeeded");
           setIsLoadingView(false);
         }
@@ -123,7 +140,7 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5 bg-gray-100 mx-auto justify-center w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-5 bg-gray-100 mx-auto justify-center w-full">
           {paquetes &&
             paquetes.length > 0 &&
             paquetes.map((p, index) => {
@@ -133,14 +150,17 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
                   className="w-[300px] lg:w-[400px] shadow-md rounded-md p-5 flex flex-col gap-5 justify-between items-center"
                 >
                   <div className="flex flex-row justify-between items-center w-full">
-                    <p>{p.nombre}</p>
+                    <p>{"Paquete " + (index + 1)}</p>
                     <FaBoxOpen color="#F58A27" size={32} />
                   </div>
-
                   <div className="flex flex-row justify-between items-center w-full">
                     <div>
                       <p>Lista de Productos</p>
-                      <ul></ul>
+                      <ul>
+                        {p.productos.map((producto, idx) => (
+                          <li key={idx}>{producto}</li>
+                        ))}
+                      </ul>
                     </div>
 
                     <div>
@@ -151,15 +171,18 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
 
                   <div className="flex flex-row justify-between items-center w-full">
                     <div className="flex flex-row justify-center items-center gap-4">
-                      <FaTrash
-                        onClick={() => {
-                          setIdDeletePackage(p.idPaquete);
-                          handleShowModal();
-                        }}
-                        color="#F58A27"
-                        size={24}
-                      />
-                      <FaPen color="#F58A27" size={24} />
+                      {cookie.get("rol") !== "Vendedor" ? (
+                        <FaTrash
+                          onClick={() => {
+                            setIdDeletePackage(p.idPaquete);
+                            handleShowModal();
+                          }}
+                          color="#F58A27"
+                          size={24}
+                        />
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <p className="font-bold">Precio: ${p.precio}</p>
                   </div>

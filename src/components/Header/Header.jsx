@@ -20,20 +20,8 @@ const Header = () => {
       urls: ["/supliers", "/products", "/report-damage-product"],
     },
     Vendedor: {
-      options: [
-        "Obra",
-        "Venta",
-        "Devolución",
-        "Producto",
-        "Paquetes",
-      ],
-      urls: [
-        "/proyecto",
-        "/sale",
-        "/devolucion",
-        "/products",
-        "/list-package",
-      ],
+      options: ["Obra", "Venta", "Producto", "Paquetes"],
+      urls: ["/proyecto", "/sale", "/products", "/list-package"],
     },
   };
 
