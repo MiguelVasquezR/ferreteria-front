@@ -33,7 +33,7 @@ const ViewForgetPasswordAction = () => {
         password: result.data.password,
       };
       axios
-        .put(`${import.meta.env.VITE_API_URL_BACK}/cambiar-contrasena`, data, {
+        .put(`${import.meta.env.VITE_URL}/cambiar-contrasena`, data, {
           headers: { "Content-Type": "application/json" },
         })
         .then((res) => {
@@ -82,6 +82,7 @@ const ViewForgetPasswordAction = () => {
                 name="password"
                 type={isPasswordVisible ? "text" : "password"}
                 isIcon={true}
+                register={methods.register}
                 Icon={
                   isPasswordVisible ? (
                     <IoIosEye
@@ -107,6 +108,7 @@ const ViewForgetPasswordAction = () => {
                 name="confirmPassword"
                 type={isConfirmPasswordVisible ? "text" : "password"}
                 isIcon={true}
+                register={methods.register}
                 Icon={
                   isConfirmPasswordVisible ? (
                     <IoIosEye
