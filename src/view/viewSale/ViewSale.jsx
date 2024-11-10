@@ -18,8 +18,14 @@ import toast from "react-hot-toast";
 import ModalEmail from "../../components/Modal/ModalEmail/ModalEmail";
 import CardProcessPayment from "../../components/cardProcessPayment/CardProcessPayment";
 import { setPayment } from "../../store/slices/payment/payment_slice";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
-const ViewSales = ({ productosState, setDataProducts, setStatus, productsSale }) => {
+const ViewSales = ({
+  productosState,
+  setDataProducts,
+  setStatus,
+  productsSale,
+}) => {
   const methods = useForm();
   const { productos } = productosState;
   const cookie = new Cookies();
@@ -28,6 +34,7 @@ const ViewSales = ({ productosState, setDataProducts, setStatus, productsSale })
   const [showModalEmail, setShowModalEmail] = useState(false);
   const [dataProductStock, setDataProductStock] = useState([]);
   const [processPayment, setProcessPayment] = useState(false);
+  const [isLoadinView, setIsLoadinView] = useState(true);
 
   useEffect(() => {
     if (productos.length !== 0 || productos === null) {
@@ -49,10 +56,13 @@ const ViewSales = ({ productosState, setDataProducts, setStatus, productsSale })
       .then((response) => {
         setDataProducts(response.data);
         setStatus("succeeded");
+        setIsLoadinView(false);
+        toast.success("Productos cargados correctamente");
       })
       .catch(() => {
         toast.error("Error al obtener los productos");
         setStatus("error");
+        setIsLoadinView(false);
       });
   }, []);
 
@@ -161,6 +171,12 @@ const ViewSales = ({ productosState, setDataProducts, setStatus, productsSale })
 
       <div className=" p-5 w-full h-full">
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">Ventas</h2>
+
+        {isLoadinView && (
+          <div className="h-screen bg-white/60  w-screen absolute">
+            <SuplierLoading />
+          </div>
+        )}
 
         <div className="flex justify-center items-center flex-col gap-5 max-w-[1200px] mx-auto">
           <form

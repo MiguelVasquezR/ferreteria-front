@@ -64,12 +64,7 @@ const ViewReportDamageProduct = () => {
 
       <div className="flex flex-col gap-1">
         <div className="flex flex-row justify-start items-center gap-1 my-5 lg:pl-5 cursor-pointer">
-          <IoArrowBackOutline
-            className="font-bold"
-            size={32}
-            color={"black"}
-            onClick={backPage}
-          />
+          
           <h2 className="font-bold text-[18px] lg:text-[22px]">
             Reporte producto dañado
           </h2>

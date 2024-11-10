@@ -19,6 +19,7 @@ import { IoIosSearch } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { Cookies } from "react-cookie";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   const methods = useForm();
@@ -27,6 +28,7 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const cookie = new Cookies();
+  const [isLoadinView, setIsLoadinView] = useState(true);
 
   const productosFiltrados = useMemo(() => {
     return productos?.filter((product) =>
@@ -52,6 +54,7 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
       .then((response) => {
         setDataProducts(response.data);
         setStatus("succeeded");
+        setIsLoadinView(false);
       })
       .catch(() => {
         toast.error("Error al obtener los productos");
@@ -117,6 +120,12 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
       )}
 
       <div className="relative p-5 w-full h-full">
+        {isLoadinView && (
+          <div className="h-screen bg-white/60  w-screen absolute">
+            <SuplierLoading />
+          </div>
+        )}
+
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">
           Productos
         </h2>

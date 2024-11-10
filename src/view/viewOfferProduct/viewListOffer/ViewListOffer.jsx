@@ -7,15 +7,17 @@ import toast from "react-hot-toast";
 import { connect } from "react-redux";
 import { dataOfertas } from "../../../store/slices/offer/offer_reducer";
 import { FaPlus } from "react-icons/fa6";
+import SuplierLoading from "../../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
   const cookie = new Cookies();
 
   const { ofertas } = ofertasState;
-  const [busqueda, setBusqueda] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [isLoadinView, setIsLoadingView] = useState(true);
 
   const filterBusqueda = ofertas.filter((ofertas) =>
-    ofertas?.nombreProducto?.toLowerCase().includes(busqueda?.toLowerCase())
+    ofertas?.nombre?.toLowerCase().includes(busqueda?.toLowerCase())
   );
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
       .request(config)
       .then((response) => {
         setDataOfertas(response.data);
+        setIsLoadingView(false);
       })
       .catch(() => {
         toast.error("Error al obtener las ofertas");
@@ -57,6 +60,12 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
       <Header />
 
       <div className="p-5">
+        {isLoadinView && (
+          <div className="h-screen bg-white/60  w-screen absolute">
+            <SuplierLoading />ƒ
+          </div>
+        )}
+
         <h2 className="font-bold text-[15px] lg:text-[20px]">Ofertas</h2>
 
         <div className="w-full flex justify-center items-center ">
@@ -87,7 +96,7 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
             filterBusqueda.map((oferta) => (
               <CardOffer
                 key={oferta.idOferta}
-                nombre={oferta.nombreProducto}
+                nombre={oferta.nombre}
                 precio={oferta.precioOferta}
                 fechaLimite={oferta.fechaFinal}
               />

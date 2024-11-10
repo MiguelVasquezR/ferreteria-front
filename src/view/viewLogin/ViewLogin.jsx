@@ -31,6 +31,7 @@ const ViewLogin = () => {
         .then((res) => {
           if (res.data === "Usuario o contraseña incorrectos") {
             setIsError(res.data);
+            setIsLoadingView(false);
           } else if (res.data === "Usuario autenticado") {
             const { access_token, rol } = res.headers;
             cookies.set("token", access_token, { path: "/" });
@@ -39,7 +40,7 @@ const ViewLogin = () => {
           }
         })
         .catch((err) => {
-          setIsLoadingView(true);
+          setIsLoadingView(false);
           console.log(err);
         });
     }
@@ -82,8 +83,8 @@ const ViewLogin = () => {
             Icon={IoIosEyeOff}
             placeholder={"Usuario o correo"}
             register={methods.register}
-            isError={!!methods?.formState.errors?.password?.message}
-            Error={methods?.formState.errors?.password?.message}
+            isError={!!methods?.formState.errors?.contrasena?.message}
+            Error={methods?.formState.errors?.contrasena?.message}
           />
 
           {isError !== "" && (
