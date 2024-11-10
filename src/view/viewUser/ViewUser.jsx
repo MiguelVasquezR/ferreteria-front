@@ -8,15 +8,15 @@ import { connect } from "react-redux";
 import { dataUsuarios } from "../../store/slices/users/users_reducer";
 import SupliearLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 import Modal from "../../components/Modal/Modal";
-import { FaTrash, FaPen, FaPlus } from "react-icons/fa";
+import { FaTrash, FaPlus } from "react-icons/fa";
 
 const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
   const cookie = new Cookies();
   const { usuarios } = usuariosState;
   const [isLoadingView, setIsLoadingView] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [idDeletePackage, setIdDeletePackage] = useState(null);
-  const [isLoadingDelete, setIsLoadingDelete] = useState(false); // Corregido: isLoadingDelete
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [isSelectItem, setIsSelectItem] = useState(null);
 
   useEffect(() => {
     if (usuarios.length > 0) {
@@ -46,29 +46,39 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
   }, []);
 
   const handleDelete = () => {
-    setIsLoadingDelete(true); // Inicia el indicador de carga de eliminación
     const config = {
-      method: "DELETE",
-      url: `${import.meta.env.VITE_URL}/paquete/eliminar?idPaquete=${idDeletePackage}`,
+      method: "PUT",
+      url: `${import.meta.env.VITE_URL}/usuario/eliminar?idUsuario=${
+        isSelectItem.idUsuario
+      }`,
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
       },
     };
 
+    setIsLoadingDelete(true);
     axios
       .request(config)
-      .then(() => {
-        toast.success("Paquete eliminado con éxito");
-        setShowModal(false);
-        setDataUsuarios(usuarios.filter((user) => user.id !== idDeletePackage));
+      .then((response) => {
+        if (response.data === "Usuario eliminado") {
+          const newItems =
+            usuarios.length > 0 &&
+            usuarios?.filter((i) => {
+              return i.idUsuario !== isSelectItem.idUsuario;
+            });
+          setDataUsuarios(newItems);
+          setIsSelectItem(null);
+          setIsLoadingDelete(false);
+          setShowModal(false);
+          toast.success("Usuario eliminado correctamente");
+        }
       })
-      .catch(() => {
-        toast.error("Error al eliminar el paquete");
+      .catch((err) => {
+        console.log(err);
+
+        toast.error("Error al eliminar el usuario");
         setShowModal(false);
-      })
-      .finally(() => {
-        setIsLoadingDelete(false); // Termina el indicador de carga
       });
   };
 
@@ -77,10 +87,10 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
       {showModal && (
         <div className="absolute z-50 flex justify-center items-center w-screen h-screen bg-black/50">
           <Modal
-            text="¿Estás seguro de que deseas eliminar el producto?"
+            text="¿Estás seguro de que deseas eliminar el usuario?"
             onDelete={handleDelete}
             onCancel={() => setShowModal(false)}
-            isLoading={isLoadingDelete} // Corregido: isLoadingDelete
+            isLoading={isLoadingDelete}
           />
         </div>
       )}
@@ -100,10 +110,9 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
           <div className="flex flex-row items-center gap-3">
             <FaTrash
               onClick={() => {
-                setIdDeletePackage("ID_DEL_PAQUETE_A_ELIMINAR"); // Reemplaza con el ID del paquete
-                setShowModal(true);
+                isSelectItem && setShowModal(true);
               }}
-              color="black"
+              color={isSelectItem ? "red" : "gray"}
               size={24}
               className="cursor-pointer"
             />
@@ -126,22 +135,25 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
               <tr className="w-full">
                 <th>Nombre</th>
                 <th>Teléfono</th>
-                <th className="hidden lg:table-column">Correo</th>
-                <th className="hidden lg:table-column">RFC</th>
+                <th className="hidden lg:table-cell">Correo</th>
+                <th className="hidden lg:table-cell">RFC</th>
                 <th>Sueldo</th>
                 <th>Usuario</th>
               </tr>
             </thead>
             <tbody>
-              {usuarios?.map((user, index) => (
+              {usuarios?.map((user) => (
                 <tr
-                  key={index + user?.usuario}
-                  className="border-solid border-black/30 border-b-[1px] p-1 text-center"
+                  key={user?.usuario}
+                  className={`border-solid border-black/30 border-b-[1px] p-2 text-center ${
+                    isSelectItem === user ? "bg-black/10" : ""
+                  }`}
+                  onClick={() => setIsSelectItem(user)}
                 >
                   <td>{user?.nombre}</td>
                   <td>{user?.telefono}</td>
-                  <td className="hidden lg:table-column">{user?.correo}</td>
-                  <td className="hidden lg:table-column">{user?.rfc}</td>
+                  <td className="hidden lg:table-cell">{user?.correo}</td>
+                  <td className="hidden lg:table-cell">{user?.rfc}</td>
                   <td>{user?.sueldo}</td>
                   <td>{user?.usuario}</td>
                 </tr>

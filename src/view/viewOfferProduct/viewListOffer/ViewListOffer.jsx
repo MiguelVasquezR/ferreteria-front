@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Header from "../../../components/Header/Header";
 import { Cookies } from "react-cookie";
@@ -33,7 +33,7 @@ const ViewListOffer = ({ setDataOfertas, ofertasState }) => {
       .then((response) => {
         setDataOfertas(response.data);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Error al obtener las ofertas");
       });
   }, []);

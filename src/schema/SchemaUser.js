@@ -25,8 +25,11 @@ export const User = z.object({
   nombre: z
     .string()
     .min(1, "El nombre es requerido")
-    .max(30,"El nombre es muy largo")
-    .regex(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo debe contener letras y espacios"),
+    .max(30, "El nombre es muy largo")
+    .regex(
+      /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/,
+      "El nombre solo debe contener letras y espacios"
+    ),
   telefono: z
     .string()
     .min(1, "Debes ingresar el teléfono de contacto")
@@ -40,36 +43,55 @@ export const User = z.object({
   rfc: z
     .string()
     .length(13, "El RFC debe tener 13 caracteres")
-    .regex(/^[A-Z0-9]+$/, { message: "El RFC solo debe contener letras mayúsculas y números" })
-    .refine((value) => {
-      const lettersCount = (value.match(/[A-Z]/g) || []).length;
-      const numbersCount = (value.match(/[0-9]/g) || []).length;
-      return lettersCount >= 3 && numbersCount >= 6;
-    }, {
-      message: "El RFC debe contener al menos 3 letras y 6 números",
-    }),
+    .regex(/^[A-Z0-9]+$/, {
+      message: "El RFC solo debe contener letras mayúsculas y números",
+    })
+    .refine(
+      (value) => {
+        const lettersCount = (value.match(/[A-Z]/g) || []).length;
+        const numbersCount = (value.match(/[0-9]/g) || []).length;
+        return lettersCount >= 3 && numbersCount >= 6;
+      },
+      {
+        message: "El RFC debe contener al menos 3 letras y 6 números",
+      }
+    ),
   calle: z
     .string()
     .min(1, "La calle es requerida")
     .max(50, "La calle es muy larga")
-    .regex(/^[a-zA-Z0-9\s]+$/, { message: "Solo se admiten letras, números y espacios" }), 
+    .regex(/^[a-zA-Z0-9\s]+$/, {
+      message: "Solo se admiten letras, números y espacios",
+    }),
   numero: z
     .string()
     .min(1, "El número es requerido")
     .max(7, "El número es muy largo")
-    .regex(/^[a-zA-Z0-9]+$/, { message: "Solo se admiten letras y números" }),   
+    .regex(/^[a-zA-Z0-9]+$/, { message: "Solo se admiten letras y números" }),
   colonia: z
     .string()
     .min(1, "La colonia es requerida")
     .max(50, "La colonia es muy larga")
-    .regex(/^[a-zA-Z0-9\s]+$/, { message: "Solo se admiten letras, números y espacios" }), 
+    .regex(/^[a-zA-Z0-9\s]+$/, {
+      message: "Solo se admiten letras, números y espacios",
+    }),
   ciudad: z
     .string()
     .min(1, "La ciudad es requerida")
     .max(20, "La ciudad es muy larga")
-    .regex(/^[a-zA-Z0-9\s]+$/, { message: "Solo se admiten letras, números y espacios" }),
+    .regex(/^[a-zA-Z0-9\s]+$/, {
+      message: "Solo se admiten letras, números y espacios",
+    }),
   sueldo: z
     .string()
     .min(1, "El sueldo es requerido")
     .max(10, "El número no puede superar 10 digitos"),
+  usuario: z
+    .string()
+    .min(1, "El usuario es requerido")
+    .max(10, "El usuario no puede superar 15 digitos"),
+  contrasena: z
+    .string()
+    .min(1, "La contraseña es requerido")
+    .max(10, "La contraseña no puede superar 15 digitos"),
 });
