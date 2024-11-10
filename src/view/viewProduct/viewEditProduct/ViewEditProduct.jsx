@@ -1,3 +1,5 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SchemaProduct } from "../../../schema/SchemaProduct";
 import Header from "../../../components/Header/Header";
 import TextField from "../../../components/Form/TextField/TextField";
 import { FormProvider, useForm } from "react-hook-form";
@@ -19,7 +21,10 @@ import {
 import { Cookies } from "react-cookie";
 
 const ViewEditProduct = ({ productosState }) => {
-  const methods = useForm();
+  const methods = useForm({
+    resolver: zodResolver(SchemaProduct),
+    mode: "onChange",
+  });
   const navigate = useNavigate();
   const { id } = useParams();
   const { productos } = productosState;
@@ -123,8 +128,8 @@ const ViewEditProduct = ({ productosState }) => {
                 type="text"
                 placeholder="1, 4, 4.5kg, etc."
                 register={methods.register}
-                Error={methods?.formState.errors?.stock_minimo?.message}
-                isError={!!methods?.formState.errors?.stock_minimo?.message}
+                Error={methods?.formState.errors?.stockMinimo?.message}
+                isError={!!methods?.formState.errors?.stockMinimo?.message}
               />
 
               <TextField
@@ -143,8 +148,8 @@ const ViewEditProduct = ({ productosState }) => {
                 type="text"
                 placeholder="Precio del producto"
                 register={methods.register}
-                Error={methods?.formState.errors?.precio_menudeo?.message}
-                isError={!!methods?.formState.errors?.precio_menudeo?.message}
+                Error={methods?.formState.errors?.precioMenudeo?.message}
+                isError={!!methods?.formState.errors?.precioMenudeo?.message}
               />
 
               <TextField
@@ -153,8 +158,8 @@ const ViewEditProduct = ({ productosState }) => {
                 type="text"
                 placeholder="Precio mayoreo del producto"
                 register={methods.register}
-                Error={methods?.formState.errors?.precio_mayoreo?.message}
-                isError={!!methods?.formState.errors?.precio_mayoreo?.message}
+                Error={methods?.formState.errors?.precioMayoreo?.message}
+                isError={!!methods?.formState.errors?.precioMayoreo?.message}
               />
 
               <div className="w-[200px] lg:w-[300px] lg:h-[50px] my-5">
