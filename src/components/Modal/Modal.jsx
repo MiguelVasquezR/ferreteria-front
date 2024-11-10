@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Modal = ({ text, onDelete, onCancel }) => {
+const Modal = ({ text, onDelete, onCancel, isLoading }) => {
   return (
     <div className="flex flex-col justify-center items-center gap-20 w-[300px] lg:w-[400px] mx-auto border-[#a2a2a2] border-[0.5px] border-solid shadow-md rounded-lg bg-white">
       <div className="p-5">
@@ -15,6 +15,7 @@ const Modal = ({ text, onDelete, onCancel }) => {
           Cancelar
         </button>
         <button
+          disabled={isLoading}
           onClick={onDelete}
           className="w-1/2 bg-succes text-white py-2 rounded-r-lg btn-times"
         >
@@ -29,6 +30,7 @@ Modal.propTypes = {
   text: PropTypes.string.isRequired,
   onDelte: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default Modal;

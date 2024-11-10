@@ -2,8 +2,7 @@ import Header from "../../components/Header/Header";
 import TextField from "../../components/Form/TextField/TextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { IoIosSearch } from "react-icons/io";
-import { FaBarcode } from "react-icons/fa6";
-import { MdDelete, MdModeEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import Button from "../../components/Buttons/Button";
 import PropTypes from "prop-types";
 import {
@@ -17,8 +16,16 @@ import axios from "axios";
 
 import toast from "react-hot-toast";
 import ModalEmail from "../../components/Modal/ModalEmail/ModalEmail";
+import CardProcessPayment from "../../components/cardProcessPayment/CardProcessPayment";
+import { setPayment } from "../../store/slices/payment/payment_slice";
+import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 
-const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
+const ViewSales = ({
+  productosState,
+  setDataProducts,
+  setStatus,
+  productsSale,
+}) => {
   const methods = useForm();
   const { productos } = productosState;
   const cookie = new Cookies();
@@ -26,6 +33,8 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
   const [totalCompra, setTotalCompra] = useState(0);
   const [showModalEmail, setShowModalEmail] = useState(false);
   const [dataProductStock, setDataProductStock] = useState([]);
+  const [processPayment, setProcessPayment] = useState(false);
+  const [isLoadinView, setIsLoadinView] = useState(true);
 
   useEffect(() => {
     if (productos.length !== 0 || productos === null) {
@@ -47,10 +56,13 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
       .then((response) => {
         setDataProducts(response.data);
         setStatus("succeeded");
+        setIsLoadinView(false);
+        toast.success("Productos cargados correctamente");
       })
       .catch(() => {
         toast.error("Error al obtener los productos");
         setStatus("error");
+        setIsLoadinView(false);
       });
   }, []);
 
@@ -110,10 +122,13 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
 
     validateAmountAvailable(data?.productos);
 
-    if (dataProductStock) {
+    if (dataProductStock.length !== 0) {
       setShowModalEmail(true);
     } else {
-      axios
+      setProcessPayment(true);
+      productsSale(data);
+
+      /* axios
         .request(config)
         .then((res) => {
           if (res.data === "Venta guardada exitosamente") {
@@ -126,7 +141,7 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
         })
         .catch(() => {
           toast.error("Error al registrar la venta");
-        });
+        }); */
     }
   };
 
@@ -142,14 +157,26 @@ const ViewSales = ({ productosState, setDataProducts, setStatus }) => {
     <>
       <Header />
 
+      {processPayment && (
+        <div className="w-screen h-screen absolute z-50">
+          <CardProcessPayment />
+        </div>
+      )}
+
       {showModalEmail && (
         <div className="absolute h-screen w-screen">
           <ModalEmail producto={dataProductStock} close={closeModalEmail} />
         </div>
       )}
 
-      <div className="relative p-5 w-full h-full">
+      <div className=" p-5 w-full h-full">
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">Ventas</h2>
+
+        {isLoadinView && (
+          <div className="h-screen bg-white/60  w-screen absolute">
+            <SuplierLoading />
+          </div>
+        )}
 
         <div className="flex justify-center items-center flex-col gap-5 max-w-[1200px] mx-auto">
           <form
@@ -262,6 +289,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setDataProducts: (data) => dispatch(dataProduct(data)),
     setStatus: (status) => dispatch(actualizarStatus(status)),
+    productsSale: (data) => dispatch(setPayment(data)),
   };
 };
 

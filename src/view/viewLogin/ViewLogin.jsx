@@ -20,15 +20,18 @@ const ViewLogin = () => {
   const [isError, setIsError] = useState("");
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const [isLoadinView, setIsLoadingView] = useState(false);
 
   const onSubmit = (data) => {
     setIsError("");
+    setIsLoadingView(true);
     if (data.usuario !== "" && data.contrasena !== "") {
       axios
         .post(`${import.meta.env.VITE_URL}/login`, data)
         .then((res) => {
           if (res.data === "Usuario o contraseña incorrectos") {
             setIsError(res.data);
+            setIsLoadingView(false);
           } else if (res.data === "Usuario autenticado") {
             const { access_token, rol } = res.headers;
             cookies.set("token", access_token, { path: "/" });
@@ -37,6 +40,7 @@ const ViewLogin = () => {
           }
         })
         .catch((err) => {
+          setIsLoadingView(false);
           console.log(err);
         });
     }
@@ -61,7 +65,7 @@ const ViewLogin = () => {
 
           <TextField
             label="Ingresa tu usuario o correo"
-            name="user"
+            name="usuario"
             type="text"
             isIcon={false}
             Icon={null}
@@ -73,14 +77,14 @@ const ViewLogin = () => {
 
           <TextField
             label="Ingresa tu contraseña"
-            name="password"
+            name="contrasena"
             type="password"
             isIcon={true}
             Icon={IoIosEyeOff}
             placeholder={"Usuario o correo"}
             register={methods.register}
-            isError={!!methods?.formState.errors?.password?.message}
-            Error={methods?.formState.errors?.password?.message}
+            isError={!!methods?.formState.errors?.contrasena?.message}
+            Error={methods?.formState.errors?.contrasena?.message}
           />
 
           {isError !== "" && (
@@ -95,6 +99,7 @@ const ViewLogin = () => {
               Icon={null}
               background="bg-blue"
               onClick={() => {}}
+              isLoading={isLoadinView}
             />
           </div>
         </FormProvider>

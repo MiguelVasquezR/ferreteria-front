@@ -26,9 +26,7 @@ const ViewForgetPassword = () => {
 
     const config = {
       method: "GET",
-      url: `${import.meta.env.VITE_API_URL_BACK}/olvide-contrasena?correo=${
-        data.email
-      }`,
+      url: `${import.meta.env.VITE_URL}/olvide-contrasena?correo=${data.email}`,
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
         "Content-Type": "application/json",
@@ -38,7 +36,6 @@ const ViewForgetPassword = () => {
     axios
       .request(config)
       .then((res) => {
-        console.log(res);
         setMessage(res.data);
         setIsLoading(false);
       })
@@ -71,6 +68,7 @@ const ViewForgetPassword = () => {
                 Icon={null}
                 isError={false}
                 placeholder={"correo@ejemplo.com"}
+                register={methods.register}
               />
               {isError && (
                 <p className="pl-2 text-error">El correo es requerido</p>
