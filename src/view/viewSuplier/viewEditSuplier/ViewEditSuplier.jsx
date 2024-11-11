@@ -11,11 +11,14 @@ import {
   updateStatus,
 } from "../../../store/slices/proveedor/proveedor_reducers";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SchemeSuplier } from "../../../schema/SchemaSuplier";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import ImageSuplier from "../../../../public/proveedor.png";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Cookies } from "react-cookie";
 
 const ViewEditSuplier = ({ proveedoresState }) => {
   const methods = useForm({
@@ -25,6 +28,8 @@ const ViewEditSuplier = ({ proveedoresState }) => {
   const { id } = useParams();
   const { proveedores } = proveedoresState;
   const navigate = useNavigate();
+  const [proveedor, setProveedor] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (proveedores.length === 0) {
@@ -37,6 +42,7 @@ const ViewEditSuplier = ({ proveedoresState }) => {
       proveedores.filter((p) => {
         const currentSuplier = p.idPersona === id ? p : null;
         if (currentSuplier) {
+          setProveedor(currentSuplier);
           methods.setValue("nombre", currentSuplier.nombre);
           methods.setValue("telefono", currentSuplier.telefono);
           methods.setValue("correo", currentSuplier.correo);
@@ -49,6 +55,40 @@ const ViewEditSuplier = ({ proveedoresState }) => {
       });
     }
   }, [id, methods, proveedores]);
+
+  const cookie = new Cookies();
+
+  const handleSubmit = (data) => {
+    const config = {
+      method: "PUT",
+      url: `${import.meta.env.VITE_URL}/proveedor/actualizar-proveedor?id=${
+        proveedor.idPersona
+      }`,
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      data,
+    };
+
+    setIsLoading(true);
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response);
+        if (
+          response.status === 201 &&
+          response.data.message === "Proveedor actualizado correctamente"
+        ) {
+          navigate("/supliers");
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+        toast.error("Error al crear el proveedor");
+      });
+  };
 
   return (
     <div>
@@ -69,7 +109,7 @@ const ViewEditSuplier = ({ proveedoresState }) => {
 
         <form
           className="w-[360px] lg:w-[50%] flex flex-col gap-5 justify-center items-center"
-          /* onSubmit={methods.handleSubmit(handleSubmit)} */
+          onSubmit={methods.handleSubmit(handleSubmit)}
         >
           <FormProvider {...methods}>
             <TextField
@@ -173,6 +213,7 @@ const ViewEditSuplier = ({ proveedoresState }) => {
                 isIcon={true}
                 texto="Guardar"
                 type="submit"
+                isLoading={isLoading}
                 Icon={<AiOutlineSave size={32} />}
                 onClick={() => {}}
               />
