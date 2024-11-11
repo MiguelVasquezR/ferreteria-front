@@ -30,9 +30,6 @@ const ViewListSuplier = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (proveedores.length > 0) {
-      return;
-    }
     setStatus("loading");
     const config = {
       method: "GET",
