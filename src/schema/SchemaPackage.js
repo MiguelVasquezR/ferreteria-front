@@ -4,8 +4,8 @@ export const SchemaPackage = z.object({
   nombre: z
     .string()
     .min(1, "El nombre es requerido")
-    .max(25, "El nombre es muy largo")
-    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9#.]+$/, "El nombre solo admite .  #  letras y números"),
+    .max(25, "El nombre es muy largo"),
+
   precio: z
     .string()
     .refine((value) => !isNaN(parseFloat(value)), {
@@ -20,7 +20,7 @@ export const SchemaPackage = z.object({
   descripcion: z
     .string()
     .min(1, "La descripcion es obligatoria")
-    .max(10, "La descripcion no puede ser mayor a 100 caracteres"),
+    .max(100, "La descripcion no puede ser mayor a 100 caracteres"),
 });
 
 export const SchemaOffer = z.object({
@@ -35,15 +35,18 @@ export const SchemaOffer = z.object({
     .refine((value) => parseFloat(value) <= 9999, {
       message: "El precio no puede ser mayor a 9999",
     }),
-  fecha: z
+  fechaFinal: z
     .string()
     .min(1, "La fecha es obligatoria")
-    .refine((value) => {
-      const inputDate = new Date(value);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return inputDate >= today;
-    }, {
-      message: "La fecha no puede ser anterior a la fecha actual",
-    }),
-  });
+    .refine(
+      (value) => {
+        const inputDate = new Date(value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return inputDate >= today;
+      },
+      {
+        message: "La fecha no puede ser anterior a la fecha actual",
+      }
+    ),
+});

@@ -91,7 +91,11 @@ const ViewEditProject = ({ proyectosState }) => {
     <>
       <Header />
 
-      {isLoading && <SuplierLoading />}
+      {isLoading && (
+        <div className="absolute w-screen h-screen">
+          <SuplierLoading />
+        </div>
+      )}
 
       <div>
         <div className="flex flex-row justify-start items-center gap-2 w-full p-5">
@@ -288,6 +292,7 @@ const ViewEditProject = ({ proyectosState }) => {
               type="submit"
               onClick={() => {}}
               background="bg-primary"
+              isLoading={isLoading}
               isIcon={true}
               texto="Guardar"
               Icon={<FaRegSave />}

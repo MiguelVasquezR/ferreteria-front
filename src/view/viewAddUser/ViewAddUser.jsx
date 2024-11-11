@@ -29,10 +29,10 @@ const ViewAddUser = () => {
   };
 
   const onSubmit = (data) => {
-    if (tipoView.tipo === "" || tipoView.tipo === undefined) {
+    /* if (tipoView.tipo === "" || tipoView.tipo === undefined) {
       setTipoView({ ...tipoView, error: true });
       return;
-    }
+    } */
 
     const dataToSend = {
       ...data,
@@ -53,8 +53,7 @@ const ViewAddUser = () => {
     axios
       .request(conf)
       .then((response) => {
-        console.log(response);
-        if (response.data === "Usuario agregado exitosamente") {
+        if (response.data.mensaje === "Usuario agregado exitosamente") {
           toast.success("Usuario agregado exitosamente");
           navigate("/users");
         } else {
@@ -63,6 +62,7 @@ const ViewAddUser = () => {
         }
       })
       .catch(() => {
+        setIsLoading(false);
         toast.error("Error al agregar el usuario");
       });
   };
