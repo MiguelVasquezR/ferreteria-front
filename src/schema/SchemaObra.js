@@ -4,17 +4,7 @@ export const schemaObra = z.object({
   nombre: z
     .string()
     .min(1, "El nombres es requrido")
-    .max(25, "El nombre es muy largo")
-    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9#.]+$/, "El nombre solo admite .  #  letras y números"),  paterno: z
-    .string()
-    .min(1, "El apellido es requrido")
-    .max(25, "El apellido es muy largo")
-    .regex(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo debe contener letras y espacios"),
-  materno: z
-    .string()
-    .min(1, "El apellido es requrido")
-    .max(25, "El apellido es muy largo")
-    .regex(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo debe contener letras y espacios"),
+    .max(25, "El nombre es muy largo"),
   telefono: z
     .string()
     .length(10, "El teléfono solo puede tener 10 digitos")
@@ -34,7 +24,6 @@ export const schemaObra = z.object({
     }, {
       message: "El RFC debe contener al menos 3 letras y 6 números",
     }),
-  
   descripcion: z
     .string()
     .min(1, "La descripcion es requerida")

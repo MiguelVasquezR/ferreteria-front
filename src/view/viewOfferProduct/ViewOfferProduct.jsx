@@ -82,7 +82,7 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
     setIsLoadingSubmit(true);
 
     const information = {
-      fecha: data.fecha,
+      fechaFinal: data.fechaFinal,
       precio: data.precio,
       idProducto: listProducts[0].idProducto,
     };
@@ -101,14 +101,14 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
     axios
       .request(config)
       .then((response) => {
-        if (response.data === "Paquete agregado exitosamente") {
-          toast.success("Paquete creado exitosamente");
-          navigate("/list-package");
+        if (response.data === "Oferta agregada correctamente") {
+          toast.success("Oferta creado exitosamente");
+          navigate("/offers");
         }
       })
       .catch(() => {
         setIsLoadingSubmit(false);
-        toast.error("Error al crear el paquete");
+        toast.error("Error al crear la oferta");
       });
   };
 
@@ -137,7 +137,7 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
         >
           <FormProvider {...methods}>
             <TextField
-              name="fecha"
+              name="fechaFinal"
               label="Fecha de Finalización"
               placeholder="Fecha de Finalización"
               isError={!!methods.formState.errors.fecha}

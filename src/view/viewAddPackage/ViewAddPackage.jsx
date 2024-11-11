@@ -1,7 +1,7 @@
 import Header from "../../components/Header/Header";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FormProvider, useForm } from "react-hook-form";
-import Card from "../../components/cardAddPackage/cardAddPackage"; 
+import Card from "../../components/cardAddPackage/cardAddPackage";
 import TextField from "../../components/Form/TextField/TextField";
 import TextArea from "../../components/Form/TextArea/TextArea";
 import Button from "../../components/Buttons/Button";
@@ -160,12 +160,13 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
               Icon={null}
               isIcon={false}
             />
+
             <TextArea
               isError={!!methods.formState.errors.descripcion}
+              error={methods.formState.errors.descripcion?.message}
               register={methods.register}
               name="descripcion"
               label="Descripción"
-              error={methods.formState.errors.descripcion}
               placeholder={"Descripción del paquete"}
             />
 
