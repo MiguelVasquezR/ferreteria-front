@@ -7,7 +7,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import Button from "../../../components/Buttons/Button";
 import { IoIosSave } from "react-icons/io";
 import PhotoComponent from "../../../components/Photo/Photo";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -29,6 +29,10 @@ const ViewEditProduct = ({ productosState }) => {
   const { id } = useParams();
   const { productos } = productosState;
   const cookie = new Cookies();
+  const [isLoad, setIsLoad] = useState(false);
+  const [product, setProduct] = useState({});
+
+  console.log(methods.formState.errors);
 
   useEffect(() => {
     if (productos) {
@@ -36,6 +40,7 @@ const ViewEditProduct = ({ productosState }) => {
         if (p.idProducto === id) return p;
       });
       if (editProducto) {
+        setProduct(editProducto);
         methods.setValue("urlImage", editProducto.urlImage);
         methods.setValue("nombre", editProducto.nombre);
         methods.setValue("cantidad", editProducto.cantidad);
@@ -63,6 +68,8 @@ const ViewEditProduct = ({ productosState }) => {
       data: dataSend,
     };
 
+    setIsLoad(true);
+
     axios
       .request(config)
       .then((response) => {
@@ -70,10 +77,12 @@ const ViewEditProduct = ({ productosState }) => {
           navigate("/products");
         } else {
           toast.error("Error al editar el producto");
+          setIsLoad(false);
         }
       })
       .catch(() => {
         toast.error("Error al editar el producto");
+        setIsLoad(false);
       });
   };
 
@@ -168,6 +177,7 @@ const ViewEditProduct = ({ productosState }) => {
                   background="bg-blue"
                   onClick={() => {}}
                   type="submit"
+                  isLoading={isLoad}
                   isIcon={true}
                   Icon={<IoIosSave size={32} color="white" />}
                 />
