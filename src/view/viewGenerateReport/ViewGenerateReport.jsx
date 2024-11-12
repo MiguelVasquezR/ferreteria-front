@@ -52,6 +52,13 @@ const ViewGenerateReport = () => {
       const responseMenosVendidos = await axios.request(configMenosVendidos);
       setMenosVendidos(responseMenosVendidos.data);
       setIsLoading(false);
+
+      if (
+        responseMasVendidos.data.length === 0 &&
+        responseMenosVendidos.data.length === 0
+      ) {
+        toast.error("No hay ventas realizadas para realizar tu reporte");
+      }
     } catch {
       setIsLoading(false);
       toast.error("Ocurrió un error al generar el reporte");
@@ -153,7 +160,7 @@ const ViewGenerateReport = () => {
         </div>
       ) : (
         <p className="font-bold text-[20px] lg:text-[50px] my-52">
-          Debes seleccionar la frecuencia del reporte
+          Debes seleccionar una frecuencia
         </p>
       )}
     </div>
