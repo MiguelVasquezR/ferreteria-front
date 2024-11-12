@@ -12,6 +12,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import TextArea from "../../../components/Form/TextArea/TextArea";
 import { Cookies } from "react-cookie";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
 
 const ViewCreateProduct = () => {
   const methods = useForm({
@@ -20,8 +22,20 @@ const ViewCreateProduct = () => {
   });
   const navigate = useNavigate();
   const cookie = new Cookies();
-  console.log (methods.formState.errors)
+  const [proveedores, setProveedores] = useState([]);
+  const [proveedor, setProveedor] = useState("");
+
   const onSubmit = (data) => {
+    if (proveedor === "") {
+      toast.error("Selecciona un proveedor");
+      return;
+    }
+
+    const dataToSend = {
+      ...data,
+      idPersona: proveedor.idPersona,
+    };
+
     const config = {
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`,
@@ -29,7 +43,7 @@ const ViewCreateProduct = () => {
       },
       method: "POST",
       url: `${import.meta.env.VITE_URL}/producto/agregar-producto`,
-      data,
+      data: dataToSend,
     };
 
     axios
@@ -46,6 +60,22 @@ const ViewCreateProduct = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const config = {
+      method: "GET",
+      url: `${import.meta.env.VITE_URL}/proveedor/obtener`,
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios.request(config).then((response) => {
+      console.log(response);
+      setProveedores(response.data);
+    });
+  }, []);
 
   const backPage = (e) => {
     e.preventDefault();
@@ -98,6 +128,29 @@ const ViewCreateProduct = () => {
                 isError={!!methods?.formState.errors?.nombre?.message}
               />
 
+              <label
+                className={clsx(
+                  "pl-2 w-full font-bold lg:text-[20px] text-black"
+                )}
+              >
+                Seleccionar proveedor
+              </label>
+              {proveedores.length > 0 && (
+                <select
+                  className="border-[1px] border-solid border-black w-full h-[44px] outline-none shadow-md rounded-md p-1"
+                  onChange={() => setProveedor(event.target.value)}
+                >
+                  <option value="">Seleccionar</option>
+                  {proveedores.map((proveedor) => (
+                    <option
+                      value={proveedor.idPersona}
+                      key={proveedor.idPersona}
+                    >
+                      {proveedor.nombre}
+                    </option>
+                  ))}
+                </select>
+              )}
               <TextField
                 label="Cantidad del producto"
                 name="cantidad"
@@ -107,7 +160,6 @@ const ViewCreateProduct = () => {
                 Error={methods?.formState.errors?.cantidad?.message}
                 isError={!!methods?.formState.errors?.cantidad?.message}
               />
-
               <TextField
                 label="¿Cuál sería el Stock mínimo?"
                 name="stockMinimo"
@@ -117,7 +169,6 @@ const ViewCreateProduct = () => {
                 Error={methods?.formState.errors?.stockMinimo?.message}
                 isError={!!methods?.formState.errors?.stockMinimo?.message}
               />
-
               <TextField
                 label="Costo del producto"
                 name="costo"
@@ -127,7 +178,6 @@ const ViewCreateProduct = () => {
                 Error={methods?.formState.errors?.costo?.message}
                 isError={!!methods?.formState.errors?.costo?.message}
               />
-
               <TextField
                 label="Precio a menudeo del producto"
                 name="precioMenudeo"
@@ -137,7 +187,6 @@ const ViewCreateProduct = () => {
                 Error={methods?.formState.errors?.precioMenudeo?.message}
                 isError={!!methods?.formState.errors?.precioMenudeo?.message}
               />
-
               <TextField
                 label="Precio a mayoreo del producto"
                 name="precioMayoreo"
@@ -147,7 +196,6 @@ const ViewCreateProduct = () => {
                 Error={methods?.formState.errors?.precioMayoreo?.message}
                 isError={!!methods?.formState.errors?.precioMayoreo?.message}
               />
-
               <TextArea
                 label="Descripción del producto"
                 name="descripcion"
@@ -156,7 +204,6 @@ const ViewCreateProduct = () => {
                 error={methods?.formState.errors?.descripcion?.message}
                 register={methods.register}
               />
-
               <div className="w-[200px] lg:w-[300px] lg:h-[50px] my-5">
                 <Button
                   texto="Guardar"

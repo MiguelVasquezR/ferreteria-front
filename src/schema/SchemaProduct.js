@@ -34,4 +34,8 @@ export const SchemaProduct = z.object({
     .string()
     .min(1, { message: "El precio al mayoreo es requerido" })
     .max(8, { message: "Límite alcanzado" }),
+  descripcion: z
+    .string()
+    .min(1, { message: "El precio al mayoreo es requerido" })
+    .max(200, { message: "Límite alcanzado" }),
 });
