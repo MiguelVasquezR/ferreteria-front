@@ -79,55 +79,55 @@ const ViewCreateSuplier = () => {
           >
             <FormProvider {...methods}>
               <TextField
-                label="Nombre del Proveedor"
+                label="Nombre"
                 name="nombre"
                 type="text"
                 Icon={false}
                 isIcon={false}
                 Error={methods?.formState.errors?.nombre?.message}
                 isError={!!methods?.formState.errors?.nombre?.message}
-                placeholder={"Nombre del Proveedor..."}
+                placeholder={"Nombre completo"}
                 register={methods.register}
               />
 
               <TextField
-                label="Teléfono del Proveedor"
+                label="Teléfono"
                 name="telefono"
                 type="text"
                 Icon={false}
                 Error={methods?.formState.errors?.telefono?.message}
                 isError={!!methods?.formState.errors?.telefono?.message}
                 isIcon={false}
-                placeholder={"228XXXXXXX"}
+                placeholder={"5512345678"}
                 register={methods.register}
               />
 
               <TextField
-                label="Correo del Proveedor"
+                label="Correo electrónico"
                 name="correo"
                 type="text"
                 Error={methods?.formState.errors?.correo?.message}
                 isError={!!methods?.formState.errors?.correo?.message}
                 Icon={false}
                 isIcon={false}
-                placeholder={"example@example.com"}
+                placeholder={"example@gmail.com"}
                 register={methods.register}
               />
 
               <TextField
-                label="RFC del Proveedor"
+                label="RFC"
                 name="rfc"
                 type="text"
                 Error={methods?.formState.errors?.rfc?.message}
                 isError={!!methods?.formState.errors?.rfc?.message}
                 Icon={false}
                 isIcon={false}
-                placeholder={"XXXXXXXXXXXXX"}
+                placeholder={"AAAA######XXX"}
                 register={methods.register}
               />
 
               <TextField
-                label="Calle del Proveedor"
+                label="Calle"
                 name="calle"
                 type="text"
                 Error={methods?.formState.errors?.calle?.message}
@@ -139,31 +139,31 @@ const ViewCreateSuplier = () => {
               />
 
               <TextField
-                label="Número de Dirección del Proveedor"
+                label="Número de Domicilio"
                 name="numero"
                 type="text"
                 Error={methods?.formState.errors?.numero?.message}
                 isError={!!methods?.formState.errors?.numero?.message}
                 Icon={false}
                 isIcon={false}
-                placeholder={"Numero del Edificio"}
+                placeholder={"18, s/n, 3-B"}
                 register={methods.register}
               />
 
               <TextField
-                label="Colónia del Proveedor"
+                label="Colonia"
                 name="colonia"
                 type="text"
                 Error={methods?.formState.errors?.colonia?.message}
                 isError={!!methods?.formState.errors?.colonia?.message}
                 Icon={false}
                 isIcon={false}
-                placeholder={"Colónia del Proveedor"}
+                placeholder={"Colonia"}
                 register={methods.register}
               />
 
               <TextField
-                label="Ciudad del Proveedor"
+                label="Ciudad"
                 name="ciudad"
                 type="text"
                 Error={methods?.formState.errors?.ciudad?.message}

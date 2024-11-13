@@ -169,12 +169,12 @@ const ViewEditSales = ({ productosState, setDataProducts, setStatus }) => {
   
             <div className="flex justify-between items-center mb-2">
               <p className="text-[16px]">Vendedor:</p>
-              <p className="text-[14px] text-gray-600 text-right">{/* Valor dinámico aquí */}</p>
+              <p className="text-[14px] text-gray-600 text-right">{}</p>
             </div>
   
             <div className="flex justify-between items-center mb-2">
               <p className="text-[16px]">Monto total de la venta:</p>
-              <p className="text-[14px] text-gray-600 text-right">{1200}</p>
+              <p className="text-[14px] text-gray-600 text-right">{0}</p>
             </div>
             
             <div className="flex justify-between items-center mb-2">

@@ -68,10 +68,7 @@ const ViewAddUser = () => {
   };
 
   return (
-    <div
-      className="flex flex-col items-center pb-5"
-      style={{ fontFamily: "Georgia", fontSize: "12px" }}
-    >
+    <>
       <Header />
 
       <div className="flex flex-row items-center gap-2 w-full p-5 pl-4 justify-start">
@@ -86,14 +83,14 @@ const ViewAddUser = () => {
         <FormProvider {...methods}>
           <div className="flex flex-col gap-5 w-full mt-4">
             <div className="mt-1 text-lg w-full text-left px-14">
-              <b className="text-[25px]">Informacion Personal</b>
+              <b className="text-[25px]">Información Personal</b>
             </div>
 
             <TextField
               name="nombre"
-              label="Nombre Completo"
+              label="Nombre"
               type="text"
-              placeholder="Nombre Completo"
+              placeholder="Nombre completo"
               Icon={null}
               isIcon={false}
               register={methods.register}
@@ -105,7 +102,7 @@ const ViewAddUser = () => {
               name="telefono"
               label="Teléfono"
               type="text"
-              placeholder="Nombre Completo"
+              placeholder="5512345678"
               Icon={null}
               isIcon={false}
               register={methods.register}
@@ -115,9 +112,9 @@ const ViewAddUser = () => {
 
             <TextField
               name="correo"
-              label="Correo Personal"
+              label="Correo electrónico"
               type="text"
-              placeholder="Correo"
+              placeholder="ferreteria@gmail.com"
               Icon={null}
               isIcon={false}
               register={methods.register}
@@ -129,7 +126,7 @@ const ViewAddUser = () => {
               name="rfc"
               label="RFC"
               type="text"
-              placeholder="XXXXXXXXXXXXX"
+              placeholder="AAAA######XXX"
               Icon={null}
               isIcon={false}
               register={methods.register}
@@ -155,9 +152,9 @@ const ViewAddUser = () => {
 
             <TextField
               name="numero"
-              label="Número de Casa"
+              label="Número de Domicilio"
               type="text"
-              placeholder="10"
+              placeholder="18, s/n, 3-B"
               Icon={null}
               isIcon={false}
               register={methods.register}
@@ -242,12 +239,12 @@ const ViewAddUser = () => {
               name="contrasena"
               label="Contraseña del Empleado"
               type="password"
-              placeholder="*********"
+              placeholder="Minimo 8 caracteres"
               Icon={null}
               isIcon={false}
               register={methods.register}
-              isError={methods.formState.errors.sueldo}
-              Error={methods.formState.errors.sueldo?.message}
+              isError={methods.formState.errors.contrasena}
+              Error={methods.formState.errors.contrasena?.message}
             />
 
             <div>
@@ -264,7 +261,7 @@ const ViewAddUser = () => {
           </div>
         </FormProvider>
       </form>
-    </div>
+    </>
   );
 };
 

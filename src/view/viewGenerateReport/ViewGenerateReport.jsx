@@ -75,7 +75,7 @@ const ViewGenerateReport = () => {
 
       <form onSubmit={onSubmit} className="w-full max-w-[800px] mx-auto">
         <p className="my-5 font-bold text-[20px]">
-          Selecciona le frecuencia del reporte
+          Selecciona el tipo del reporte
         </p>
 
         <div className="flex flex-row justify-center items-center gap-4">
@@ -160,7 +160,7 @@ const ViewGenerateReport = () => {
         </div>
       ) : (
         <p className="font-bold text-[20px] lg:text-[50px] my-52">
-          Debes seleccionar una frecuencia
+          Debes seleccionar una tipo de reporte
         </p>
       )}
     </div>
