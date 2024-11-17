@@ -19,6 +19,7 @@ import {
   dataProduct,
 } from "../../../store/slices/product/product_reducers";
 import { Cookies } from "react-cookie";
+import clsx from "clsx";
 
 const ViewEditProduct = ({ productosState }) => {
   const methods = useForm({
@@ -31,8 +32,25 @@ const ViewEditProduct = ({ productosState }) => {
   const cookie = new Cookies();
   const [isLoad, setIsLoad] = useState(false);
   const [product, setProduct] = useState({});
+  const [proveedores, setProveedores] = useState([]);
+  const [proveedor, setProveedor] = useState("");
 
   console.log(methods.formState.errors);
+
+  useEffect(() => {
+    const config = {
+      method: "GET",
+      url: `${import.meta.env.VITE_URL}/proveedor/obtener`,
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios.request(config).then((response) => {
+      setProveedores(response.data);
+    });
+  }, []);
 
   useEffect(() => {
     if (productos) {
@@ -112,7 +130,7 @@ const ViewEditProduct = ({ productosState }) => {
 
             <div className=" w-full lg:w-1/2 flex flex-col justify-center items-center gap-5 px-5">
               <TextField
-                label="Nombre del producto"
+                label="Nombre"
                 name="nombre"
                 type="text"
                 placeholder="Nombre del producto"
@@ -121,8 +139,33 @@ const ViewEditProduct = ({ productosState }) => {
                 isError={!!methods?.formState.errors?.nombre?.message}
               />
 
+              <label
+                className={clsx(
+                  "pl-2 w-full font-bold lg:text-[20px] text-black"
+                )}
+              >
+                Seleccionar proveedor
+              </label>
+              {proveedores.length > 0 && (
+                <select
+                  className="border-[1px] border-solid border-black w-full h-[44px] outline-none shadow-md rounded-md p-1"
+                  onChange={(event) => setProveedor(event.target.value)}
+                  value={proveedor.idPersona}
+                >
+                  <option value="">Seleccionar</option>
+                  {proveedores.map((proveedor) => (
+                    <option
+                      value={proveedor.idPersona}
+                      key={proveedor.idPersona}
+                    >
+                      {proveedor.nombre}
+                    </option>
+                  ))}
+                </select>
+              )}
+
               <TextField
-                label="Cantidad del producto"
+                label="Cantidad"
                 name="cantidad"
                 type="text"
                 placeholder="Cantidad del producto"
@@ -132,27 +175,27 @@ const ViewEditProduct = ({ productosState }) => {
               />
 
               <TextField
-                label="¿Cuál sería el Stock mínimo?"
+                label="Stock mínimo"
                 name="stockMinimo"
                 type="text"
-                placeholder="1, 4, 4.5kg, etc."
+                placeholder="1"
                 register={methods.register}
                 Error={methods?.formState.errors?.stockMinimo?.message}
                 isError={!!methods?.formState.errors?.stockMinimo?.message}
               />
 
               <TextField
-                label="Costo del producto"
+                label="Costo"
                 name="costo"
                 type="text"
-                placeholder="Costo del producto"
+                placeholder="0.00"
                 register={methods.register}
                 Error={methods?.formState.errors?.costo?.message}
                 isError={!!methods?.formState.errors?.costo?.message}
               />
 
               <TextField
-                label="Precio menudeo del producto"
+                label="Precio a menudeo"
                 name="precioMenudeo"
                 type="text"
                 placeholder="Precio del producto"
@@ -162,10 +205,10 @@ const ViewEditProduct = ({ productosState }) => {
               />
 
               <TextField
-                label="Precio mayoreo del producto"
+                label="Precio a mayoreo"
                 name="precioMayoreo"
                 type="text"
-                placeholder="Precio mayoreo del producto"
+                placeholder="Precio del producto"
                 register={methods.register}
                 Error={methods?.formState.errors?.precioMayoreo?.message}
                 isError={!!methods?.formState.errors?.precioMayoreo?.message}

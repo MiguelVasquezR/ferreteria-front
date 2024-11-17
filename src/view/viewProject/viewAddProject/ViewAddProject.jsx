@@ -50,7 +50,7 @@ const ViewAddProject = () => {
       .catch((error) => {
         setIsLoading(true);
         console.log(error);
-        toast.error("Error al crear el proveedor");
+        toast.error("Error al crear el proyecto");
       });
   };
 
@@ -78,13 +78,13 @@ const ViewAddProject = () => {
         <FormProvider {...methods}>
           <fieldset className="w-[90%] lg:w-[70%] gap-3 flex justify-center items-center flex-col">
             <legend className="text-[18px] lg:text-[24px] font-bold py-5">
-              Información de Persona
+              Información Personal del encargado de proyecto
             </legend>
 
             <TextField
               name="nombre"
               label={"Nombre"}
-              placeholder="Nombre de la persona"
+              placeholder="Nombre completo"
               type="text"
               Icon={null}
               isIcon={false}
@@ -94,33 +94,9 @@ const ViewAddProject = () => {
             />
 
             <TextField
-              name="paterno"
-              label={"Apellido Paterno"}
-              placeholder="Apellido paterno de la persona"
-              type="text"
-              Icon={null}
-              isIcon={false}
-              register={methods.register}
-              isError={!!methods.formState.errors.paterno}
-              Error={methods.formState.errors.paterno?.message}
-            />
-
-            <TextField
-              name="materno"
-              label={"Apellido Materno"}
-              placeholder="Apellido materno de la persona"
-              type="text"
-              Icon={null}
-              isIcon={false}
-              register={methods.register}
-              isError={!!methods.formState.errors.materno}
-              Error={methods.formState.errors.materno?.message}
-            />
-
-            <TextField
               name="telefono"
               label={"Teléfono"}
-              placeholder="Teléfono de la persona"
+              placeholder="5512345678"
               type="text"
               Icon={null}
               isIcon={false}
@@ -132,7 +108,7 @@ const ViewAddProject = () => {
             <TextField
               name="correo"
               label={"Correo electrónico"}
-              placeholder="Correo electrónico de la persona"
+              placeholder="ejemplo@gmail.com"
               type="text"
               Icon={null}
               isIcon={false}
@@ -144,7 +120,7 @@ const ViewAddProject = () => {
             <TextField
               name="rfc"
               label={"RFC"}
-              placeholder="RFC de la persona"
+              placeholder="AAAA######XXX"
               type="text"
               Icon={null}
               isIcon={false}
@@ -156,7 +132,7 @@ const ViewAddProject = () => {
 
           <fieldset className="w-[90%] lg:w-[70%] gap-3 flex justify-center items-center flex-col">
             <legend className="text-[18px] lg:text-[24px] font-bold py-5">
-              Dirección de la Persona a Cargo
+              Dirección del encargado de proyecto
             </legend>
 
             <TextField
@@ -173,8 +149,8 @@ const ViewAddProject = () => {
 
             <TextField
               name="numero"
-              label={"Número de hogar"}
-              placeholder="Número de hogar"
+              label={"Número de Domicilio"}
+              placeholder="18, s/n, 3-B"
               type="text"
               Icon={null}
               isIcon={false}
@@ -210,7 +186,7 @@ const ViewAddProject = () => {
 
           <fieldset className="w-[90%] lg:w-[70%] gap-3 flex justify-center items-center flex-col">
             <legend className="text-[18px] lg:text-[24px] font-bold py-5">
-              Dirección de Proyecto
+              Dirección del Proyecto
             </legend>
 
             <TextField
@@ -227,8 +203,8 @@ const ViewAddProject = () => {
 
             <TextField
               name="numeroP"
-              label={"Número de hogar"}
-              placeholder="Número de hogar"
+              label={"Número de Domicilio"}
+              placeholder="18, s/n, 3-B"
               type="text"
               Icon={null}
               isIcon={false}

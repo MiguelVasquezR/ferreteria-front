@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import ClockLoadin from "../Loadings/ClockLoading/index";
+import clsx from "clsx";
 
 const Button = ({
   texto,
@@ -20,7 +21,7 @@ const Button = ({
       {isLoading ? (
         <ClockLoadin />
       ) : (
-        <div>
+        <div className={clsx(isIcon && "flex flex-row justify-center items-center gap-3")}>
           {isIcon && <span>{Icon}</span>}
           {texto}
         </div>

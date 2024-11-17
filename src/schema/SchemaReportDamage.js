@@ -4,10 +4,10 @@ export const SchemaReportDamage = z.object({
   urlImage: z.string().url("La url de la imagen no es válida"),
   nombre: z
     .string()
-    .min(1, "El precio es obligatorio")
-    .max(20, "El nombre no puede ser mayor a 20 caracteres"),
+    .min(1, "El nombre es requerido")
+    .max(100, "El nombre es muy largo"),
   descripcion: z
     .string()
     .min(1, "La descripcion es obligatoria")
-    .max(150, "La descripcion no puede ser mayor a 100 caracteres"),
+    .max(200, "La descripcion no puede ser mayor a 200 caracteres"),
 });
