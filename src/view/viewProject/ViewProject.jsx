@@ -28,6 +28,12 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
   const [showModal, setShowModal] = useState(false);
   const [idProyecto, setIdProyecto] = useState("");
 
+  const filterProyecto = proyectos.filter((proyecto) => {
+    return proyecto.nombre
+      .toLowerCase()
+      .includes(methods.watch("busqueda")?.toLowerCase());
+  });
+
   const changeStateModal = () => {
     setShowModal(true);
   };
@@ -66,20 +72,18 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
           toast.error("Error al eliminar el proyecto");
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(true);
-        console.log(error);
         setStatus("error");
         toast.error("Error al eliminar el proyecto");
       });
   };
 
   useEffect(() => {
-
     if (proyectos.length > 0) {
       return;
     }
-    
+
     setIsLoading(true);
     setStatus("loading");
     const config = {
@@ -94,17 +98,14 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
     axios
       .request(config)
       .then((response) => {
-        console.log( response.data);
-        
         if (response.status === 200) {
           setDataProyectos(response.data);
           setStatus("succeeded");
           setIsLoading(false);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(true);
-        console.log(error);
         setStatus("error");
         toast.error("Error al obtener los proyectos");
       });
@@ -136,7 +137,7 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
             <TextField
               name="busqueda"
               label="Buscar proyecto"
-              placeholder="Buscar proyecto"
+              placeholder="Buscar proyecto por nombre del encargado"
               isError={!!methods.formState.errors.busqueda}
               Error={methods.formState.errors.busqueda?.message}
               register={methods.register}
@@ -158,7 +159,7 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  place-items-center">
-          {proyectos?.map((proyecto, index) => (
+          {filterProyecto?.map((proyecto, index) => (
             <CardPresentationProject
               changeStateID={changeStateID}
               showModal={changeStateModal}

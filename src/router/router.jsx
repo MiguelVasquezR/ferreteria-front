@@ -31,6 +31,7 @@ import ViewAddUser from "../view/viewAddUser/ViewAddUser.jsx";
 import ViewSettings from "../view/viewSettings/ViewSettings.jsx";
 import ViewUser from "../view/viewUser/ViewUser.jsx";
 import ViewListOffer from "../view/viewOfferProduct/viewListOffer/ViewListOffer.jsx";
+import NotFound from "../view/notFound/index.jsx";
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
   que el usuario quiere ingresar al sistema tenga el permiso de entrar a esa pestalla. He creado el componente 
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <div>Ruta no encontrada</div>,
+    element: <NotFound />,
   },
   {
     path: "/login",
