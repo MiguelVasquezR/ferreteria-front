@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   dataProduct,
@@ -30,13 +30,11 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
   const cookie = new Cookies();
   const [isLoadinView, setIsLoadinView] = useState(true);
 
-  const productosFiltrados = useMemo(() => {
-    return productos?.filter((product) =>
-      product.nombre
-        ?.toLowerCase()
-        .includes(methods.watch("buscador")?.toLowerCase())
-    );
-  }, [productos, methods]);
+  const productosFiltrados = productos?.filter((product) =>
+    product.nombre
+      ?.toLowerCase()
+      .includes(methods.watch("buscador")?.toLowerCase())
+  );
 
   useEffect(() => {
     const config = {
@@ -261,10 +259,15 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
                   />
                 </div>
 
-                <div>
+                <div className="flex flex-col justify-start items-start w-full">
                   <h2 className="font-bold text-[22px] my-1">
                     Información del Proveedor
                   </h2>
+                  <h2>
+                    Nombre del Proveedor: {selectedProduct?.nombrePersona}
+                  </h2>
+                  <p>Teléfono: {selectedProduct?.telefono}</p>
+                  <p>Correo: {selectedProduct?.correo}</p>
                 </div>
               </div>
             ) : (

@@ -1,10 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import Header from "../../../components/Header/Header";
-import TextField from "../../../components/Form/TextField/TextField";
 import TextArea from "../../../components/Form/TextArea/TextArea";
 import PhotoComponent from "../../../components/Photo/Photo";
-import { IoArrowBackOutline } from "react-icons/io5";
 import Button from "../../../components/Buttons/Button";
 import { IoIosSave } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +11,11 @@ import toast from "react-hot-toast";
 
 import { SchemaReportDamage } from "../../../schema/SchemaReportDamage";
 import { Cookies } from "react-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ViewReportDamageProduct = () => {
+  const [productos, setProductos] = useState([]);
+  const [producto, setProducto] = useState("");
   const methods = useForm({
     resolver: zodResolver(SchemaReportDamage),
     mode: "onChange",
@@ -25,6 +25,11 @@ const ViewReportDamageProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
+    if (methods.watch().nombre === "") {
+      toast.error("Selecciona un producto");
+      return;
+    }
+
     const config = {
       method: "POST",
       url: `${import.meta.env.VITE_URL}/reporte/guardar`,
@@ -39,10 +44,11 @@ const ViewReportDamageProduct = () => {
     axios
       .request(config)
       .then((response) => {
-        if (response.data === "Reporte guardado exitosamente") {
+        if (response.data === "Reporte guardado correctamente") {
           toast.success("Reporte guardado exitosamente");
           navigate("/");
         }
+        setIsLoading(false);
       })
       .catch(() => {
         setIsLoading(false);
@@ -52,11 +58,21 @@ const ViewReportDamageProduct = () => {
       });
   };
 
-  const backPage = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigate(-1);
-  };
+  useEffect(() => {
+    const config = {
+      method: "GET",
+      url: `${import.meta.env.VITE_URL}/producto/obtener-productos`,
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios.request(config).then((response) => {
+      console.log(response);
+      setProductos(response.data);
+    });
+  }, []);
 
   return (
     <div>
@@ -64,7 +80,6 @@ const ViewReportDamageProduct = () => {
 
       <div className="flex flex-col gap-1">
         <div className="flex flex-row justify-start items-center gap-1 my-5 lg:pl-5 cursor-pointer">
-          
           <h2 className="font-bold text-[18px] lg:text-[22px]">
             Reporte producto dañado
           </h2>
@@ -85,27 +100,40 @@ const ViewReportDamageProduct = () => {
               />
             </div>
 
-            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-5 px-5">
-              <TextField
-                label="Seleccione el producto"
-                name="nombre"
-                type="text"
-                placeholder="Nombre del producto dañado"
-                register={methods.register}
-                Error={methods.formState.errors.productoDagnado?.message}
-                isError={!!methods.formState.errors.productoDagnado}
-              />
+            <div className="w-full lg:w-1/2 flex flex-col   gap-5 px-5">
+              <h2 className="font-bold lg:text-[22px]">
+                {" "}
+                Seleccione el producto
+              </h2>
+
+              {productos.length > 0 && (
+                <select
+                  className="border-[1px] border-solid border-black w-full h-[44px] outline-none shadow-md rounded-md p-1"
+                  onChange={(event) => setProducto(event.target.value)}
+                  {...methods.register("nombre")}
+                >
+                  <option value="">Seleccionar</option>
+                  {productos.map((producto) => (
+                    <option
+                      value={producto.idProducto}
+                      key={producto.idProducto}
+                    >
+                      {producto.nombre}
+                    </option>
+                  ))}
+                </select>
+              )}
 
               <TextArea
-                isError=""
-                name="descripcion"
-                error={methods.formState.errors.reporteDagno?.message}
                 label={"Seleccione el producto"}
+                name="descripcion"
                 placeholder="Describa el daño del producto"
                 register={methods.register}
+                error={methods.formState.errors.descripcion?.message}
+                isError={!!methods.formState.errors.nombre}
               />
 
-              <div className=" w-[200px] lg:w-[300px] lg:h-[50px] my-5 rounded-md">
+              <div className=" w-[200px] lg:w-[300px] lg:h-[50px] my-5 rounded-md items-center">
                 <Button
                   texto="Generar"
                   background="bg-F58A27"

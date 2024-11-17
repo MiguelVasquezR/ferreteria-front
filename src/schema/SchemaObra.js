@@ -3,12 +3,13 @@ import { z } from "zod";
 export const schemaObra = z.object({
   nombre: z
     .string()
-    .min(1, "El nombres es requrido")
-    .max(25, "El nombre es muy largo"),
+    .min(1, "El nombre es requerido")
+    .max(40, "El nombre es muy largo")
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.#\s]+$/, "Solo . # letras, números y espacios"),
   telefono: z
     .string()
     .length(10, "El teléfono solo puede tener 10 digitos")
-    .regex(/^\d+$/, "El teléfono solo debe contener números"),
+    .regex(/^\d+$/, "El teléfono solo admite números"),
   correo: z
     .string()
     .email("El correo es requerido")
@@ -36,8 +37,8 @@ export const schemaObra = z.object({
   numero: z
     .string()
     .min(1, "El número es requerido")
-    .max(7, "El número es muy largo")
-    .regex(/^[a-zA-Z0-9]+$/, { message: "Solo se admiten letras y números" }),  
+    .max(6, "El número es muy largo")
+    .regex(/^[a-zA-Z0-9-/]+$/, { message: "Solo se admiten / - letras y números" }),  
   colonia: z
     .string()
     .min(1, "La colonia es requerida")
@@ -48,7 +49,6 @@ export const schemaObra = z.object({
     .min(1, "La ciudad es requerido")
     .max(20, "La ciudad es muy larga")
     .regex(/^[a-zA-Z0-9\s.]+$/, { message: "Solo se admiten letras, números y espacios" }),
-
   calleP: z
     .string()
     .min(1, "La calle es requerida")
@@ -58,7 +58,7 @@ export const schemaObra = z.object({
     .string()
     .min(1, "El número es requerido")
     .max(7, "El número es muy largo")
-    .regex(/^[a-zA-Z0-9]+$/, { message: "Solo se admiten letras y números" }),  
+    .regex(/^[a-zA-Z0-9-/]+$/, { message: "Solo se admiten / - letras y números" }),  
   coloniaP: z
     .string()
     .min(1, "La colonia es requerida")

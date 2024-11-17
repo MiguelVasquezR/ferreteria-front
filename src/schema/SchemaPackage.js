@@ -4,19 +4,22 @@ export const SchemaPackage = z.object({
   nombre: z
     .string()
     .min(1, "El nombre es requerido")
-    .max(25, "El nombre es muy largo"),
-
+    .max(40, "El nombre es muy largo")
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.#\s]+$/, "Solo . # letras, números y espacios"),
   precio: z
     .string()
+    .max(8, "Limite de caracteres excedido")
+    .regex(/^\d+(\.\d{1,2})?$/, { message: "El precio solo admite números y un punto decimal" })
     .refine((value) => !isNaN(parseFloat(value)), {
       message: "El precio debe ser un número válido",
     })
     .refine((value) => parseFloat(value) >= 1, {
       message: "El precio debe ser mayor o igual a 1",
     })
-    .refine((value) => parseFloat(value) <= 9999, {
-      message: "El precio no puede ser mayor a 9999",
+    .refine((value) => parseFloat(value) <= 9999.99, {
+      message: "El precio no puede ser mayor a 9999.99",
     }),
+
   descripcion: z
     .string()
     .min(1, "La descripcion es obligatoria")
@@ -41,12 +44,17 @@ export const SchemaOffer = z.object({
     .refine(
       (value) => {
         const inputDate = new Date(value);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return inputDate >= today;
+        const tomorrow = new Date();
+        tomorrow.setHours(0, 0, 0, 0);
+        
+        const currentYear = tomorrow.getFullYear();
+        const inputYear = inputDate.getFullYear();
+
+        return inputYear >= currentYear && inputDate >= tomorrow;
       },
       {
-        message: "La fecha no puede ser anterior a la fecha actual",
+        message: "La fecha debe ser posterior a la fecha actual",
       }
     ),
+
 });
