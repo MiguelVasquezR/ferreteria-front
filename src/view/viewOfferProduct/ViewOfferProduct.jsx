@@ -140,8 +140,8 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
               name="fechaFinal"
               label="Fecha de Finalización"
               placeholder="Fecha de Finalización"
-              isError={!!methods.formState.errors.fecha}
-              Error={methods.formState.errors.fecha?.message}
+              isError={!!methods.formState.errors.fechaFinal}
+              Error={methods.formState.errors.fechaFinal?.message}
               register={methods.register}
               type="date"
               Icon={null}
@@ -180,7 +180,7 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
                 background="bg-[#F58A27]"
                 text="Crear Paquete"
                 isIcon={false}
-                texto="Crear Paquete"
+                texto="Crear Oferta"
                 type="submit"
                 Icon={null}
                 onClick={() => {}}

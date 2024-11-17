@@ -3,9 +3,9 @@ import z from "zod";
 export const SchemeSuplier = z.object({
   nombre: z
     .string()
-    .min(1, "El nombre es obligatorio")
-    .max(50,"El nombre no puede exceder los 50 caracteres")
-    .regex(/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo debe contener letras y espacios"),
+    .min(1, "El nombre es requerido")
+    .max(40, "El nombre es muy largo")
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.#\s]+$/, "Solo . # letras, números y espacios"),
   telefono: z
     .string()
     .min(1, "Debes ingresar el teléfono de contacto")
@@ -41,7 +41,7 @@ export const SchemeSuplier = z.object({
     .string()
     .min(1, "El número es requerido")
     .max(7, "El número es muy largo")
-    .regex(/^[a-zA-Z0-9]+$/, { message: "Solo se admiten letras y números" }),   
+    .regex(/^[a-zA-Z0-9-/]+$/, { message: "Solo se admiten / - letras y números" }),  
   ciudad: z
     .string()
     .min(1, "La ciudad es requerida")

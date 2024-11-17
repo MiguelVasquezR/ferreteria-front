@@ -32,7 +32,6 @@ import ViewSettings from "../view/viewSettings/ViewSettings.jsx";
 import ViewUser from "../view/viewUser/ViewUser.jsx";
 import ViewListOffer from "../view/viewOfferProduct/viewListOffer/ViewListOffer.jsx";
 import NotFound from "../view/notFound/index.jsx";
-
 /*
   Según la lógica de negocio, tendremos 3 interfaces diferentes segun los roles, entonces debemos de validar
   que el usuario quiere ingresar al sistema tenga el permiso de entrar a esa pestalla. He creado el componente 
@@ -84,42 +83,30 @@ const router = createBrowserRouter([
     path: "/products",
     element: <ViewProducts />,
   },
-
   {
     path: "/supliers",
     element: <ViewListSuplier />,
   },
-
   {
     path: "/create-suplier",
     element: <ViewCreateSuplier />,
   },
-
   {
     path: "/generate-report",
     element: <ViewGenerateReport />,
   },
-
   {
     path: "/report-damage-product",
     element: <ViewReportDamageProduct />,
   },
-
-  {
-    path: "/process-payment",
-    element: <ViewProcessPayment />,
-  },
-
   {
     path: "/sale",
     element: <ViewSale />,
   },
-
   {
     path: "/edit-sale",
     element: <ViewEditSale />,
   },
-
   {
     path: "/proyecto/agregar",
     element: <ViewAddProject />,
@@ -128,46 +115,30 @@ const router = createBrowserRouter([
     path: "/proyecto",
     element: <ViewProject />,
   },
-
   {
     path: "/daily-report",
     element: <ViewDailyReport />,
   },
-
   {
     path: "/edit-project",
     element: <ViewEditProject />,
   },
-
   {
-    path: "/Edit-Package",
+    path: "/edit-package",
     element: <ViewEditPackage />,
   },
-
   {
-    path: "/Add-package",
-    element: <ViewAddPackage />,
-  },
-
-  {
-    path: "/List-package",
+    path: "/list-package",
     element: <ViewListPackage />,
   },
   {
     path: "/edit-project/:id",
     element: <ViewEditProject />,
   },
-
-  {
-    path: "/Edit-Package",
-    element: <ViewEditPackage />,
-  },
-
   {
     path: "/add-package",
     element: <ViewAddPackage />,
   },
-
   {
     path: "/list-package",
     element: <ViewListPackage />,
@@ -185,7 +156,7 @@ const router = createBrowserRouter([
     element: <ViewUser />,
   },
   {
-    path: "/edit-User",
+    path: "/edit-user",
     element: <ViewEditUser />,
   },
   {
@@ -195,6 +166,12 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <ViewSettings />,
+  },
+  
+  {
+    path: "/Report-demaged",
+    element: <ViewReportDamageProduct/>
+
   },
 ]);
 
