@@ -14,6 +14,7 @@ import TextArea from "../../../components/Form/TextArea/TextArea";
 import { Cookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import SuplierLoading from "../../../components/Loadings/SuplierLoading/SuplierLoading";
 
 const ViewCreateProduct = () => {
   const methods = useForm({
@@ -24,6 +25,7 @@ const ViewCreateProduct = () => {
   const cookie = new Cookies();
   const [proveedores, setProveedores] = useState([]);
   const [proveedor, setProveedor] = useState("");
+  const [isLoadingView, setIsLoadingView] = useState(false);
 
   const onSubmit = (data) => {
     if (proveedor === "") {
@@ -71,10 +73,17 @@ const ViewCreateProduct = () => {
       },
     };
 
-    axios.request(config).then((response) => {
-      console.log(response);
-      setProveedores(response.data);
-    });
+    setIsLoadingView(true);
+    axios
+      .request(config)
+      .then((response) => {
+        setProveedores(response.data);
+        setIsLoadingView(false);
+      })
+      .catch(() => {
+        toast.error("Error al obtener los proveedores");
+        setIsLoadingView(false);
+      });
   }, []);
 
   const backPage = (e) => {
@@ -88,6 +97,10 @@ const ViewCreateProduct = () => {
       <Header />
 
       <div className="flex flex-col gap-1">
+        {isLoadingView && (
+          <div className="w-screen h-screen absolute">{<SuplierLoading />}</div>
+        )}
+
         <div className="flex flex-row justify-start items-center gap-1 my-5 lg:pl-5 cursor-pointer">
           <IoArrowBackOutline
             className="font-bold"

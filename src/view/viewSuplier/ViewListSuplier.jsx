@@ -29,6 +29,12 @@ const ViewListSuplier = ({
   const cookie = new Cookies();
   const [isLoading, setIsLoading] = useState(true);
 
+  const filterProveedor = proveedores.filter((proveedor) => {
+    return proveedor.nombre
+      .toLowerCase()
+      .includes(methods.watch("buscador")?.toLowerCase());
+  });
+
   useEffect(() => {
     setStatus("loading");
     const config = {
@@ -141,8 +147,8 @@ const ViewListSuplier = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5 bg-gray-100 w-full mx-auto justify-center">
-          {proveedores.length > 0 &&
-            proveedores?.map((proveedor, index) => {
+          {filterProveedor.length > 0 &&
+            filterProveedor?.map((proveedor, index) => {
               return (
                 <Card
                   key={index}
