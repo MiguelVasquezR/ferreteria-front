@@ -92,17 +92,17 @@ const ViewReportDamageProduct = () => {
                 type="text"
                 placeholder="Nombre del producto dañado"
                 register={methods.register}
-                Error={methods.formState.errors.productoDagnado?.message}
-                isError={!!methods.formState.errors.productoDagnado}
+                Error={methods.formState.errors.nombre?.message}
+                isError={!!methods.formState.errors.nombre}
               />
 
               <TextArea
-                isError=""
-                name="descripcion"
-                error={methods.formState.errors.reporteDagno?.message}
                 label={"Seleccione el producto"}
+                name="descripcion"
                 placeholder="Describa el daño del producto"
                 register={methods.register}
+                error={methods.formState.errors.descripcion?.message}
+                isError={!!methods.formState.errors.nombre}
               />
 
               <div className=" w-[200px] lg:w-[300px] lg:h-[50px] my-5 rounded-md">

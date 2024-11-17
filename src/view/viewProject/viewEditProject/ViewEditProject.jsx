@@ -115,13 +115,13 @@ const ViewEditProject = ({ proyectosState }) => {
         <FormProvider {...methods}>
           <fieldset className="w-[90%] lg:w-[70%] gap-3 flex justify-center items-center flex-col">
             <legend className="text-[18px] lg:text-[24px] font-bold py-5">
-              Información de Persona
+                Información Personal del encargado de proyecto
             </legend>
 
             <TextField
               name="nombre"
-              label={"Nombre(s)"}
-              placeholder="Nombre de la persona"
+              label={"Nombre"}
+              placeholder="Nombre completo"
               type="text"
               Icon={null}
               isIcon={false}
@@ -133,7 +133,7 @@ const ViewEditProject = ({ proyectosState }) => {
             <TextField
               name="telefono"
               label={"Teléfono"}
-              placeholder="Teléfono de la persona"
+              placeholder="5512345678"
               type="text"
               Icon={null}
               isIcon={false}
@@ -145,7 +145,7 @@ const ViewEditProject = ({ proyectosState }) => {
             <TextField
               name="correo"
               label={"Correo electrónico"}
-              placeholder="Correo electrónico de la persona"
+              placeholder="ejemplo@gmail.com"
               type="text"
               Icon={null}
               isIcon={false}
@@ -157,7 +157,7 @@ const ViewEditProject = ({ proyectosState }) => {
             <TextField
               name="rfc"
               label={"RFC"}
-              placeholder="RFC de la persona"
+              placeholder="AAAA######XXX"
               type="text"
               Icon={null}
               isIcon={false}
@@ -169,7 +169,7 @@ const ViewEditProject = ({ proyectosState }) => {
 
           <fieldset className="w-[90%] lg:w-[70%] gap-3 flex justify-center items-center flex-col">
             <legend className="text-[18px] lg:text-[24px] font-bold py-5">
-              Dirección de la Persona a Cargo
+              Dirección del encargado de proyecto
             </legend>
 
             <TextField
@@ -186,8 +186,8 @@ const ViewEditProject = ({ proyectosState }) => {
 
             <TextField
               name="numero"
-              label={"Número de hogar"}
-              placeholder="Número del edificio"
+              label={"Número de Domicilio"}
+              placeholder="18, s/n, 3-B"
               type="text"
               Icon={null}
               isIcon={false}
@@ -223,7 +223,7 @@ const ViewEditProject = ({ proyectosState }) => {
 
           <fieldset className="w-[90%] lg:w-[70%] gap-3 flex justify-center items-center flex-col">
             <legend className="text-[18px] lg:text-[24px] font-bold py-5">
-              Dirección de Proyecto
+               Dirección del  proyecto
             </legend>
 
             <TextField
@@ -240,8 +240,8 @@ const ViewEditProject = ({ proyectosState }) => {
 
             <TextField
               name="numeroP"
-              label={"Número de hogar"}
-              placeholder="Número del edificio"
+              label={"Número de Domicilio"}
+              placeholder="18, s/n, 3-B"
               type="text"
               Icon={null}
               isIcon={false}
