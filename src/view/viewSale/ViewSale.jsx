@@ -16,7 +16,6 @@ import axios from "axios";
 
 import toast from "react-hot-toast";
 import ModalEmail from "../../components/Modal/ModalEmail/ModalEmail";
-import CardProcessPayment from "../../components/cardProcessPayment/CardProcessPayment";
 import { setPayment } from "../../store/slices/payment/payment_slice";
 import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
 

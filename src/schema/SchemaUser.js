@@ -25,7 +25,7 @@ export const User = z.object({
   nombre: z
     .string()
     .min(1, "El nombre es requerido")
-    .max(30, "El nombre es muy largo")
+    .max(40, "El nombre es muy largo")
     .regex(
       /^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]+$/,
       "El nombre solo debe contener letras y espacios"
@@ -67,7 +67,7 @@ export const User = z.object({
     .string()
     .min(1, "El número es requerido")
     .max(7, "El número es muy largo")
-    .regex(/^[a-zA-Z0-9]+$/, { message: "Solo se admiten letras y números" }),
+    .regex(/^[a-zA-Z0-9-/]+$/, { message: "Solo se admiten / - letras y números" }),  
   colonia: z
     .string()
     .min(1, "La colonia es requerida")
@@ -84,14 +84,25 @@ export const User = z.object({
     }),
   sueldo: z
     .string()
-    .min(1, "El sueldo es requerido")
-    .max(10, "El número no puede superar 10 digitos"),
+    .max(8, "Limite de digitos alcanzado")
+    .regex(/^\d+(\.\d{1,2})?$/, { message: "El sueldo solo admite números y un punto decimal" })
+    .refine((value) => !isNaN(parseFloat(value)), {
+      message: "El sueldo debe ser un número válido",
+    })
+    .refine((value) => parseFloat(value) >= 1, {
+      message: "El sueldo debe ser mayor o igual a 1",
+    })
+    .refine((value) => parseFloat(value) <= 99999.99, {
+      message: "El sueldo no puede ser mayor a 99999.99",
+    }),
   usuario: z
     .string()
     .min(1, "El usuario es requerido")
-    .max(10, "El usuario no puede superar 15 digitos"),
+    .max(15, "El usuario no puede superar 15 digitos"),
   contrasena: z
     .string()
-    .min(1, "La contraseña es requerido")
-    .max(10, "La contraseña no puede superar 15 digitos"),
+    .min(8, "La contraseña es requerida")
+    .max(10, "La contraseña no puede superar 10 caracteres")
+    .regex(/^[a-zA-Z0-9!@#$%^&*]+$/, "La contraseña solo admite @ # $ % ^ & * letras, números"),
+
 });

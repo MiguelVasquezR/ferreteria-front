@@ -119,7 +119,7 @@ const ViewCreateProduct = () => {
 
             <div className=" w-full lg:w-1/2 flex flex-col justify-center items-center gap-5 px-5">
               <TextField
-                label="Nombre del producto"
+                label="Nombre"
                 name="nombre"
                 type="text"
                 placeholder="Nombre del producto"
@@ -152,7 +152,7 @@ const ViewCreateProduct = () => {
                 </select>
               )}
               <TextField
-                label="Cantidad del producto"
+                label="Cantidad"
                 name="cantidad"
                 type="text"
                 placeholder="Cantidad del producto"
@@ -161,16 +161,16 @@ const ViewCreateProduct = () => {
                 isError={!!methods?.formState.errors?.cantidad?.message}
               />
               <TextField
-                label="¿Cuál sería el Stock mínimo?"
+                label="Stock mínimo"
                 name="stockMinimo"
                 type="text"
-                placeholder="1, 4, 4.5kg, etc."
+                placeholder="1, 4.5kg, etc."
                 register={methods.register}
                 Error={methods?.formState.errors?.stockMinimo?.message}
                 isError={!!methods?.formState.errors?.stockMinimo?.message}
               />
               <TextField
-                label="Costo del producto"
+                label="Costo"
                 name="costo"
                 type="text"
                 placeholder="Costo del producto"
@@ -179,7 +179,7 @@ const ViewCreateProduct = () => {
                 isError={!!methods?.formState.errors?.costo?.message}
               />
               <TextField
-                label="Precio a menudeo del producto"
+                label="Precio a menudeo"
                 name="precioMenudeo"
                 type="text"
                 placeholder="Precio del producto"
@@ -188,16 +188,16 @@ const ViewCreateProduct = () => {
                 isError={!!methods?.formState.errors?.precioMenudeo?.message}
               />
               <TextField
-                label="Precio a mayoreo del producto"
+                label="Precio a mayoreo"
                 name="precioMayoreo"
                 type="text"
-                placeholder="Precio mayoreo del producto"
+                placeholder="Precio del producto"
                 register={methods.register}
                 Error={methods?.formState.errors?.precioMayoreo?.message}
                 isError={!!methods?.formState.errors?.precioMayoreo?.message}
               />
               <TextArea
-                label="Descripción del producto"
+                label="Descripción"
                 name="descripcion"
                 placeholder="Descripción del producto"
                 isError={!!methods?.formState.errors?.descripcion?.message}
