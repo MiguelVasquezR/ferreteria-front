@@ -5,10 +5,9 @@ export const SchemaReportDamage = z.object({
   nombre: z
     .string()
     .min(1, "El nombre es requerido")
-    .max(30, "El nombre es muy largo")
-    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.#\s]+$/, "Solo . # letras, números y espacios"),
+    .max(100, "El nombre es muy largo"),
   descripcion: z
     .string()
     .min(1, "La descripcion es obligatoria")
-    .max(10, "La descripcion no puede ser mayor a 100 caracteres"),
+    .max(200, "La descripcion no puede ser mayor a 200 caracteres"),
 });

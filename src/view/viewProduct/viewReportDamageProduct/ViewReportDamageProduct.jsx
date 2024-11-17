@@ -1,10 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import Header from "../../../components/Header/Header";
-import TextField from "../../../components/Form/TextField/TextField";
 import TextArea from "../../../components/Form/TextArea/TextArea";
 import PhotoComponent from "../../../components/Photo/Photo";
-import { IoArrowBackOutline } from "react-icons/io5";
 import Button from "../../../components/Buttons/Button";
 import { IoIosSave } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +25,7 @@ const ViewReportDamageProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
-    if (producto === "") {
+    if (methods.watch().nombre === "") {
       toast.error("Selecciona un producto");
       return;
     }
@@ -46,10 +44,11 @@ const ViewReportDamageProduct = () => {
     axios
       .request(config)
       .then((response) => {
-        if (response.data === "Reporte guardado exitosamente") {
+        if (response.data === "Reporte guardado correctamente") {
           toast.success("Reporte guardado exitosamente");
           navigate("/");
         }
+        setIsLoading(false);
       })
       .catch(() => {
         setIsLoading(false);
@@ -57,12 +56,6 @@ const ViewReportDamageProduct = () => {
           "Por el momento no se puede guardar el reporte, intenta más tarde"
         );
       });
-  };
-
-  const backPage = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigate(-1);
   };
 
   useEffect(() => {
@@ -116,7 +109,8 @@ const ViewReportDamageProduct = () => {
               {productos.length > 0 && (
                 <select
                   className="border-[1px] border-solid border-black w-full h-[44px] outline-none shadow-md rounded-md p-1"
-                  onChange={() => setProducto(event.target.value)}
+                  onChange={(event) => setProducto(event.target.value)}
+                  {...methods.register("nombre")}
                 >
                   <option value="">Seleccionar</option>
                   {productos.map((producto) => (
