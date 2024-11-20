@@ -32,11 +32,15 @@ const ViewCreateProduct = () => {
       toast.error("Selecciona un proveedor");
       return;
     }
+    
 
     const dataToSend = {
       ...data,
-      idPersona: proveedor.idPersona,
+      idPersona: proveedor,
     };
+
+    console.log(dataToSend);
+    
 
     const config = {
       headers: {
@@ -47,6 +51,7 @@ const ViewCreateProduct = () => {
       url: `${import.meta.env.VITE_URL}/producto/agregar-producto`,
       data: dataToSend,
     };
+    
 
     axios
       .request(config)

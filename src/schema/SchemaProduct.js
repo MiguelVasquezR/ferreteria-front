@@ -8,7 +8,10 @@ export const SchemaProduct = z.object({
     .string()
     .min(1, "El nombre es requerido")
     .max(40, "El nombre es muy largo")
-    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.#\s]+$/, "Solo . # letras, números y espacios"),
+    .regex(
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.#\s]+$/,
+      "Solo . # letras, números y espacios"
+    ),
   cantidad: z
     .string()
     .min(1, { message: "La cantidad del producto es requerida" })
@@ -23,7 +26,9 @@ export const SchemaProduct = z.object({
     .string()
     .min(1, { message: "El costo del producto es requerido" })
     .max(9, { message: "Límite alcanzado" })
-    .regex(/^\d+(\.\d{1,2})?$/, { message: "Solo se admiten numeros y decimales" })
+    .regex(/^\d+(\.\d{1,2})?$/, {
+      message: "Solo se admiten numeros y decimales",
+    })
     .refine((value) => parseFloat(value) >= 1, {
       message: "El precio debe ser mayor o igual a 1",
     })
@@ -34,7 +39,9 @@ export const SchemaProduct = z.object({
     .string()
     .min(1, { message: "El precio a menudeo es requerido" })
     .max(9, { message: "Límite alcanzado" })
-    .regex(/^\d+(\.\d{1,2})?$/, { message: "Solo se admiten numeros y decimales" })
+    .regex(/^\d+(\.\d{1,2})?$/, {
+      message: "Solo se admiten numeros y decimales",
+    })
     .refine((value) => parseFloat(value) >= 1, {
       message: "El precio debe ser mayor o igual a 1",
     })
@@ -45,11 +52,17 @@ export const SchemaProduct = z.object({
     .string()
     .min(1, { message: "El costo del producto es requerido" })
     .max(9, { message: "Límite alcanzado" })
-    .regex(/^\d+(\.\d{1,2})?$/, { message: "Solo se admiten numeros y decimales" })
+    .regex(/^\d+(\.\d{1,2})?$/, {
+      message: "Solo se admiten numeros y decimales",
+    })
     .refine((value) => parseFloat(value) >= 1, {
       message: "El precio debe ser mayor o igual a 1",
     })
     .refine((value) => parseFloat(value) <= 99999.99, {
       message: "El precio no puede ser mayor a 99999.99",
     }),
+  descripcion: z
+    .string()
+    .min(1, { message: "La descripción es requerida" })
+    .max(200, { message: "La descripción es muy larga" }),
 });
