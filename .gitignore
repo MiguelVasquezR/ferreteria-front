@@ -24,5 +24,3 @@ node_modules
 
 .env.local
 .env
-
-src/styles/
