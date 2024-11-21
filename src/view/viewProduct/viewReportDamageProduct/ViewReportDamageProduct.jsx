@@ -125,7 +125,7 @@ const ViewReportDamageProduct = () => {
               )}
 
               <TextArea
-                label={"Seleccione el producto"}
+                label={"Descripción del daño"}
                 name="descripcion"
                 placeholder="Describa el daño del producto"
                 register={methods.register}
