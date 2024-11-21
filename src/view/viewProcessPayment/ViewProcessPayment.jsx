@@ -2,7 +2,7 @@ import Header from "../../components/Header/Header";
 import TextField from "../../components/Form/TextField/TextField";
 import { FormProvider, useForm } from "react-hook-form";
 import { IoIosSearch } from "react-icons/io";
-import Card from "../../components/CardProcessPayment/cardProcessPayment";
+import Card from "../../components/cardProcessPayment/cardProcessPayment.jsx";
 
 const ViewProcessPayment = () => {
   const methods = useForm();
