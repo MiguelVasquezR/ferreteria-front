@@ -147,7 +147,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/Report-demaged",
+    path: "/report-demaged",
     element: <ViewReportDamageProduct />,
   },
   {
