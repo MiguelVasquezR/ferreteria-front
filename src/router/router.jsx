@@ -34,10 +34,6 @@ const router = createBrowserRouter([
     element: <ViewMain />,
   },
   {
-    path: "*",
-    element: <NotFound />,
-  },
-  {
     path: "/login",
     element: <ViewLogin />,
   },
@@ -153,6 +149,10 @@ const router = createBrowserRouter([
   {
     path: "/Report-demaged",
     element: <ViewReportDamageProduct />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
