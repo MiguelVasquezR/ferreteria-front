@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import axios from "axios";
-
+import CardProcessPayment from "../../components/cardProcessPayment/cardProcessPayment";
 import toast from "react-hot-toast";
 import ModalEmail from "../../components/Modal/ModalEmail/ModalEmail";
 import { setPayment } from "../../store/slices/payment/payment_slice";
@@ -276,6 +276,7 @@ ViewSales.propTypes = {
   productosState: PropTypes.object,
   setDataProducts: PropTypes.func,
   setStatus: PropTypes.func,
+  productsSale: PropTypes.func,
 };
 
 const mapsStateToProps = (state) => {

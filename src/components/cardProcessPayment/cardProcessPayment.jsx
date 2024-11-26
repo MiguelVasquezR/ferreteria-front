@@ -9,13 +9,24 @@ import ContainerCash from "./cardItemProductPayment/containerCash/ContainerCash"
 
 const CardProcessPayment = ({ pago }) => {
   const [tipoPago, setTipoPago] = useState("efectivo");
-
-  const handleCharge = () => {
-    console.log("Cobrando");
-    console.log(tipoPago);
-  };
-
   const { productos: listaProductos, total: totalVenta } = pago;
+  const [filtrado, setFiltrado] = useState(listaProductos);
+  const [total, setTotal] = useState(totalVenta);
+
+  const deleteProduct = (id) => {
+    const newProducts = filtrado.filter((producto) => {
+      if (producto.idProducto === id) {
+        const totalK = producto.cantidadCompra * producto.precioMenudeo;
+        setTotal(totalVenta - totalK);
+      } else {
+        return producto.idProducto !== id;
+      }
+    });
+    if (newProducts.length === 0) {
+      window.location.reload();
+    }
+    setFiltrado(newProducts);
+  };
 
   return (
     <div className="w-screen h-screen bg-white/60 px-5 z-50 shadow-md">
@@ -27,9 +38,10 @@ const CardProcessPayment = ({ pago }) => {
             </p>
 
             <div>
-              {listaProductos?.map((producto) => (
+              {filtrado?.map((producto) => (
                 <CardItemProductPayment
                   key={producto.id}
+                  id={producto.idProducto}
                   urlImage={producto.urlImage}
                   cantidad={producto.cantidadCompra}
                   precioUnitario={
@@ -37,13 +49,14 @@ const CardProcessPayment = ({ pago }) => {
                       ? producto.precioMayoreo
                       : producto.precioMenudeo
                   }
+                  deleteProduct={deleteProduct}
                 />
               ))}
             </div>
 
             <div className="flex justify-end items-center gap-5 my-5">
               <ul className="flex flex-col justify-end items-end gap-2">
-                <li className="font-bold">Total: ${totalVenta}</li>
+                <li className="font-bold">Total: ${total}</li>
               </ul>
             </div>
           </div>
@@ -88,7 +101,7 @@ const CardProcessPayment = ({ pago }) => {
             </div>
 
             {tipoPago === "efectivo" ? (
-              <ContainerCash totalPagar={totalVenta} />
+              <ContainerCash totalPagar={total} />
             ) : (
               <ContainerCard />
             )}

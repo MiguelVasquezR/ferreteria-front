@@ -56,8 +56,6 @@ const ContainerCash = ({ totalPagar, pago }) => {
             axios
               .request(conftP)
               .then((res) => {
-                console.log(res);
-
                 if (res.data.length > 0) {
                   toast.success(
                     `Su venta ha sido procesada, sin embargo, los siguientes productos están en poco stock ${res.data.map(
@@ -68,6 +66,7 @@ const ContainerCash = ({ totalPagar, pago }) => {
                   );
                 } else {
                   toast.success("Venta guardada exitosamente");
+                  window.location.reload();
                 }
               })
               .catch(() => {
