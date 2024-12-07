@@ -249,7 +249,7 @@ const ViewSales = ({
                       ? s.precioMayoreo
                       : s.precioMenudeo;
 
-                  const total = s.cantidadCompra * precioUnitario;
+                  const total = s.cantidadCompra * precioVenta;
 
                   return (
                     <tr key={s.codigo + "-" + index}>
