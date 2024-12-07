@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import ModalEmail from "../../components/Modal/ModalEmail/ModalEmail";
 import { setPayment } from "../../store/slices/payment/payment_slice";
 import SuplierLoading from "../../components/Loadings/SuplierLoading/SuplierLoading";
+import Card from "../../components/cardAddPackage/cardAddPackage";
 
 const ViewSales = ({
   productosState,
@@ -28,6 +29,7 @@ const ViewSales = ({
   const methods = useForm();
   const { productos } = productosState;
   const cookie = new Cookies();
+
   const [sales, setSales] = useState([]);
   const [totalCompra, setTotalCompra] = useState(0);
   const [showModalEmail, setShowModalEmail] = useState(false);
@@ -35,35 +37,47 @@ const ViewSales = ({
   const [processPayment, setProcessPayment] = useState(false);
   const [isLoadinView, setIsLoadinView] = useState(true);
 
+  const [productoFiltrador, setProductoFiltrador] = useState(productos);
+
   useEffect(() => {
-    if (productos.length !== 0 || productos === null) {
-      return;
+    if (productos.length === 0) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${cookie.get("token")}`,
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        url: `${import.meta.env.VITE_URL}/producto/obtener-productos`,
+      };
+
+      setStatus("loading");
+      axios
+        .request(config)
+        .then((response) => {
+          setDataProducts(response.data);
+          setProductoFiltrador(response.data);
+          setStatus("succeeded");
+          setIsLoadinView(false);
+          toast.success("Productos cargados correctamente");
+        })
+        .catch(() => {
+          toast.error("Error al obtener los productos");
+          setStatus("error");
+          setIsLoadinView(false);
+        });
     }
+  }, [productos.length, cookie, setDataProducts, setStatus]);
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${cookie.get("token")}`,
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-      url: `${import.meta.env.VITE_URL}/producto/obtener-productos`,
-    };
-
-    setStatus("loading");
-    axios
-      .request(config)
-      .then((response) => {
-        setDataProducts(response.data);
-        setStatus("succeeded");
-        setIsLoadinView(false);
-        toast.success("Productos cargados correctamente");
-      })
-      .catch(() => {
-        toast.error("Error al obtener los productos");
-        setStatus("error");
-        setIsLoadinView(false);
-      });
-  }, []);
+  const addProductsToList = (p) => {
+    const productExists = sales.find(
+      (product) => product.idProducto === p.idProducto
+    );
+    if (productExists) {
+      setSales(sales.filter((product) => product.idProducto !== p.idProducto));
+    } else {
+      setSales([...sales, { ...p, cantidadCompra: 1 }]);
+    }
+  };
 
   useEffect(() => {
     const total = sales.reduce((acc, s) => {
@@ -75,23 +89,14 @@ const ViewSales = ({
   }, [sales]);
 
   const handleFindProduct = (data) => {
-    const pd = productos.find((p) => p.codigo === data.buscador);
-    if (pd) {
-      const existingSale = sales.find((s) => s.codigo === pd.codigo);
-      if (existingSale) {
-        setSales((prevSales) =>
-          prevSales.map((s) =>
-            s.codigo === existingSale.codigo
-              ? { ...s, cantidadCompra: s.cantidadCompra + 1 }
-              : s
-          )
-        );
-      } else {
-        setSales((prevSales) => [...prevSales, { ...pd, cantidadCompra: 1 }]);
-      }
-    } else {
-      toast.error("Producto no encontrado");
-    }
+    const searchTerm = data.buscador.toLowerCase();
+    const filteredProducts = productos.filter((p) => {
+      return (
+        p.codigo.toLowerCase().includes(searchTerm) ||
+        p.nombre.toLowerCase().includes(searchTerm)
+      );
+    });
+    setProductoFiltrador(filteredProducts);
   };
 
   const closeModalEmail = () => {
@@ -104,53 +109,29 @@ const ViewSales = ({
       return;
     }
 
-    const data = {
-      productos: sales,
-      total: totalCompra,
-    };
+    const data = { productos: sales, total: totalCompra };
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${cookie.get("token")}`,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      url: `${import.meta.env.VITE_URL}/venta/guardar`,
-      data,
-    };
-
-    validateAmountAvailable(data?.productos);
+    validateAmountAvailable(data.productos);
 
     if (dataProductStock.length !== 0) {
       setShowModalEmail(true);
     } else {
       setProcessPayment(true);
       productsSale(data);
-
-      /* axios
-        .request(config)
-        .then((res) => {
-          if (res.data === "Venta guardada exitosamente") {
-            toast.success("Venta guardada exitosamente");
-            setSales([]);
-            setTotalCompra(0);
-          } else {
-            toast.error("Error al registrar la venta");
-          }
-        })
-        .catch(() => {
-          toast.error("Error al registrar la venta");
-        }); */
     }
   };
 
   const validateAmountAvailable = (products) => {
-    products.map((p) => {
+    products.forEach((p) => {
       if (p.cantidadCompra > p.cantidad) {
-        setDataProductStock(p);
+        setDataProductStock((prev) => [...prev, p]);
       }
     });
   };
+
+  const changeViewProcess = (valor) => {
+    setProcessPayment(valor);
+  }
 
   return (
     <>
@@ -158,7 +139,7 @@ const ViewSales = ({
 
       {processPayment && (
         <div className="w-screen h-screen absolute z-50">
-          <CardProcessPayment />
+          <CardProcessPayment changeViewProcess={changeViewProcess} />
         </div>
       )}
 
@@ -168,18 +149,18 @@ const ViewSales = ({
         </div>
       )}
 
-      <div className=" p-5 w-full h-full">
+      <div className="p-5 w-full h-full">
         <h2 className="font-bold text-[18px] lg:text-[22px] w-full">Ventas</h2>
 
         {isLoadinView && (
-          <div className="h-screen bg-white/60  w-screen absolute">
+          <div className="h-screen bg-white/60 w-screen absolute">
             <SuplierLoading />
           </div>
         )}
 
         <div className="flex justify-center items-center flex-col gap-5 max-w-[1200px] mx-auto">
           <form
-            onSubmit={methods.handleSubmit(handleFindProduct)}
+            onChange={methods.handleSubmit(handleFindProduct)}
             className="w-[320px] lg:w-[600px]"
           >
             <FormProvider {...methods}>
@@ -195,6 +176,22 @@ const ViewSales = ({
               />
             </FormProvider>
           </form>
+
+          <div className="w-full">
+            <p className="font-bold lg:text-[22px]">Productos</p>
+
+            <div className="flex overflow-y-auto gap-5 p-4 whitespace-nowrap">
+              {productoFiltrador.map((producto, index) => (
+                <Card
+                  onClick={() => addProductsToList(producto)}
+                  key={index}
+                  urlImage={producto.urlImage}
+                  name={producto.nombre}
+                  id={producto.idProducto}
+                />
+              ))}
+            </div>
+          </div>
 
           <div className="w-full flex flex-row justify-between items-center">
             <div className="flex flex-row items-center justify-start">
@@ -223,16 +220,51 @@ const ViewSales = ({
 
               <tbody>
                 {sales?.map((s, index) => {
+                  const handleChangeCantidadCompra = (e) => {
+                    const newCantidadCompra = e.target.value;
+                    if (newCantidadCompra === "" || !isNaN(newCantidadCompra)) {
+                      setSales((prevSales) =>
+                        prevSales.map((product) =>
+                          product.idProducto === s.idProducto
+                            ? {
+                                ...product,
+                                cantidadCompra:
+                                  newCantidadCompra === ""
+                                    ? ""
+                                    : parseInt(newCantidadCompra),
+                              }
+                            : product
+                        )
+                      );
+                    }
+                  };
+
+                  const precioVenta =
+                    s.cantidadCompra <= 10
+                      ? s.precioMenudeo
+                      : s.precioMayoreo;
+
                   const precioUnitario =
                     s.cantidadCompra >= s.stockMinimo
                       ? s.precioMayoreo
                       : s.precioMenudeo;
+
                   const total = s.cantidadCompra * precioUnitario;
+
                   return (
                     <tr key={s.codigo + "-" + index}>
                       <td className="text-center">{s.nombre}</td>
-                      <td className="text-center">{s.cantidadCompra}</td>
-                      <td className="text-center">{s.precioMenudeo}</td>
+                      <td className="text-center">
+                        <input
+                          type="text"
+                          onChange={handleChangeCantidadCompra}
+                          value={
+                            s.cantidadCompra === "" ? "" : s.cantidadCompra
+                          }
+                          className="w-full text-center outline-none p-1 bg-[#f2f2f2]"
+                        />
+                      </td>
+                      <td className="text-center">{precioVenta}</td>
                       <td className="text-center">{total}</td>
                     </tr>
                   );
@@ -254,6 +286,7 @@ const ViewSales = ({
               </tbody>
             </table>
           </div>
+
           <div className="w-full flex justify-end items-center">
             <div className="w-[200px] h-[40px] lg:w-[300px] lg:h-[50px]">
               <Button
