@@ -6,8 +6,9 @@ import { connect } from "react-redux";
 import CardItemProductPayment from "./cardItemProductPayment/CardItemProductPayment";
 import ContainerCard from "./cardItemProductPayment/containerCard/ContainerCard";
 import ContainerCash from "./cardItemProductPayment/containerCash/ContainerCash";
+import { IoIosCloseCircle } from "react-icons/io";
 
-const CardProcessPayment = ({ pago }) => {
+const CardProcessPayment = ({ pago, changeViewProcess }) => {
   const [tipoPago, setTipoPago] = useState("efectivo");
   const { productos: listaProductos, total: totalVenta } = pago;
   const [filtrado, setFiltrado] = useState(listaProductos);
@@ -30,7 +31,16 @@ const CardProcessPayment = ({ pago }) => {
 
   return (
     <div className="w-screen h-screen bg-white/60 px-5 z-50 shadow-md">
-      <div className="flex flex-col justify-center items-center max-w-[800px] max-h-[500px] m-auto py-10">
+      <div className="flex flex-col justify-center items-center max-w-[800px] max-h-[500px] m-auto py-10 relative">
+        <div className="absolute right-10 top-10 bg-white rounded-md">
+          <IoIosCloseCircle
+            size={32}
+            color="red"
+            onClick={() => {
+              changeViewProcess(false);
+            }}
+          />
+        </div>
         <div className="bg-white  rounded-md p-5 flex flex-col lg:flex-row gap-5 m-auto">
           <div>
             <p className="text-center font-bold text-[20px] my-3">

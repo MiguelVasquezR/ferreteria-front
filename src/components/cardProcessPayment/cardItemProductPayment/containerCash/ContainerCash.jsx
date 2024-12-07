@@ -64,6 +64,7 @@ const ContainerCash = ({ totalPagar, pago }) => {
                       }
                     )}`
                   );
+                  window.location.reload();
                 } else {
                   toast.success("Venta guardada exitosamente");
                   window.location.reload();
