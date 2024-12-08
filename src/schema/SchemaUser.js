@@ -43,19 +43,11 @@ export const User = z.object({
   rfc: z
     .string()
     .length(13, "El RFC debe tener 13 caracteres")
-    .regex(/^[A-Z0-9]+$/, {
-      message: "El RFC solo debe contener letras mayúsculas y números",
-    })
-    .refine(
-      (value) => {
-        const lettersCount = (value.match(/[A-Z]/g) || []).length;
-        const numbersCount = (value.match(/[0-9]/g) || []).length;
-        return lettersCount >= 3 && numbersCount >= 6;
-      },
-      {
-        message: "El RFC debe contener al menos 3 letras y 6 números",
-      }
-    ),
+    .regex(/^[A-Z]{4}\d{6}[A-Z0-9]{3}$/, {
+      message:
+        "El RFC se compone solo de Mayusculas: 4 letras iniciales, seguidas de 6 números, y terminar con 3 caracteres alfanuméricos. Para mas información puedes consultarlo en https://calcularrfc.mx/#google_vignette",
+    }),
+  
   calle: z
     .string()
     .min(1, "La calle es requerida")
