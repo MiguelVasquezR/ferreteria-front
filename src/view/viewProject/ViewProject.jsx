@@ -158,13 +158,14 @@ const ViewProject = ({ setDataProyectos, setStatus, proyectosState }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  place-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 place-items-center">
           {filterProyecto?.map((proyecto, index) => (
             <CardPresentationProject
               changeStateID={changeStateID}
               showModal={changeStateModal}
               proyecto={proyecto}
-              key={index}
+              key={proyecto.idProyecto} 
+              title={`Proyecto #${index + 1}`} 
             />
           ))}
         </div>

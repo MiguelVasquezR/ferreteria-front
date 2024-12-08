@@ -1,7 +1,7 @@
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-const CardPresentationProject = ({ proyecto, showModal, changeStateID }) => {
+const CardPresentationProject = ({ proyecto, showModal, changeStateID, title }) => {
   const {
     idProyecto,
     nombre,
@@ -27,16 +27,16 @@ const CardPresentationProject = ({ proyecto, showModal, changeStateID }) => {
 
   const handleEdit = () => {
     navigate(`/edit-project/${idProyecto}`);
-  }
+  };
 
   return (
     <div className="bg-white rounded-md shadow-md w-[90%] p-5 flex flex-row justify-between items-center">
       <div className="w-[50%]">
-        <p className="text-[18px] lg:text-[24px] font-bold">Proyecto #1</p>
-        <article className="">
+        <p className="text-[18px] lg:text-[24px] font-bold">{title}</p> 
+        <article>
           <h3 className="font-bold mb-5">Encargado</h3>
           <p>Nombre: {nombre || "N/A"}</p>
-          <p>Teléfono: {telefono || "N/A"} </p>
+          <p>Teléfono: {telefono || "N/A"}</p>
           <p>Correo: {correo || "N/A"}</p>
           <p>RFC: {rfc || "N/A"}</p>
         </article>
@@ -68,7 +68,12 @@ const CardPresentationProject = ({ proyecto, showModal, changeStateID }) => {
             color="black"
             className="cursor-pointer"
           />
-          <MdEdit onClick={handleEdit} size={32} color="black" className="cursor-pointer" />
+          <MdEdit
+            onClick={handleEdit}
+            size={32}
+            color="black"
+            className="cursor-pointer"
+          />
         </div>
       </div>
     </div>
