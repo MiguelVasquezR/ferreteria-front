@@ -116,8 +116,18 @@ const ViewSales = ({
     if (dataProductStock.length !== 0) {
       setShowModalEmail(true);
     } else {
-      setProcessPayment(true);
-      productsSale(data);
+      const { productos } = data;
+      const listCompra = Array.isArray(productos)
+        ? productos.filter((p) => p.cantidadCompra > 0)
+        : [];
+
+      if (listCompra.length === 0) {
+        toast.error("No hay productos para vender");
+      } else {
+        setProcessPayment(true);
+        data.productos = listCompra;
+        productsSale(data);
+      }
     }
   };
 
@@ -131,7 +141,7 @@ const ViewSales = ({
 
   const changeViewProcess = (valor) => {
     setProcessPayment(valor);
-  }
+  };
 
   return (
     <>
@@ -240,9 +250,7 @@ const ViewSales = ({
                   };
 
                   const precioVenta =
-                    s.cantidadCompra <= 10
-                      ? s.precioMenudeo
-                      : s.precioMayoreo;
+                    s.cantidadCompra <= 10 ? s.precioMenudeo : s.precioMayoreo;
 
                   const precioUnitario =
                     s.cantidadCompra >= s.stockMinimo
