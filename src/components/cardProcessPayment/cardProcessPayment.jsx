@@ -11,6 +11,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 const CardProcessPayment = ({ pago, changeViewProcess }) => {
   const [tipoPago, setTipoPago] = useState("efectivo");
   const { productos: listaProductos, total: totalVenta } = pago;
+
   const [filtrado, setFiltrado] = useState(listaProductos);
   const [total, setTotal] = useState(totalVenta);
 
