@@ -20,6 +20,7 @@ import {
 } from "../../../store/slices/product/product_reducers";
 import { Cookies } from "react-cookie";
 import clsx from "clsx";
+import TextArea from "../../../components/Form/TextArea/TextArea";
 
 const ViewEditProduct = ({ productosState }) => {
   const methods = useForm({
@@ -66,6 +67,7 @@ const ViewEditProduct = ({ productosState }) => {
         methods.setValue("costo", editProducto.costo);
         methods.setValue("precioMenudeo", editProducto.precioMenudeo);
         methods.setValue("precioMayoreo", editProducto.precioMayoreo);
+        methods.setValue("descripcion", editProducto.descripcion);
       }
     }
   }, [productos, id, methods]);
@@ -212,6 +214,15 @@ const ViewEditProduct = ({ productosState }) => {
                 register={methods.register}
                 Error={methods?.formState.errors?.precioMayoreo?.message}
                 isError={!!methods?.formState.errors?.precioMayoreo?.message}
+              />
+
+              <TextArea
+                label="Descripción"
+                name="descripcion"
+                placeholder="Descripción del producto"
+                isError={!!methods?.formState.errors?.descripcion?.message}
+                error={methods?.formState.errors?.descripcion?.message}
+                register={methods.register}
               />
 
               <div className="w-[200px] lg:w-[300px] lg:h-[50px] my-5">

@@ -38,6 +38,8 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
       .request(config)
       .then((response) => {
         if (response.status === 200) {
+          console.log(response);
+          
           const paquetesUnicos = response.data.reduce((acc, item) => {
             const { idPaquete, nombre, descripcion, precio, idProducto } = item;
 
@@ -53,6 +55,7 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
             acc[idPaquete].productos.push(nombre);
             return acc;
           }, {});
+
           const paquetesFormateados = Object.values(paquetesUnicos);
 
           setDataPaquetes(paquetesFormateados);
@@ -150,7 +153,9 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
                   className="w-[300px] lg:w-[400px] shadow-md rounded-md p-5 flex flex-col gap-5 justify-between items-center"
                 >
                   <div className="flex flex-row justify-between items-center w-full">
-                    <p>{"Paquete " + (index + 1)}</p>
+                    <p className="text-black font-bold px-2">
+                      {"Nombre: " + p.nombre}
+                    </p>
                     <FaBoxOpen color="#F58A27" size={32} />
                   </div>
                   <div className="flex flex-row justify-between items-center w-full">

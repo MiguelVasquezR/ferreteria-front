@@ -45,6 +45,15 @@ const ViewAddProject = () => {
           response.data.mensaje === "Obra guardada correctamente"
         ) {
           navigate("/proyecto");
+        } else if (
+          response.data.message ===
+          "El proyecto ya existe con la misma persona y dirección"
+        ) {
+          setIsLoading(false);
+          toast.error(response.data.mensaje);
+        } else {
+          setIsLoading(false);
+          toast.error("Error al crear el proyecto");
         }
       })
       .catch((error) => {

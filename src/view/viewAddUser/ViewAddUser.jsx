@@ -36,6 +36,23 @@ const ViewAddUser = () => {
 
     const dataToSend = {
       ...data,
+      usuario: {
+        usuario: data.usuario,
+        contrasena: data.contrasena,
+        sueldo: data.sueldo,
+      },
+      persona:{
+        nombre: data.nombre,
+        telefono: data.telefono,
+        correo: data.correo,
+        rfc: data.rfc,
+      },
+      direccion: {
+        calle: data.calle,
+        numero: data.numero,
+        colonia: data.colonia,
+        ciudad: data.ciudad,
+      },
       tipo: tipoView,
     };
 
@@ -46,13 +63,18 @@ const ViewAddUser = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${cookie.get("token")}`,
       },
+      body: JSON.stringify(dataToSend),
       data: dataToSend,
     };
+
+    console.log(conf);
 
     setIsLoading(true);
     axios
       .request(conf)
       .then((response) => {
+        console.log(response);
+
         if (response.data.mensaje === "Usuario agregado exitosamente") {
           toast.success("Usuario agregado exitosamente");
           navigate("/users");
@@ -61,9 +83,10 @@ const ViewAddUser = () => {
           setIsLoading(false);
         }
       })
-      .catch(() => {
+      .catch((e) => {
         setIsLoading(false);
         toast.error("Error al agregar el usuario");
+        console.log(e);
       });
   };
 

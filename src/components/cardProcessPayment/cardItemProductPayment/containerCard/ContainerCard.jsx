@@ -8,6 +8,7 @@ const ContainerCard = () => {
       setEstado("Procesando Cobro");
       setTimeout(() => {
         setEstado("Aprobado");
+        window.location.reload();
       }, 5000);
     }, 5000);
     return () => clearTimeout(timer);

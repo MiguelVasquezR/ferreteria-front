@@ -6,20 +6,42 @@ import { connect } from "react-redux";
 import CardItemProductPayment from "./cardItemProductPayment/CardItemProductPayment";
 import ContainerCard from "./cardItemProductPayment/containerCard/ContainerCard";
 import ContainerCash from "./cardItemProductPayment/containerCash/ContainerCash";
+import { IoIosCloseCircle } from "react-icons/io";
 
-const CardProcessPayment = ({ pago }) => {
+const CardProcessPayment = ({ pago, changeViewProcess }) => {
   const [tipoPago, setTipoPago] = useState("efectivo");
-
-  const handleCharge = () => {
-    console.log("Cobrando");
-    console.log(tipoPago);
-  };
-
   const { productos: listaProductos, total: totalVenta } = pago;
+
+  const [filtrado, setFiltrado] = useState(listaProductos);
+  const [total, setTotal] = useState(totalVenta);
+
+  const deleteProduct = (id) => {
+    const newProducts = filtrado.filter((producto) => {
+      if (producto.idProducto === id) {
+        const totalK = producto.cantidadCompra * producto.precioMenudeo;
+        setTotal(totalVenta - totalK);
+      } else {
+        return producto.idProducto !== id;
+      }
+    });
+    if (newProducts.length === 0) {
+      window.location.reload();
+    }
+    setFiltrado(newProducts);
+  };
 
   return (
     <div className="w-screen h-screen bg-white/60 px-5 z-50 shadow-md">
-      <div className="flex flex-col justify-center items-center max-w-[800px] max-h-[500px] m-auto py-10">
+      <div className="flex flex-col justify-center items-center max-w-[800px] max-h-[500px] m-auto py-10 relative">
+        <div className="absolute right-10 top-10 bg-white rounded-md">
+          <IoIosCloseCircle
+            size={32}
+            color="red"
+            onClick={() => {
+              changeViewProcess(false);
+            }}
+          />
+        </div>
         <div className="bg-white  rounded-md p-5 flex flex-col lg:flex-row gap-5 m-auto">
           <div>
             <p className="text-center font-bold text-[20px] my-3">
@@ -27,9 +49,10 @@ const CardProcessPayment = ({ pago }) => {
             </p>
 
             <div>
-              {listaProductos?.map((producto) => (
+              {filtrado?.map((producto) => (
                 <CardItemProductPayment
                   key={producto.id}
+                  id={producto.idProducto}
                   urlImage={producto.urlImage}
                   cantidad={producto.cantidadCompra}
                   precioUnitario={
@@ -37,19 +60,20 @@ const CardProcessPayment = ({ pago }) => {
                       ? producto.precioMayoreo
                       : producto.precioMenudeo
                   }
+                  deleteProduct={deleteProduct}
                 />
               ))}
             </div>
 
             <div className="flex justify-end items-center gap-5 my-5">
               <ul className="flex flex-col justify-end items-end gap-2">
-                <li className="font-bold">Total: ${totalVenta}</li>
+                <li className="font-bold">Total: ${total}</li>
               </ul>
             </div>
           </div>
 
           <div className="bg-primary rounded-md p-5">
-            <p className="font-bold text-white text-[32px]">Informe de Pago</p>
+            <p className="font-bold text-white text-[32px]">Infórme de Pago</p>
 
             <div className="">
               <p className="text-white text-[20px] font-bold my-2">
@@ -68,27 +92,14 @@ const CardProcessPayment = ({ pago }) => {
                   />
                 </div>
 
-                <div className="border-white border-[1px] rounded-md w-[100px]">
-                  <Button
-                    background="transparent"
-                    isIcon={false}
-                    texto="Tarjeta"
-                    type=""
-                    Icon={false}
-                    isLoading={false}
-                    onClick={() => setTipoPago("tarjeta")}
-                  />
-                </div>
+                
               </div>
             </div>
 
-            <div className="flex flex-row justify-between items-center my-5">
-              <p className="text-white">¿Deseas dividir el pago?</p>
-              <ButtonSwitch />
-            </div>
+            
 
             {tipoPago === "efectivo" ? (
-              <ContainerCash totalPagar={totalVenta} />
+              <ContainerCash totalPagar={total} />
             ) : (
               <ContainerCard />
             )}

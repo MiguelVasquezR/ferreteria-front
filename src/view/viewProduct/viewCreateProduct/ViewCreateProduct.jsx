@@ -35,8 +35,10 @@ const ViewCreateProduct = () => {
 
     const dataToSend = {
       ...data,
-      idPersona: proveedor.idPersona,
+      idPersona: proveedor,
     };
+
+    console.log(dataToSend);
 
     const config = {
       headers: {
@@ -51,9 +53,13 @@ const ViewCreateProduct = () => {
     axios
       .request(config)
       .then((response) => {
-        if (response.data === "Producto agregado correctamente") {
+        if (response.data.message === "Producto registrado correctamente") {
           toast.success(response.data);
           navigate("/products");
+        } else if (
+          response.data.message === "El producto ya se encuentra en existencia"
+        ) {
+          toast.error("El producto ya se encuentra en existencia");
         } else {
           toast.error("Error al agregar el producto");
         }
