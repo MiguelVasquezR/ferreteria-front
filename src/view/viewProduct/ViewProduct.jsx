@@ -101,6 +101,7 @@ const ViewProducts = ({ setDataProducts, products, setStatus }) => {
     navigate(`/edit-product/${selectedProduct.idProducto}`);
   };
 
+
   return (
     <>
       <Header />

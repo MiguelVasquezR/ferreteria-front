@@ -23,4 +23,8 @@ node_modules
 
 
 .env.local
+<<<<<<< HEAD
+styles/
+=======
 .env
+>>>>>>> 8e2fe34a7a252d74fc9d1805f96c9ae6b0782d73
