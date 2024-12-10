@@ -104,6 +104,9 @@ const ViewOfferProduct = ({ setStatus, setDataProducts, products }) => {
         if (response.data === "Oferta agregada correctamente") {
           toast.success("Oferta creado exitosamente");
           navigate("/offers");
+        } else if (response.data === "Oferta en Existencia") {
+          toast.error("Ya existe una oferta para este producto");
+          setIsLoadingSubmit(false);
         }
       })
       .catch(() => {

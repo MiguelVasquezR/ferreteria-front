@@ -134,7 +134,8 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
             <thead className="w-full">
               <tr className="w-full">
                 <th>Nombre</th>
-                <th>Teléfono</th>
+                <th>Rol</th>
+                <th className="hidden lg:table-cell">Teléfono</th>
                 <th className="hidden lg:table-cell">Correo</th>
                 <th className="hidden lg:table-cell">RFC</th>
                 <th>Sueldo</th>
@@ -151,7 +152,8 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
                   onClick={() => setIsSelectItem(user)}
                 >
                   <td>{user?.nombre}</td>
-                  <td>{user?.telefono}</td>
+                  <td>{user?.rol}</td>
+                  <td className="hidden lg:table-cell">{user?.telefono}</td>
                   <td className="hidden lg:table-cell">{user?.correo}</td>
                   <td className="hidden lg:table-cell">{user?.rfc}</td>
                   <td>{user?.sueldo}</td>

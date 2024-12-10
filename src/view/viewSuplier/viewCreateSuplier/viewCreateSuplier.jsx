@@ -43,6 +43,10 @@ const ViewCreateSuplier = () => {
           response.data.message === "Proveedor registrado correctamente"
         ) {
           navigate("/supliers");
+        } else if (
+          response.data.message === "El proveedor ya se encuentra en existencia"
+        ) {
+          toast.error("El proveedor ya se encuentra en existencia");
         }
       })
       .catch((error) => {
