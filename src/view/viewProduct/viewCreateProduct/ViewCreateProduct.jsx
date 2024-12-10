@@ -32,7 +32,6 @@ const ViewCreateProduct = () => {
       toast.error("Selecciona un proveedor");
       return;
     }
-    
 
     const dataToSend = {
       ...data,
@@ -40,7 +39,6 @@ const ViewCreateProduct = () => {
     };
 
     console.log(dataToSend);
-    
 
     const config = {
       headers: {
@@ -51,14 +49,17 @@ const ViewCreateProduct = () => {
       url: `${import.meta.env.VITE_URL}/producto/agregar-producto`,
       data: dataToSend,
     };
-    
 
     axios
       .request(config)
       .then((response) => {
-        if (response.data === "Producto agregado correctamente") {
+        if (response.data.message === "Producto registrado correctamente") {
           toast.success(response.data);
           navigate("/products");
+        } else if (
+          response.data.message === "El producto ya se encuentra en existencia"
+        ) {
+          toast.error("El producto ya se encuentra en existencia");
         } else {
           toast.error("Error al agregar el producto");
         }
