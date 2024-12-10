@@ -73,7 +73,7 @@ const CardProcessPayment = ({ pago, changeViewProcess }) => {
           </div>
 
           <div className="bg-primary rounded-md p-5">
-            <p className="font-bold text-white text-[32px]">Informe de Pago</p>
+            <p className="font-bold text-white text-[32px]">Infórme de Pago</p>
 
             <div className="">
               <p className="text-white text-[20px] font-bold my-2">
@@ -92,24 +92,11 @@ const CardProcessPayment = ({ pago, changeViewProcess }) => {
                   />
                 </div>
 
-                <div className="border-white border-[1px] rounded-md w-[100px]">
-                  <Button
-                    background="transparent"
-                    isIcon={false}
-                    texto="Tarjeta"
-                    type=""
-                    Icon={false}
-                    isLoading={false}
-                    onClick={() => setTipoPago("tarjeta")}
-                  />
-                </div>
+                
               </div>
             </div>
 
-            <div className="flex flex-row justify-between items-center my-5">
-              <p className="text-white">¿Deseas dividir el pago?</p>
-              <ButtonSwitch />
-            </div>
+            
 
             {tipoPago === "efectivo" ? (
               <ContainerCash totalPagar={total} />
