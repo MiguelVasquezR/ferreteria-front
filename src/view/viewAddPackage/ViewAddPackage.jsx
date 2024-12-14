@@ -105,6 +105,9 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
         if (response.data === "Paquete agregado exitosamente") {
           toast.success("Paquete creado exitosamente");
           navigate("/list-package");
+        } else if (response.data === "El paquete ya existe, verifica los productos, el nombre y precio de tus paquetes en la lista de paquetes") {
+          toast.error(response.data);
+          setIsLoadingSubmit(false);
         }
       })
       .catch(() => {
@@ -156,7 +159,7 @@ const ViewAddPackage = ({ setStatus, setDataProducts, products }) => {
               isError={!!methods.formState.errors.precio}
               Error={methods.formState.errors.precio?.message}
               register={methods.register}
-              type="number"
+              type="text"
               Icon={null}
               isIcon={false}
             />

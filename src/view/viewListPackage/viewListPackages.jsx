@@ -38,27 +38,8 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
       .request(config)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response);
-          
-          const paquetesUnicos = response.data.reduce((acc, item) => {
-            const { idPaquete, nombre, descripcion, precio, idProducto } = item;
-
-            if (!acc[idPaquete]) {
-              acc[idPaquete] = {
-                idPaquete,
-                nombre,
-                descripcion,
-                precio,
-                productos: [],
-              };
-            }
-            acc[idPaquete].productos.push(nombre);
-            return acc;
-          }, {});
-
-          const paquetesFormateados = Object.values(paquetesUnicos);
-
-          setDataPaquetes(paquetesFormateados);
+          const paquete = response.data;
+          setDataPaquetes(paquete);
           setStatus("succeeded");
           setIsLoadingView(false);
         }
@@ -143,7 +124,7 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-5 bg-gray-100 mx-auto justify-center w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-5 bg-gray-100 mx-auto justify-center w-full">
           {paquetes &&
             paquetes.length > 0 &&
             paquetes.map((p, index) => {
@@ -161,9 +142,9 @@ const ViewListPackage = ({ setDataPaquetes, setStatus, paquetesState }) => {
                   <div className="flex flex-row justify-between items-center w-full">
                     <div>
                       <p>Lista de Productos</p>
-                      <ul>
+                      <ul className="list-disc pl-3">
                         {p.productos.map((producto, idx) => (
-                          <li key={idx}>{producto}</li>
+                          <li key={idx}>{producto.nombre}</li>
                         ))}
                       </ul>
                     </div>
