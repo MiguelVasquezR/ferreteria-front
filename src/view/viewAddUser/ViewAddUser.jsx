@@ -79,7 +79,7 @@ const ViewAddUser = () => {
           toast.success("Usuario agregado exitosamente");
           navigate("/users");
         } else {
-          toast.error("Error al agregar el usuario");
+          toast.error("Error: El usuario ya existe.");
           setIsLoading(false);
         }
       })
