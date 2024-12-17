@@ -71,10 +71,10 @@ const ViewAddUser = () => {
     axios
       .request(conf)
       .then((response) => {
-        if (response.status === 400) {
-          toast.error(response.mensaje);
-        } else if (response.status === 200) {
-          toast.success(response.mensaje);
+        if (response.data.status === 400) {
+          toast.error(response.data.mensaje);
+        } else if (response.data.status === 200) {
+          toast.success(response.data.mensaje);
           navigate("/users");
         }
       })
