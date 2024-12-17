@@ -73,6 +73,7 @@ const ViewAddUser = () => {
       .then((response) => {
         if (response.data.status === 400) {
           toast.error(response.data.mensaje);
+          setIsLoading(false);
         } else if (response.data.status === 200) {
           toast.success(response.data.mensaje);
           navigate("/users");
