@@ -2,13 +2,15 @@ import { useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 
-const Card = ({ urlImage, onClick }) => {
+const Card = ({ urlImage, onClick, p }) => {
   const [isSelect, setIsSelect] = useState(false);
   return (
     <div
       onClick={() => {
         onClick();
-        setIsSelect(!isSelect);
+        {
+          p?.cantidad <= 0 ? null : setIsSelect(!isSelect);
+        }
       }}
       className="relative flex-shrink-0 w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] bg-gray-200 rounded-full shadow-lg"
     >

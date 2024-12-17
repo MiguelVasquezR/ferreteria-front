@@ -69,13 +69,20 @@ const ViewSales = ({
   }, [productos.length, cookie, setDataProducts, setStatus]);
 
   const addProductsToList = (p) => {
-    const productExists = sales.find(
-      (product) => product.idProducto === p.idProducto
-    );
-    if (productExists) {
-      setSales(sales.filter((product) => product.idProducto !== p.idProducto));
+    if (p.cantidad <= 0) {
+      toast.error("No hay existencia de este producto para realizar su venta");
+      return null;
     } else {
-      setSales([...sales, { ...p, cantidadCompra: 1 }]);
+      const productExists = sales.find(
+        (product) => product.idProducto === p.idProducto
+      );
+      if (productExists) {
+        setSales(
+          sales.filter((product) => product.idProducto !== p.idProducto)
+        );
+      } else {
+        setSales([...sales, { ...p, cantidadCompra: 1 }]);
+      }
     }
   };
 
@@ -113,20 +120,32 @@ const ViewSales = ({
 
     validateAmountAvailable(data.productos);
 
-    if (dataProductStock.length !== 0) {
-      setShowModalEmail(true);
-    } else {
-      const { productos } = data;
-      const listCompra = Array.isArray(productos)
-        ? productos.filter((p) => p.cantidadCompra > 0)
-        : [];
+    const { productos } = data;
+    const listCompra = Array.isArray(productos)
+      ? productos.filter((p) => p.cantidadCompra > 0)
+      : [];
 
-      if (listCompra.length === 0) {
-        toast.error("No hay productos para vender");
-      } else {
-        setProcessPayment(true);
-        data.productos = listCompra;
+    if (listCompra.length === 0) {
+      toast.error("No hay productos para vender");
+    } else {
+      const listNombre = [];
+      const filterProduct = data.productos.filter((p) => {
+        if (p.cantidadCompra <= p.cantidad) {
+          return p;
+        } else {
+          listNombre.push(p.nombre);
+        }
+      });
+      if (listNombre.length > 0) {
+        toast.error(
+          "La cantidad por vender de algunos productos no es suficiente para está venta, los productos son: " +
+            listNombre
+        );
+      }
+      if (filterProduct.length > 0) {
+        data.productos = filterProduct;
         productsSale(data);
+        setProcessPayment(true);
       }
     }
   };
@@ -191,15 +210,18 @@ const ViewSales = ({
             <p className="font-bold lg:text-[22px]">Productos</p>
 
             <div className="flex overflow-y-auto gap-5 p-4 whitespace-nowrap">
-              {productoFiltrador.map((producto, index) => (
-                <Card
-                  onClick={() => addProductsToList(producto)}
-                  key={index}
-                  urlImage={producto.urlImage}
-                  name={producto.nombre}
-                  id={producto.idProducto}
-                />
-              ))}
+              {productoFiltrador.map((producto, index) =>
+                producto.cantidad > 0 ? (
+                  <Card
+                    onClick={() => addProductsToList(producto)}
+                    key={index}
+                    urlImage={producto.urlImage}
+                    name={producto.nombre}
+                    id={producto.idProducto}
+                    p={producto}
+                  />
+                ) : null
+              )}
             </div>
           </div>
 
