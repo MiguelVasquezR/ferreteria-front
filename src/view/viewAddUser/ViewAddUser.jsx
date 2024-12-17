@@ -41,7 +41,7 @@ const ViewAddUser = () => {
         contrasena: data.contrasena,
         sueldo: data.sueldo,
       },
-      persona:{
+      persona: {
         nombre: data.nombre,
         telefono: data.telefono,
         correo: data.correo,
@@ -67,20 +67,15 @@ const ViewAddUser = () => {
       data: dataToSend,
     };
 
-    console.log(conf);
-
     setIsLoading(true);
     axios
       .request(conf)
       .then((response) => {
-        console.log(response);
-
-        if (response.data.mensaje === "Usuario agregado exitosamente") {
-          toast.success("Usuario agregado exitosamente");
+        if (response.status === 400) {
+          toast.error(response.mensaje);
+        } else if (response.status === 200) {
+          toast.success(response.status);
           navigate("/users");
-        } else {
-          toast.error("Error al agregar el usuario");
-          setIsLoading(false);
         }
       })
       .catch((e) => {

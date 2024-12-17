@@ -36,6 +36,8 @@ const ViewUser = ({ setDataUsuarios, usuariosState, setStatus }) => {
     axios
       .request(config)
       .then((response) => {
+        console.log(response.data);
+
         setDataUsuarios(response.data);
         setIsLoadingView(false);
       })
