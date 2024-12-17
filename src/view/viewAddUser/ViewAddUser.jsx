@@ -74,7 +74,7 @@ const ViewAddUser = () => {
         if (response.status === 400) {
           toast.error(response.mensaje);
         } else if (response.status === 200) {
-          toast.success(response.status);
+          toast.success(response.mensaje);
           navigate("/users");
         }
       })
